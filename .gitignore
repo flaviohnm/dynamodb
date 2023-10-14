@@ -90,3 +90,5 @@ buildNumber.properties
 
 HELP.md
 **/.ideia
+mvnw
+mvnw.cmd
