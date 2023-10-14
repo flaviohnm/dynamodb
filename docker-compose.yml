@@ -1,0 +1,23 @@
+version: "3.7"
+
+services:
+
+  localstack:
+    container_name: localstack
+    image: localstack/localstack:0.11.2
+    ports:
+      - '4566:4566' # LocalStack Gateway
+    environment:
+      - SERVICES=dynamodb
+      - DEFAULT_REGION=sa-east-1
+      - DEBUG=1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - EDGE_PORT=4566
+      - AWS_ACCESS_KEY_ID=1234
+      - AWS_SECRET_ACCESS_KEY=1234
+    volumes:
+      - "localstack_data:/tmp/localstack"
+      - "./localstack:/docker-entrypoint-initaws.d"
+
+volumes:
+  localstack_data:

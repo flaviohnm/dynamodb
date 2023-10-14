@@ -1,0 +1,49 @@
+{
+  "AttributeDefinitions": [
+    {
+      "AttributeName": "funcionarioId",
+      "AttributeType": "S"
+    },
+    {
+      "AttributeName": "nome",
+      "AttributeType": "S"
+    },
+    {
+      "AttributeName": "departamento",
+      "AttributeType": "S"
+    }
+  ],
+  "KeySchema": [
+    {
+      "AttributeName": "funcionarioId",
+      "KeyType": "HASH"
+    }
+  ],
+  "ProvisionedThroughput": {
+    "ReadCapacityUnits": 1,
+    "WriteCapacityUnits": 1
+  },
+  "TableName": "funcionario",
+  "GlobalSecondaryIndexes": [
+    {
+      "IndexName": "indexFuncionario",
+      "KeySchema": [
+        {
+          "AttributeName": "nome",
+          "KeyType": "HASH"
+        },
+        {
+          "AttributeName": "departamento",
+          "KeyType": "RANGE"
+        }
+      ],
+      "Projection": {
+        "ProjectionType": "ALL"
+      },
+      "ProvisionedThroughput": {
+        "ReadCapacityUnits": 1,
+        "WriteCapacityUnits": 1
+      }
+    }
+  ]
+}
