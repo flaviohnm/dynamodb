@@ -1,6 +1,6 @@
-# Projeto Santander Week | Phase: Back-End
+# Projeto AWS With DynamoDB & Java Spring Data | Phase: Back-End
 
-## API-Rest Stock
+## API-Rest Costumer
 
 ## 🚀💻 Technologies & Tools
 
