@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/v1/")
 public class AppController {
 
     private final CostumerService costumerService;
@@ -37,8 +37,8 @@ public class AppController {
     }
 
     @PutMapping("costumer")
-    public ResponseEntity<Costumer> updateCostumer(@Valid @RequestBody CostumerDTO costumerDTO, String companyDocumentNumber) {
-        return ResponseEntity.ok(costumerService.updateCostumer(companyDocumentNumber,costumerDTO));
+    public ResponseEntity<Costumer> updateCostumer(@Valid @RequestBody CostumerDTO costumerDTO) {
+        return ResponseEntity.ok(costumerService.updateCostumer(costumerDTO.getCompanyDocumentNumber(), costumerDTO));
     }
 
     @DeleteMapping("costumer/{companyName}")

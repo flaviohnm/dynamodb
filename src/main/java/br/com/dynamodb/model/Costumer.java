@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 
 
-@DynamoDBTable(tableName = "Costumer")
+@DynamoDBTable(tableName = "costumer")
 public class Costumer implements Serializable {
 
     private static final long serialVersionUID = -4282005207341771716L;
