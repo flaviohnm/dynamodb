@@ -1,0 +1,18 @@
+Guia
+1. terraform | Hands-on Terraform Fundations
+link:https://www.udemy.com/share/105ThC3@fk0qy4hrHBGh41MAeQry1MlZLoXiD0BsBH-tAQlidW8bnfoqcOfjZLZr6JoWRXXV/
+
+2. Java with DynamoDB
+link: https://medium.com/@kaikeventura/api-rest-com-spring-boot-e-aws-dynamodb-5e79ecb80b62
+github: https://github.com/flaviohnm/dynamodb
+
+3. Glue Job | Apenas para conhecimento
+link: https://andresaviana.medium.com/aws-glue-entenda-porque-n%C3%A3o-%C3%A9-s%C3%B3-uma-ferramenta-de-etl-6e0183b9477f
+
+4. ECS
+Link: https://docs.aws.amazon.com/pt_br/AmazonECS/latest/developerguide/Welcome.html
+
+5. S3
+link: https://aws.amazon.com/pt/s3/
+
+4. JSON & YAML
