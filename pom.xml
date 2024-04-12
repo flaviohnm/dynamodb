@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.4</version>
+        <version>3.2.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>br.com</groupId>
@@ -15,9 +15,9 @@
     <description>AWS DynamoDB Project</description>
     <properties>
         <java.version>21</java.version>
-        <aws-dynamo.version>1.12.566</aws-dynamo.version>
+        <aws-dynamo.version>1.12.700</aws-dynamo.version>
         <spring-data-dynamodb.version>5.1.0</spring-data-dynamodb.version>
-        <lombok.version>1.18.30</lombok.version>
+        <lombok.version>1.18.32</lombok.version>
     </properties>
     <dependencies>
         <!-- Spring Boot -->
