@@ -1,0 +1,67 @@
+{
+  "costumer": [
+    {
+      "PutRequest": {
+        "Item": {
+          "id": {
+            "S": "011e8b48-c426-46b2-bf1b-44b77660b32a"
+          },
+          "company_name": {
+            "S": "Empresa Portuguesa LTDA"
+          },
+          "company_document_number": {
+            "S": "6598752300011"
+          },
+          "phone_number":{
+            "S":"11-44444-55511"
+          },
+          "active":{
+            "BOOL": true
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "id": {
+            "S": "011e8b48-c426-46b2-bf1b-44b77660b32b"
+          },
+          "company_name": {
+            "S": "Empresa Americana LTDA"
+          },
+          "company_document_number": {
+            "S": "6598752300012"
+          },
+          "phone_number":{
+            "S":"11-44444-55512"
+          },
+          "active":{
+            "BOOL": true
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "id": {
+            "S": "011e8b48-c426-46b2-bf1b-44b77660b32c"
+          },
+          "company_name": {
+            "S": "Empresa Portuguesa LTDA"
+          },
+          "company_document_number": {
+            "S": "6598752300013"
+          },
+          "phone_number":{
+            "S":"11-44444-55513"
+          },
+          "active":{
+            "BOOL": true
+          }
+        }
+      }
+    }
+  ]
+}
