@@ -10,13 +10,23 @@ create_dynamodb(){
 
 putItems_dynamodb(){
   awslocal dynamodb batch-write-item --request-items file:///docker-entrypoint-initaws.d/item/putCostumers.json
-  echo "add costumers in costumerTable successfully"
+  echo " 3 costumers add in costumerTable successfully"
+}
+
+update_dynamodb(){
+  awslocal dynamodb update-time-to-live --table-name costumer \
+    --time-to-live-specification "Enable=true, AttributeName=expiration_date"
+  echo "update dynamodb with ttl attribute successfully"
 }
 
 echo "Criando DynamoDB"
 echo "==================="
 create_dynamodb
 
-echo "Add Costumers in Costumer Table"
+echo "Adding 3 Costumers in Costumer Table"
+echo "==================="
+putItems_dynamodb
+
+echo "Adding TTL attribute in Costumer Table"
 echo "==================="
 putItems_dynamodb

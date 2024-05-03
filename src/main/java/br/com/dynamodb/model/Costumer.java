@@ -15,22 +15,23 @@ public class Costumer implements Serializable {
 
     private static final long serialVersionUID = -4282005207341771716L;
 
-
     @JsonIgnore
     private String id;
-
 
     @JsonProperty("company_name")
     private String companyName;
 
-
     @JsonProperty("company_document_number")
     private String companyDocumentNumber;
-
 
     @JsonProperty("phone_number")
     private String phoneNumber;
 
+    @JsonProperty("create_date")
+    private String createDate;
+
+    @JsonProperty("expiration_date")
+    private String expirationDate;
 
     @JsonProperty("active")
     private Boolean active;
@@ -38,15 +39,12 @@ public class Costumer implements Serializable {
     public Costumer() {
     }
 
-    public Costumer(
-            String companyName,
-            String companyDocumentNumber,
-            String phoneNumber,
-            Boolean active
-    ) {
+    public Costumer(String companyName, String companyDocumentNumber, String phoneNumber, String createDate, String expirationDate, Boolean active) {
         this.companyName = companyName;
         this.companyDocumentNumber = companyDocumentNumber;
         this.phoneNumber = phoneNumber;
+        this.createDate = createDate;
+        this.expirationDate = expirationDate;
         this.active = active;
     }
 
@@ -85,6 +83,24 @@ public class Costumer implements Serializable {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    @DynamoDBAttribute(attributeName = "create_date")
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
+
+    @DynamoDBAttribute(attributeName = "expiration_date")
+    public String getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(String expirationDate) {
+        this.expirationDate = expirationDate;
     }
 
     @DynamoDBAttribute(attributeName = "active")
