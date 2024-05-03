@@ -21,7 +21,7 @@ public class CostumerServiceImpl implements CostumerService {
 
     @Override
     public Costumer saveCostumer(CostumerDTO costumerDTO) {
-        if(costumerRepository.findByCompanyDocumentNumber(costumerDTO.getCompanyDocumentNumber()).isPresent()) {
+        if (costumerRepository.findByCompanyDocumentNumber(costumerDTO.getCompanyDocumentNumber()).isPresent()) {
             throw new RuntimeException("There is already a customer with this document number");
         }
         return costumerRepository.save(costumerDTO.costumerDTOToCostumer());
@@ -42,7 +42,7 @@ public class CostumerServiceImpl implements CostumerService {
         Optional<Costumer> costumer =
                 costumerRepository.findByCompanyDocumentNumber(companyDocumentNumber);
 
-        if(costumer.isEmpty()) {
+        if (costumer.isEmpty()) {
             throw new RuntimeException("There is no customer with this document number");
         }
 
@@ -56,7 +56,7 @@ public class CostumerServiceImpl implements CostumerService {
         Optional<Costumer> costumer =
                 costumerRepository.findByCompanyDocumentNumber(companyDocumentNumber);
 
-        if(costumer.isEmpty()) {
+        if (costumer.isEmpty()) {
             throw new RuntimeException("There is no customer with this document number");
         }
 
