@@ -32,7 +32,7 @@ public class AppController {
     }
 
     @GetMapping("costumer/all")
-    public ResponseEntity<List<Costumer>> allCostumers() {
+    public ResponseEntity<List<CostumerDTO>> allCostumers() {
         return ResponseEntity.ok(costumerService.findAllCostumers());
     }
 
