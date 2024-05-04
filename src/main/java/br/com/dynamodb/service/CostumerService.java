@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CostumerService {
     Costumer saveCostumer(CostumerDTO costumerDTO);
-    List<Costumer> findAllCostumers();
+    List<CostumerDTO> findAllCostumers();
     List<Costumer> findByCompanyName(String companyName);
     Costumer updateCostumer(String companyDocumentNumber, CostumerDTO costumerDTO);
     Costumer disableCostumer(String companyDocumentNumber);

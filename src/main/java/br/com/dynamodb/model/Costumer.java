@@ -31,7 +31,7 @@ public class Costumer implements Serializable {
     private String createDate;
 
     @JsonProperty("expiration_date")
-    private String expirationDate;
+    private Long expirationDate;
 
     @JsonProperty("active")
     private Boolean active;
@@ -39,7 +39,7 @@ public class Costumer implements Serializable {
     public Costumer() {
     }
 
-    public Costumer(String companyName, String companyDocumentNumber, String phoneNumber, String createDate, String expirationDate, Boolean active) {
+    public Costumer(String companyName, String companyDocumentNumber, String phoneNumber, String createDate, Long expirationDate, Boolean active) {
         this.companyName = companyName;
         this.companyDocumentNumber = companyDocumentNumber;
         this.phoneNumber = phoneNumber;
@@ -95,11 +95,11 @@ public class Costumer implements Serializable {
     }
 
     @DynamoDBAttribute(attributeName = "expiration_date")
-    public String getExpirationDate() {
+    public Long getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(String expirationDate) {
+    public void setExpirationDate(Long expirationDate) {
         this.expirationDate = expirationDate;
     }
 

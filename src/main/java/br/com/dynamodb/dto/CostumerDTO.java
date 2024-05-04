@@ -1,13 +1,10 @@
 package br.com.dynamodb.dto;
 
-import br.com.dynamodb.converter.Converter;
-import br.com.dynamodb.model.Costumer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 public class CostumerDTO implements Serializable {
 
@@ -84,20 +81,6 @@ public class CostumerDTO implements Serializable {
 
     public void setActive(Boolean active) {
         this.active = active;
-    }
-
-    public Costumer costumerDTOToCostumer() {
-
-        var converter = new Converter();
-
-        return new Costumer(
-                this.companyName,
-                this.companyDocumentNumber,
-                this.phoneNumber,
-                this.createDate = LocalDateTime.now().toString(),
-                this.expirationDate = converter.toEpocDate(getCreateDate()),
-                true
-        );
     }
 
 }
