@@ -10,25 +10,25 @@ public class CostumerDTO implements Serializable {
 
     private static final long serialVersionUID = 6318931228062100559L;
 
-    @JsonProperty("company_name")
+    @JsonProperty("companyName")
     @NotNull
     @NotBlank
     private String companyName;
 
-    @JsonProperty("company_document_number")
+    @JsonProperty("companyDocumentNumber")
     @NotNull
     @NotBlank
     private String companyDocumentNumber;
 
-    @JsonProperty("phone_number")
+    @JsonProperty("phoneNumber")
     @NotNull
     @NotBlank
     private String phoneNumber;
 
-    @JsonProperty("create_date")
+    @JsonProperty("createDate")
     private String createDate;
 
-    @JsonProperty("expiration_date")
+    @JsonProperty("expirationDate")
     private String expirationDate;
 
     @JsonProperty("active")

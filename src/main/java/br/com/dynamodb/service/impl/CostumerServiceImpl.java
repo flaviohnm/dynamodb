@@ -5,7 +5,6 @@ import br.com.dynamodb.dto.CostumerDTO;
 import br.com.dynamodb.model.Costumer;
 import br.com.dynamodb.repository.CostumerRepository;
 import br.com.dynamodb.service.CostumerService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,19 +23,22 @@ public class CostumerServiceImpl implements CostumerService {
     }
 
     @Override
-    public Costumer saveCostumer(CostumerDTO costumerDTO) {
-        if (costumerRepository.findByCompanyDocumentNumber(costumerDTO.getCompanyDocumentNumber()).isPresent()) {
+    public CostumerDTO saveCostumer(CostumerDTO costumerDTO) {
+        if (costumerRepository.findByCompanyDocumentNumber(
+                        costumerDTO.getCompanyDocumentNumber())
+                .isPresent()) {
             throw new RuntimeException("There is already a customer with this document number");
         }
-        return costumerRepository.save(converter.toCostumer(costumerDTO));
+        var costumer = costumerRepository.save(converter.toCostumer(costumerDTO));
+        return converter.toCostumerDTO(costumer);
     }
 
     @Override
     public List<CostumerDTO> findAllCostumers() {
+
         List<CostumerDTO> allCostumersDTO = new ArrayList<>();
 
         var costumers = costumerRepository.findAll();
-
         costumers
                 .iterator().forEachRemaining(costumer -> {
                     allCostumersDTO.add(converter.toCostumerDTO(costumer));
@@ -46,22 +48,24 @@ public class CostumerServiceImpl implements CostumerService {
     }
 
     @Override
-    public List<Costumer> findByCompanyName(String companyName) {
-        return costumerRepository.findByCompanyName(companyName);
+    public List<CostumerDTO> findByCompanyName(String companyName) {
+
+        return converter.toCostumerDTOList(costumerRepository.findByCompanyName(companyName));
     }
 
     @Override
-    public Costumer updateCostumer(String companyDocumentNumber, CostumerDTO costumerDTO) {
-        Optional<Costumer> costumer =
-                costumerRepository.findByCompanyDocumentNumber(companyDocumentNumber);
+    public CostumerDTO updateCostumer(CostumerDTO costumerDTO) {
+        var costumer =
+                costumerRepository.findByCompanyDocumentNumber(costumerDTO.getCompanyDocumentNumber());
 
         if (costumer.isEmpty()) {
             throw new RuntimeException("There is no customer with this document number");
         }
 
-        BeanUtils.copyProperties(costumerDTO, costumer.get(), "active", "id");
+        costumer.get().setCompanyName(costumerDTO.getCompanyName());
+        costumer.get().setPhoneNumber(costumerDTO.getPhoneNumber());
 
-        return costumerRepository.save(costumer.get());
+        return converter.toCostumerDTOUpdated(costumerRepository.save(costumer.get()));
     }
 
     @Override
