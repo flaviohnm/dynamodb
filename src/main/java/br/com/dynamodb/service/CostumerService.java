@@ -10,5 +10,5 @@ public interface CostumerService {
     List<CostumerDTO> findAllCostumers();
     List<CostumerDTO> findByCompanyName(String companyName);
     CostumerDTO updateCostumer(CostumerDTO costumerDTO);
-    Costumer disableCostumer(String companyDocumentNumber);
+    CostumerDTO disableCostumer(String companyDocumentNumber);
 }
