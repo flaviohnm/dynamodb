@@ -15,6 +15,12 @@
           "phone_number":{
             "S":"11-44444-55511"
           },
+          "create_date": {
+            "S": "2024-05-03T20:14:39.387192300"
+          },
+          "expiration_date": {
+            "N": "1722726879"
+          },
           "active":{
             "BOOL": true
           }
@@ -36,6 +42,12 @@
           "phone_number":{
             "S":"11-44444-55512"
           },
+          "create_date": {
+            "S": "2024-05-03T20:14:39.387192300"
+          },
+          "expiration_date": {
+            "N": "1722726879"
+          },
           "active":{
             "BOOL": true
           }
@@ -56,6 +68,12 @@
           },
           "phone_number":{
             "S":"11-44444-55513"
+          },
+          "create_date": {
+            "S": "2024-05-03T20:14:39.387192300"
+          },
+          "expiration_date": {
+            "N": "1722726879"
           },
           "active":{
             "BOOL": true
