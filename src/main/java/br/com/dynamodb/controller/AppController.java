@@ -41,9 +41,9 @@ public class AppController {
         return ResponseEntity.ok(costumerService.updateCostumer(costumerDTO));
     }
 
-    @DeleteMapping("costumer/{companyName}")
-    public ResponseEntity<Costumer> disableCostumer(@PathVariable("companyName") String companyName) {
-        return ResponseEntity.ok(costumerService.disableCostumer(companyName));
+    @PatchMapping(value = "costumer/{companyDocumentNumber}")
+    public ResponseEntity<CostumerDTO> disableCostumer(@PathVariable(value = "companyDocumentNumber") String companyDocumentNumber) {
+        return ResponseEntity.ok(costumerService.disableCostumer(companyDocumentNumber));
     }
 
 }

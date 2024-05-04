@@ -65,21 +65,22 @@ public class CostumerServiceImpl implements CostumerService {
         costumer.get().setCompanyName(costumerDTO.getCompanyName());
         costumer.get().setPhoneNumber(costumerDTO.getPhoneNumber());
 
-        return converter.toCostumerDTOUpdated(costumerRepository.save(costumer.get()));
+        return converter.toCostumerDTO(costumerRepository.save(costumer.get()));
     }
 
     @Override
-    public Costumer disableCostumer(String companyDocumentNumber) {
+    public CostumerDTO disableCostumer(String companyDocumentNumber) {
         Optional<Costumer> costumer =
                 costumerRepository.findByCompanyDocumentNumber(companyDocumentNumber);
 
         if (costumer.isEmpty()) {
             throw new RuntimeException("There is no customer with this document number");
         }
-
         costumer.get().setActive(false);
 
-        return costumerRepository.save(costumer.get());
+        var disableCostumer = costumerRepository.save(costumer.get());
+
+        return converter.toCostumerDTO(disableCostumer);
     }
 
 }
