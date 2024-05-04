@@ -1,5 +1,6 @@
 package br.com.dynamodb.service.impl;
 
+import br.com.dynamodb.converter.Converter;
 import br.com.dynamodb.dto.CostumerDTO;
 import br.com.dynamodb.model.Costumer;
 import br.com.dynamodb.repository.CostumerRepository;
@@ -7,6 +8,7 @@ import br.com.dynamodb.service.CostumerService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +16,8 @@ import java.util.Optional;
 public class CostumerServiceImpl implements CostumerService {
 
     private final CostumerRepository costumerRepository;
+
+    public Converter converter = new Converter();
 
     public CostumerServiceImpl(CostumerRepository costumerRepository) {
         this.costumerRepository = costumerRepository;
@@ -24,12 +28,21 @@ public class CostumerServiceImpl implements CostumerService {
         if (costumerRepository.findByCompanyDocumentNumber(costumerDTO.getCompanyDocumentNumber()).isPresent()) {
             throw new RuntimeException("There is already a customer with this document number");
         }
-        return costumerRepository.save(costumerDTO.costumerDTOToCostumer());
+        return costumerRepository.save(converter.toCostumer(costumerDTO));
     }
 
     @Override
-    public List<Costumer> findAllCostumers() {
-        return (List<Costumer>) costumerRepository.findAll();
+    public List<CostumerDTO> findAllCostumers() {
+        List<CostumerDTO> allCostumersDTO = new ArrayList<>();
+
+        var costumers = costumerRepository.findAll();
+
+        costumers
+                .iterator().forEachRemaining(costumer -> {
+                    allCostumersDTO.add(converter.toCostumerDTO(costumer));
+                });
+
+        return allCostumersDTO;
     }
 
     @Override
