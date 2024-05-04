@@ -56,19 +56,6 @@ public class Converter {
         return costumerDTO;
     }
 
-    public CostumerDTO toCostumerDTOUpdated(Costumer costumer) {
-        var costumerDTO = new CostumerDTO();
-
-        costumerDTO.setCompanyName(costumer.getCompanyName());
-        costumerDTO.setCompanyDocumentNumber(costumer.getCompanyDocumentNumber());
-        costumerDTO.setPhoneNumber(costumer.getPhoneNumber());
-        costumerDTO.setCreateDate(costumer.getCreateDate());
-        costumerDTO.setExpirationDate(toStringDate(costumer.getExpirationDate()));
-        costumerDTO.setActive(costumer.getActive());
-
-        return costumerDTO;
-    }
-
     public List<CostumerDTO> toCostumerDTOList(List<Costumer> costumers) {
         List<CostumerDTO> allCostumersDTO = new ArrayList<>();
         costumers
