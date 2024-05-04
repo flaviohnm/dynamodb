@@ -22,12 +22,12 @@ public class AppController {
     }
 
     @PostMapping("costumer")
-    public ResponseEntity<Costumer> newCostumer(@Valid @RequestBody CostumerDTO costumerDTO) {
+    public ResponseEntity<CostumerDTO> newCostumer(@Valid @RequestBody CostumerDTO costumerDTO) {
         return new ResponseEntity(costumerService.saveCostumer(costumerDTO), HttpStatus.OK);
     }
 
     @GetMapping("costumer")
-    public ResponseEntity<List<Costumer>> findCostumerByName(@Param("companyName") String companyName) {
+    public ResponseEntity<List<CostumerDTO>> findCostumerByName(@Param("companyName") String companyName) {
         return ResponseEntity.ok(costumerService.findByCompanyName(companyName));
     }
 
@@ -37,8 +37,8 @@ public class AppController {
     }
 
     @PutMapping("costumer")
-    public ResponseEntity<Costumer> updateCostumer(@Valid @RequestBody CostumerDTO costumerDTO) {
-        return ResponseEntity.ok(costumerService.updateCostumer(costumerDTO.getCompanyDocumentNumber(), costumerDTO));
+    public ResponseEntity<CostumerDTO> updateCostumer(@Valid @RequestBody CostumerDTO costumerDTO) {
+        return ResponseEntity.ok(costumerService.updateCostumer(costumerDTO));
     }
 
     @DeleteMapping("costumer/{companyName}")
