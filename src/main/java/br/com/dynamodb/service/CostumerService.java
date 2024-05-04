@@ -6,9 +6,9 @@ import br.com.dynamodb.model.Costumer;
 import java.util.List;
 
 public interface CostumerService {
-    Costumer saveCostumer(CostumerDTO costumerDTO);
+    CostumerDTO saveCostumer(CostumerDTO costumerDTO);
     List<CostumerDTO> findAllCostumers();
-    List<Costumer> findByCompanyName(String companyName);
-    Costumer updateCostumer(String companyDocumentNumber, CostumerDTO costumerDTO);
+    List<CostumerDTO> findByCompanyName(String companyName);
+    CostumerDTO updateCostumer(CostumerDTO costumerDTO);
     Costumer disableCostumer(String companyDocumentNumber);
 }
