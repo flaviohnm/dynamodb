@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Converter {
 
@@ -15,11 +17,11 @@ public class Converter {
 
     public Long toEpocDate(String date) {
         var convertedDate = LocalDateTime.parse(date);
-        return convertedDate.plusMonths(3).toEpochSecond(ZoneOffset.of("America/Sao_Paulo"));
+        return convertedDate.plusMonths(3).toEpochSecond(ZoneOffset.ofHours(-3));
     }
 
     public String toStringDate(Long epocDate) {
-        var localDate = Instant.ofEpochSecond(epocDate).atZone(ZoneId.of("America/Sao_Paulo")).toLocalDateTime();
+        var localDate = Instant.ofEpochSecond(epocDate).atZone(ZoneId.of("America/Recife")).toLocalDateTime();
         return localDate.format(formatter);
     }
 
@@ -53,4 +55,29 @@ public class Converter {
 
         return costumerDTO;
     }
+
+    public CostumerDTO toCostumerDTOUpdated(Costumer costumer) {
+        var costumerDTO = new CostumerDTO();
+
+        costumerDTO.setCompanyName(costumer.getCompanyName());
+        costumerDTO.setCompanyDocumentNumber(costumer.getCompanyDocumentNumber());
+        costumerDTO.setPhoneNumber(costumer.getPhoneNumber());
+        costumerDTO.setCreateDate(costumer.getCreateDate());
+        costumerDTO.setExpirationDate(toStringDate(costumer.getExpirationDate()));
+        costumerDTO.setActive(costumer.getActive());
+
+        return costumerDTO;
+    }
+
+    public List<CostumerDTO> toCostumerDTOList(List<Costumer> costumers) {
+        List<CostumerDTO> allCostumersDTO = new ArrayList<>();
+        costumers
+                .iterator().forEachRemaining(costumer -> {
+                    allCostumersDTO.add(toCostumerDTO(costumer));
+                });
+        return allCostumersDTO;
+    }
+
+    ;
+
 }
