@@ -54,6 +54,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- Jacoco -->
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>${jacoco.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -111,6 +117,7 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <skip>${surefire.skip}</skip>
                 </configuration>
             </plugin>
         </plugins>
