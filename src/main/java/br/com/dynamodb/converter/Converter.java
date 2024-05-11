@@ -17,11 +17,14 @@ public class Converter {
 
     public Long toEpocDate(String date) {
         var convertedDate = LocalDateTime.parse(date);
-        return convertedDate.plusMonths(3).toEpochSecond(ZoneOffset.ofHours(-3));
+        return convertedDate.plusMonths(3)
+                .toEpochSecond(ZoneOffset.ofHours(-3));
     }
 
     public String toStringDate(Long epocDate) {
-        var localDate = Instant.ofEpochSecond(epocDate).atZone(ZoneId.of("America/Recife")).toLocalDateTime();
+        var localDate = Instant.ofEpochSecond(epocDate)
+                .atZone(ZoneId.of("America/Recife"))
+                .toLocalDateTime();
         return localDate.format(formatter);
     }
 
@@ -59,7 +62,8 @@ public class Converter {
     public List<CostumerDTO> toCostumerDTOList(List<Costumer> costumers) {
         List<CostumerDTO> allCostumersDTO = new ArrayList<>();
         costumers
-                .iterator().forEachRemaining(costumer -> {
+                .iterator()
+                .forEachRemaining(costumer -> {
                     allCostumersDTO.add(toCostumerDTO(costumer));
                 });
         return allCostumersDTO;
