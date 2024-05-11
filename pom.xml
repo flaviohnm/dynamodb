@@ -18,6 +18,7 @@
         <aws-dynamo.version>1.12.719</aws-dynamo.version>
         <spring-data-dynamodb.version>5.1.0</spring-data-dynamodb.version>
         <lombok.version>1.18.32</lombok.version>
+        <jacoco.version>0.8.12</jacoco.version>
     </properties>
     <dependencies>
         <!-- Spring Boot -->
@@ -57,6 +58,49 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <configuration>
+                    <skip>false</skip>
+                    <rules>
+                        <rule>
+                            <element>CLASS</element>
+                            <excludes>
+                                <exclude>*Test</exclude>
+                            </excludes>
+                        </rule>
+                    </rules>
+                    <excludes>
+                        <exclude>/**/DynamoDbApplication.class</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>check</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
