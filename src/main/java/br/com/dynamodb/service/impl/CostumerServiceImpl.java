@@ -14,22 +14,22 @@ import java.util.Optional;
 @Service
 public class CostumerServiceImpl implements CostumerService {
 
-    private final CostumerRepository costumerRepository;
+    private final CostumerRepository repository;
 
     public Converter converter = new Converter();
 
-    public CostumerServiceImpl(CostumerRepository costumerRepository) {
-        this.costumerRepository = costumerRepository;
+    public CostumerServiceImpl(CostumerRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public CostumerDTO saveCostumer(CostumerDTO costumerDTO) {
-        if (costumerRepository.findByCompanyDocumentNumber(
+        if (repository.findByCompanyDocumentNumber(
                         costumerDTO.getCompanyDocumentNumber())
                 .isPresent()) {
             throw new RuntimeException("There is already a customer with this document number");
         }
-        var costumer = costumerRepository.save(converter.toCostumer(costumerDTO));
+        var costumer = repository.save(converter.toCostumer(costumerDTO));
         return converter.toCostumerDTO(costumer);
     }
 
@@ -38,7 +38,7 @@ public class CostumerServiceImpl implements CostumerService {
 
         List<CostumerDTO> allCostumersDTO = new ArrayList<>();
 
-        var costumers = costumerRepository.findAll();
+        var costumers = repository.findAll();
         costumers
                 .iterator().forEachRemaining(costumer -> {
                     allCostumersDTO.add(converter.toCostumerDTO(costumer));
@@ -50,13 +50,13 @@ public class CostumerServiceImpl implements CostumerService {
     @Override
     public List<CostumerDTO> findByCompanyName(String companyName) {
 
-        return converter.toCostumerDTOList(costumerRepository.findByCompanyName(companyName));
+        return converter.toCostumerDTOList(repository.findByCompanyName(companyName));
     }
 
     @Override
     public CostumerDTO updateCostumer(CostumerDTO costumerDTO) {
         var costumer =
-                costumerRepository.findByCompanyDocumentNumber(costumerDTO.getCompanyDocumentNumber());
+                repository.findByCompanyDocumentNumber(costumerDTO.getCompanyDocumentNumber());
 
         if (costumer.isEmpty()) {
             throw new RuntimeException("There is no customer with this document number");
@@ -65,20 +65,20 @@ public class CostumerServiceImpl implements CostumerService {
         costumer.get().setCompanyName(costumerDTO.getCompanyName());
         costumer.get().setPhoneNumber(costumerDTO.getPhoneNumber());
 
-        return converter.toCostumerDTO(costumerRepository.save(costumer.get()));
+        return converter.toCostumerDTO(repository.save(costumer.get()));
     }
 
     @Override
     public CostumerDTO disableCostumer(String companyDocumentNumber) {
         Optional<Costumer> costumer =
-                costumerRepository.findByCompanyDocumentNumber(companyDocumentNumber);
+                repository.findByCompanyDocumentNumber(companyDocumentNumber);
 
         if (costumer.isEmpty()) {
             throw new RuntimeException("There is no customer with this document number");
         }
         costumer.get().setActive(false);
 
-        var disableCostumer = costumerRepository.save(costumer.get());
+        var disableCostumer = repository.save(costumer.get());
 
         return converter.toCostumerDTO(disableCostumer);
     }
