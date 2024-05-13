@@ -6,6 +6,7 @@ import br.com.dynamodb.dto.CostumerDTO;
 import br.com.dynamodb.model.Costumer;
 import br.com.dynamodb.repository.CostumerRepository;
 import br.com.dynamodb.service.impl.CostumerServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static br.com.dynamodb.commom.CostumerConstants.*;
@@ -30,19 +32,27 @@ public class CostumerServiceTest {
     @Mock
     private CostumerRepository repository;
 
-    public Converter converter = new Converter();
+    public Converter converter;
 
+    @BeforeEach
+    public void setup() {
+        converter = new Converter();
+    }
 
 //    @Test
 //    public void createCostumer_WithValidData_ReturnsCostumer() {
-//        when(repository.findByCompanyDocumentNumber(anyString())).thenReturn(Optional.empty());
-//        when(repository.save(converter.toCostumer(COSTUMER_DTO))).thenReturn(COSTUMER_ID);
+//
+//        var convertedCostumer = converter.toCostumer(COSTUMER_DTO);
+//        convertedCostumer.setId("c630b6d5-8650-4bcb-89a2-61e0500fcb95");
+//
+//        when(repository.findByCompanyDocumentNumber(convertedCostumer.getCompanyDocumentNumber())).thenReturn(Optional.empty());
+//        when(repository.save(convertedCostumer)).thenReturn(convertedCostumer);
 //
 //        //System under test
 //        CostumerDTO sut = service.saveCostumer(COSTUMER_DTO);
 //
 //        assertThat(sut.getCreateDate()).isNotEmpty();
-//        assertThat(sut.getCompanyName()).isEqualTo(COSTUMER_DTO.getCompanyName());
+//        assertThat(sut.getCompanyName()).isEqualTo(convertedCostumer.getCompanyName());
 //    }
 
 
@@ -93,4 +103,15 @@ public class CostumerServiceTest {
         assertThat(sut.getFirst().getCompanyDocumentNumber()).isEqualTo(COSTUMER_ID.getCompanyDocumentNumber());
         assertThat(sut.getFirst().getPhoneNumber()).isEqualTo(COSTUMER_ID.getPhoneNumber());
     }
+
+    @Test
+    public void listPlanets_ReturnsNoCostumers() {
+        when(repository.findAll()).thenReturn(Collections.emptyList());
+
+        List<CostumerDTO> sut = service.findAllCostumers();
+
+        assertThat(sut).isEmpty();
+    }
+
+
 }
