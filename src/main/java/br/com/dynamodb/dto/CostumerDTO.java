@@ -34,6 +34,15 @@ public class CostumerDTO implements Serializable {
     @JsonProperty("active")
     private Boolean active;
 
+    public CostumerDTO(String companyName, String companyDocumentNumber, String phoneNumber) {
+        this.companyName = companyName;
+        this.companyDocumentNumber = companyDocumentNumber;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public CostumerDTO() {
+    }
+
     public String getCompanyName() {
         return companyName;
     }
@@ -82,5 +91,7 @@ public class CostumerDTO implements Serializable {
     public void setActive(Boolean active) {
         this.active = active;
     }
+
+
 
 }
