@@ -29,8 +29,11 @@ public class CostumerServiceImpl implements CostumerService {
                 .isPresent()) {
             throw new RuntimeException("There is already a customer with this document number");
         }
-        var costumer = repository.save(converter.toCostumer(costumerDTO));
-        return converter.toCostumerDTO(costumer);
+
+        return converter.toCostumerDTO(
+                repository.save(
+                        converter.toCostumer(costumerDTO)
+                ));
     }
 
     @Override
@@ -78,9 +81,9 @@ public class CostumerServiceImpl implements CostumerService {
         }
         costumer.get().setActive(false);
 
-        var disableCostumer = repository.save(costumer.get());
+        var disabledCostumer = repository.save(costumer.get());
 
-        return converter.toCostumerDTO(disableCostumer);
+        return converter.toCostumerDTO(disabledCostumer);
     }
 
 }
