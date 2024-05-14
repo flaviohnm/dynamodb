@@ -16,11 +16,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static br.com.dynamodb.commom.CostumerConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -39,21 +42,25 @@ public class CostumerServiceTest {
         converter = new Converter();
     }
 
-//    @Test
-//    public void createCostumer_WithValidData_ReturnsCostumer() {
-//
-//        var convertedCostumer = converter.toCostumer(COSTUMER_DTO);
-//        convertedCostumer.setId("c630b6d5-8650-4bcb-89a2-61e0500fcb95");
-//
-//        when(repository.findByCompanyDocumentNumber(convertedCostumer.getCompanyDocumentNumber())).thenReturn(Optional.empty());
-//        when(repository.save(convertedCostumer)).thenReturn(convertedCostumer);
-//
-//        //System under test
-//        CostumerDTO sut = service.saveCostumer(COSTUMER_DTO);
-//
-//        assertThat(sut.getCreateDate()).isNotEmpty();
-//        assertThat(sut.getCompanyName()).isEqualTo(convertedCostumer.getCompanyName());
-//    }
+    @Test
+    public void createCostumer_WithValidData_ReturnsCostumer() {
+
+        given(repository.findByCompanyDocumentNumber(anyString()))
+                .willReturn(Optional.empty());
+        given(repository.save(any()))
+                .willReturn(COSTUMER_ID);
+
+
+        //System under test
+        CostumerDTO sut = service.saveCostumer(COSTUMER_DTO);
+
+        assertThat(sut.getCreateDate()).isNotEmpty();
+        assertThat(sut.getCompanyName()).isEqualTo(COSTUMER_ID.getCompanyName());
+        assertThat(sut.getCompanyDocumentNumber()).isEqualTo(COSTUMER_ID.getCompanyDocumentNumber());
+        assertThat(sut.getPhoneNumber()).isEqualTo(COSTUMER_ID.getPhoneNumber());
+        assertThat(sut.getActive()).isEqualTo(COSTUMER_ID.getActive());
+
+    }
 
 
     @Test
@@ -74,6 +81,8 @@ public class CostumerServiceTest {
         assertThat(sut.getFirst().getCompanyName()).isEqualTo(COSTUMER_ID.getCompanyName());
         assertThat(sut.getFirst().getCompanyDocumentNumber()).isEqualTo(COSTUMER_ID.getCompanyDocumentNumber());
         assertThat(sut.getFirst().getPhoneNumber()).isEqualTo(COSTUMER_ID.getPhoneNumber());
+        assertThat(sut.getFirst().getActive()).isEqualTo(COSTUMER_ID.getActive());
+
     }
 
     @Test
@@ -112,6 +121,5 @@ public class CostumerServiceTest {
 
         assertThat(sut).isEmpty();
     }
-
 
 }
