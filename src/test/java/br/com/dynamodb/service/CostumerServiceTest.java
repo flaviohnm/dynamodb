@@ -45,11 +45,8 @@ public class CostumerServiceTest {
     @Test
     public void createCostumer_WithValidData_ReturnsCostumer() {
 
-        given(repository.findByCompanyDocumentNumber(anyString()))
-                .willReturn(Optional.empty());
-        given(repository.save(any(Costumer.class)))
-                .willReturn(COSTUMER_ID);
-
+        given(repository.findByCompanyDocumentNumber(anyString())).willReturn(Optional.empty());
+        given(repository.save(any(Costumer.class))).willReturn(COSTUMER_ID);
 
         //System under test
         CostumerDTO sut = service.saveCostumer(COSTUMER_DTO);
