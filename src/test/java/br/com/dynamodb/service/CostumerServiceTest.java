@@ -47,7 +47,7 @@ public class CostumerServiceTest {
 
         given(repository.findByCompanyDocumentNumber(anyString()))
                 .willReturn(Optional.empty());
-        given(repository.save(any()))
+        given(repository.save(any(Costumer.class)))
                 .willReturn(COSTUMER_ID);
 
 
