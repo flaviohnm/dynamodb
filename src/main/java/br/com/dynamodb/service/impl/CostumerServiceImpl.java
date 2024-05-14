@@ -30,10 +30,11 @@ public class CostumerServiceImpl implements CostumerService {
             throw new RuntimeException("There is already a customer with this document number");
         }
 
-        return converter.toCostumerDTO(
-                repository.save(
-                        converter.toCostumer(costumerDTO)
-                ));
+        return converter
+                .toCostumerDTO(
+                        repository.save(
+                                converter.toCostumer(costumerDTO)
+                        ));
     }
 
     @Override
