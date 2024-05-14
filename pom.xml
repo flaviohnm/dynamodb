@@ -87,6 +87,7 @@
                     </rules>
                     <excludes>
                         <exclude>/**/DynamoDbApplication.class</exclude>
+                        <exclude>/**/DynamoDBConfig.class</exclude>
                     </excludes>
                 </configuration>
                 <executions>
