@@ -10,8 +10,8 @@ public class CostumerConstants {
             "Empresa Portuguesa LTDA",
             "6598752300011",
             "11-44444-55511",
-            "2024-05-03T20:14:39.387192300",
-            1L,
+            "2024-05-14T16:26:30.024057900",
+            1723663590L,
             true
     );
 
@@ -19,8 +19,8 @@ public class CostumerConstants {
             "Empresa Portuguesa LTDA",
             "6598752300011",
             "11-44444-55511",
-            "2024-05-03T20:14:39.387192300",
-            1L,
+            "2024-05-14T16:26:30.024057900",
+            1723663590L,
             true
     );
 
