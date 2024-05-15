@@ -82,7 +82,7 @@ public class CostumerServiceTest {
 
         COSTUMER_ID.setId("c630b6d5-8650-4bcb-89a2-61e0500fcb95");
 
-        when(repository.findByCompanyName(anyString())).thenReturn(List.of(COSTUMER_ID));
+        given(repository.findByCompanyName(anyString())).willReturn(List.of(COSTUMER_ID));
 
         List<CostumerDTO> sut = service.findByCompanyName("Empresa Portuguesa LTDA");
 
@@ -99,7 +99,7 @@ public class CostumerServiceTest {
     public void getCostumer_ByUnExistingCompanyName_ReturnsEmpty() {
         final String name = "UnExisting name";
 
-        when(repository.findByCompanyName(name)).thenReturn(List.of());
+        given(repository.findByCompanyName(name)).willReturn(List.of());
 
         List<CostumerDTO> sut = service.findByCompanyName(name);
 
@@ -109,7 +109,7 @@ public class CostumerServiceTest {
     @Test
     public void listCostumers_ReturnsAllCostumers() {
 
-        when(repository.findAll()).thenReturn(COSTUMERS);
+        given(repository.findAll()).willReturn(COSTUMERS);
 
         List<CostumerDTO> sut = service.findAllCostumers();
 
@@ -135,7 +135,7 @@ public class CostumerServiceTest {
 
     @Test
     public void listPlanets_ReturnsNoCostumers() {
-        when(repository.findAll()).thenReturn(Collections.emptyList());
+        given(repository.findAll()).willReturn(Collections.emptyList());
 
         List<CostumerDTO> sut = service.findAllCostumers();
 
