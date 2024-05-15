@@ -53,4 +53,9 @@ Publicar a aplicação no github com gitActions
 Esse projeto foi baseado no documento publicado pelo Kaike Ventura
 [![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/kaike-ventura-185695aa/)
 
+
+
+---
+Feito por :man_astronaut: Flavio Monteiro :wave:
+<br>
 [![Linkedin Badge](https://img.shields.io/badge/-flaviohnm-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/flaviohnm/)](https://www.linkedin.com/in/flaviohnm/)   [![Gmail Badge](https://img.shields.io/badge/-flaviohnm@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:flaviohnm@gmail.com)](mailto:flaviohnm@gmail.com)
