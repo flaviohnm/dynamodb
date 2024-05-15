@@ -1,7 +1,6 @@
 package br.com.dynamodb.controller;
 
 import br.com.dynamodb.dto.CostumerDTO;
-import br.com.dynamodb.model.Costumer;
 import br.com.dynamodb.service.CostumerService;
 import jakarta.validation.Valid;
 import org.springframework.data.repository.query.Param;
