@@ -54,7 +54,6 @@ Esse projeto foi baseado no documento publicado pelo Kaike Ventura
 [![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/kaike-ventura-185695aa/)
 
 
-
 ---
 Feito por :man_astronaut: Flavio Monteiro :wave:
 <br>
