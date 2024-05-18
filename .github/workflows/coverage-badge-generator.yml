@@ -6,6 +6,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    name: Coverage Badge Generator
 
     steps:
       - uses: actions/checkout@v4
@@ -41,4 +42,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: jacoco-report
-          path: .target/site/jacoco/
+          path: ./target/site/jacoco/
