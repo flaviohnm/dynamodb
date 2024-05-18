@@ -7,30 +7,34 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static br.com.dynamodb.config.Constants.*;
+
 public class Converter {
 
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss");
-
     public Long toEpocDate(String date) {
-        var convertedDate = LocalDateTime.parse(date);
-        return convertedDate.plusMonths(3)
-                .toEpochSecond(ZoneOffset.ofHours(-3));
+        return LocalDateTime
+                .parse(date)
+                .plusMonths(PLUS_MONTH)
+                .toEpochSecond(
+                        ZoneOffset
+                                .ofHours(TIMEZONE)
+                );
     }
 
     public String toStringDate(Long epocDate) {
-        var localDate = Instant.ofEpochSecond(epocDate)
-                .atZone(ZoneId.of("America/Recife"))
-                .toLocalDateTime();
-        return localDate.format(formatter);
+        return Instant
+                .ofEpochSecond(epocDate)
+                .atZone(ZoneId.of(TIMEZONE_RECIFE))
+                .toLocalDateTime().format(FORMATTER);
     }
 
     public String toStringLocalDateTime(String stringDate) {
-        var localDateTime = LocalDateTime.parse(stringDate);
-        return localDateTime.format(formatter);
+        return LocalDateTime
+                .parse(stringDate)
+                .format(FORMATTER);
     }
 
     public Costumer toCostumer(CostumerDTO costumerDTO) {
@@ -66,9 +70,8 @@ public class Converter {
                 .forEachRemaining(costumer -> {
                     allCostumersDTO.add(toCostumerDTO(costumer));
                 });
+
         return allCostumersDTO;
     }
-
-    ;
 
 }
