@@ -25,7 +25,6 @@ jobs:
         uses: cicirello/jacoco-badge-generator@@v2.11.0
         with:
           generate-branches-badge: true
-          jacoco-csv-file: ./target/site/jacoco/jacoco.csv
 
       - name: Coverage Percentage
         run: |
