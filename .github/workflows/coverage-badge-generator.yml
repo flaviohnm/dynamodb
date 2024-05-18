@@ -1,17 +1,17 @@
 name: Coverage Badge Generator
 on:
   push:
-    branches: [ main ]
+    branches: [ 'develop' ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Set up the Java JDK
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v4
         with:
           java-version: '22'
           distribution: 'oracle'
@@ -41,4 +41,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: jacoco-report
-          path: target/site/jacoco/
+          path: .target/site/jacoco/
