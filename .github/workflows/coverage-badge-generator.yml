@@ -22,9 +22,10 @@ jobs:
 
       - name: Generate JaCoCo Badge
         id: jacoco
-        uses: cicirello/jacoco-badge-generator@v2
+        uses: cicirello/jacoco-badge-generator@@v2.11.0
         with:
           generate-branches-badge: true
+          jacoco-csv-file: ./target/site/jacoco/jacoco.csv
 
       - name: Coverage Percentage
         run: |
@@ -42,4 +43,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: jacoco-report
-          path: target/site/jacoco/jacoco.csv
+          path: ./target/site/jacoco/jacoco.csv
