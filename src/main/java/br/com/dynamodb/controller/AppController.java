@@ -21,7 +21,7 @@ public class AppController {
     }
 
     @PostMapping("costumer")
-    public ResponseEntity<CostumerDTO> newCostumer(@Valid @RequestBody CostumerDTO costumerDTO) {
+    public ResponseEntity<CostumerDTO> createCostumer(@Valid @RequestBody CostumerDTO costumerDTO) {
         return new ResponseEntity(costumerService.saveCostumer(costumerDTO), HttpStatus.OK);
     }
 
