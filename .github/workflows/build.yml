@@ -6,9 +6,9 @@ on:
     paths-ignore:
       - '**.md'
       - '**.yml'
-  pull_request:
-    branches:
-      - develop
+#  pull_request:
+#    branches:
+#      - develop
 
 jobs:
   build:
