@@ -1,7 +1,7 @@
 package br.com.dynamodb.converter;
 
-import br.com.dynamodb.dto.CostumerDTO;
-import br.com.dynamodb.model.Costumer;
+import br.com.dynamodb.dto.CustomerDTO;
+import br.com.dynamodb.model.Customer;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -37,12 +37,12 @@ public class Converter {
                 .format(FORMATTER);
     }
 
-    public Costumer toCostumer(CostumerDTO costumerDTO) {
-        var costumer = new Costumer();
+    public Customer toCustomer(CustomerDTO customerDTO) {
+        var costumer = new Customer();
 
-        costumer.setCompanyName(costumerDTO.getCompanyName());
-        costumer.setCompanyDocumentNumber(costumerDTO.getCompanyDocumentNumber());
-        costumer.setPhoneNumber(costumerDTO.getPhoneNumber());
+        costumer.setCompanyName(customerDTO.getCompanyName());
+        costumer.setCompanyDocumentNumber(customerDTO.getCompanyDocumentNumber());
+        costumer.setPhoneNumber(customerDTO.getPhoneNumber());
         costumer.setCreateDate(LocalDateTime.now().toString());
         costumer.setExpirationDate(toEpocDate(costumer.getCreateDate()));
         costumer.setActive(true);
@@ -50,28 +50,28 @@ public class Converter {
         return costumer;
     }
 
-    public CostumerDTO toCostumerDTO(Costumer costumer) {
-        var costumerDTO = new CostumerDTO();
+    public CustomerDTO toCustomerDTO(Customer customer) {
+        var costumerDTO = new CustomerDTO();
 
-        costumerDTO.setCompanyName(costumer.getCompanyName());
-        costumerDTO.setCompanyDocumentNumber(costumer.getCompanyDocumentNumber());
-        costumerDTO.setPhoneNumber(costumer.getPhoneNumber());
-        costumerDTO.setCreateDate(toStringLocalDateTime(costumer.getCreateDate()));
-        costumerDTO.setExpirationDate(toStringDate(costumer.getExpirationDate()));
-        costumerDTO.setActive(costumer.getActive());
+        costumerDTO.setCompanyName(customer.getCompanyName());
+        costumerDTO.setCompanyDocumentNumber(customer.getCompanyDocumentNumber());
+        costumerDTO.setPhoneNumber(customer.getPhoneNumber());
+        costumerDTO.setCreateDate(toStringLocalDateTime(customer.getCreateDate()));
+        costumerDTO.setExpirationDate(toStringDate(customer.getExpirationDate()));
+        costumerDTO.setActive(customer.getActive());
 
         return costumerDTO;
     }
 
-    public List<CostumerDTO> toCostumerDTOList(List<Costumer> costumers) {
-        List<CostumerDTO> allCostumersDTO = new ArrayList<>();
-        costumers
+    public List<CustomerDTO> toCustomerDTOList(List<Customer> customers) {
+        List<CustomerDTO> CostumersDTO = new ArrayList<>();
+        customers
                 .iterator()
-                .forEachRemaining(costumer -> {
-                    allCostumersDTO.add(toCostumerDTO(costumer));
+                .forEachRemaining(customer -> {
+                    CostumersDTO.add(toCustomerDTO(customer));
                 });
 
-        return allCostumersDTO;
+        return CostumersDTO;
     }
 
 }

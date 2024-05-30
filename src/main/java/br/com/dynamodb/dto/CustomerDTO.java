@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 
-public class CostumerDTO implements Serializable {
+public class CustomerDTO implements Serializable {
 
     private static final long serialVersionUID = 6318931228062100559L;
 
@@ -34,13 +34,13 @@ public class CostumerDTO implements Serializable {
     @JsonProperty("active")
     private Boolean active;
 
-    public CostumerDTO(String companyName, String companyDocumentNumber, String phoneNumber) {
+    public CustomerDTO(String companyName, String companyDocumentNumber, String phoneNumber) {
         this.companyName = companyName;
         this.companyDocumentNumber = companyDocumentNumber;
         this.phoneNumber = phoneNumber;
     }
 
-    public CostumerDTO() {
+    public CustomerDTO() {
     }
 
     public String getCompanyName() {
