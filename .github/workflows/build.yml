@@ -52,6 +52,6 @@ jobs:
             git config --global user.name 'Flavio Monteiro'
             git config --global user.email 'flaviohnm@users.noreply.github.com'
             git add -A
-            git commit -m ":computer: Updated JaCoCo Coverage Badge :computer:"
+            git commit -m ":computer: update: jacoco coverage badge :computer:"
             git push
           fi
