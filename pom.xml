@@ -155,8 +155,8 @@
                         <param>br.com.dynamodb.*Test</param>
                     </targetTests>
                     <excludedClasses>
-                        <param>br.com.dynamodb.model.Costumer</param>
-                        <param>br.com.dynamodb.dto.CostumerDTO</param>
+                        <param>br.com.dynamodb.model.Customer</param>
+                        <param>br.com.dynamodb.dto.CustomerDTO</param>
                         <param>br.com.dynamodb.config.Constants</param>
                         <param>br.com.dynamodb.config.DynamoDBConfig</param>
                     </excludedClasses>
