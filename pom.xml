@@ -15,7 +15,7 @@
     <description>AWS DynamoDB Project</description>
     <properties>
         <java.version>22</java.version>
-        <aws-dynamo.version>1.12.731</aws-dynamo.version>
+        <aws-dynamo.version>1.12.733</aws-dynamo.version>
         <spring-data-dynamodb.version>5.1.0</spring-data-dynamodb.version>
         <lombok.version>1.18.32</lombok.version>
         <jacoco.version>0.8.12</jacoco.version>
@@ -155,8 +155,8 @@
                         <param>br.com.dynamodb.*Test</param>
                     </targetTests>
                     <excludedClasses>
-                        <param>br.com.dynamodb.model.Costumer</param>
-                        <param>br.com.dynamodb.dto.CostumerDTO</param>
+                        <param>br.com.dynamodb.model.Customer</param>
+                        <param>br.com.dynamodb.dto.CustomerDTO</param>
                         <param>br.com.dynamodb.config.Constants</param>
                         <param>br.com.dynamodb.config.DynamoDBConfig</param>
                     </excludedClasses>

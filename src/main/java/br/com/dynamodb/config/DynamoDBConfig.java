@@ -1,6 +1,6 @@
 package br.com.dynamodb.config;
 
-import br.com.dynamodb.repository.CostumerRepository;
+import br.com.dynamodb.repository.CustomerRepository;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@EnableDynamoDBRepositories(basePackageClasses = CostumerRepository.class)
+@EnableDynamoDBRepositories(basePackageClasses = CustomerRepository.class)
 public class DynamoDBConfig {
     @Value("${aws.dynamodb.endpoint}")
     private String awsEndpoint;
