@@ -38,40 +38,38 @@ public class Converter {
     }
 
     public Customer toCustomer(CustomerDTO customerDTO) {
-        var costumer = new Customer();
+        var customer = new Customer();
 
-        costumer.setCompanyName(customerDTO.getCompanyName());
-        costumer.setCompanyDocumentNumber(customerDTO.getCompanyDocumentNumber());
-        costumer.setPhoneNumber(customerDTO.getPhoneNumber());
-        costumer.setCreateDate(LocalDateTime.now().toString());
-        costumer.setExpirationDate(toEpocDate(costumer.getCreateDate()));
-        costumer.setActive(true);
+        customer.setCompanyName(customerDTO.getCompanyName());
+        customer.setCompanyDocumentNumber(customerDTO.getCompanyDocumentNumber());
+        customer.setPhoneNumber(customerDTO.getPhoneNumber());
+        customer.setCreateDate(LocalDateTime.now().toString());
+        customer.setExpirationDate(toEpocDate(customer.getCreateDate()));
+        customer.setActive(true);
 
-        return costumer;
+        return customer;
     }
 
     public CustomerDTO toCustomerDTO(Customer customer) {
-        var costumerDTO = new CustomerDTO();
+        var customerDTO = new CustomerDTO();
 
-        costumerDTO.setCompanyName(customer.getCompanyName());
-        costumerDTO.setCompanyDocumentNumber(customer.getCompanyDocumentNumber());
-        costumerDTO.setPhoneNumber(customer.getPhoneNumber());
-        costumerDTO.setCreateDate(toStringLocalDateTime(customer.getCreateDate()));
-        costumerDTO.setExpirationDate(toStringDate(customer.getExpirationDate()));
-        costumerDTO.setActive(customer.getActive());
+        customerDTO.setCompanyName(customer.getCompanyName());
+        customerDTO.setCompanyDocumentNumber(customer.getCompanyDocumentNumber());
+        customerDTO.setPhoneNumber(customer.getPhoneNumber());
+        customerDTO.setCreateDate(toStringLocalDateTime(customer.getCreateDate()));
+        customerDTO.setExpirationDate(toStringDate(customer.getExpirationDate()));
+        customerDTO.setActive(customer.getActive());
 
-        return costumerDTO;
+        return customerDTO;
     }
 
     public List<CustomerDTO> toCustomerDTOList(List<Customer> customers) {
-        List<CustomerDTO> CostumersDTO = new ArrayList<>();
+        List<CustomerDTO> CustomersDTO = new ArrayList<>();
         customers
                 .iterator()
-                .forEachRemaining(customer -> {
-                    CostumersDTO.add(toCustomerDTO(customer));
-                });
+                .forEachRemaining(customer -> CustomersDTO.add(toCustomerDTO(customer)));
 
-        return CostumersDTO;
+        return CustomersDTO;
     }
 
 }

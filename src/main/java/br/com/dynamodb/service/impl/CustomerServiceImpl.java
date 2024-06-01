@@ -44,9 +44,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         var customers = repository.findAll();
         customers
-                .iterator().forEachRemaining(customer -> {
-                    CustomersDTO.add(converter.toCustomerDTO(customer));
-                });
+                .iterator().forEachRemaining(customer -> CustomersDTO.add(converter.toCustomerDTO(customer)));
 
         return CustomersDTO;
     }

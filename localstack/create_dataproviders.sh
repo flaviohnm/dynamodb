@@ -10,7 +10,7 @@ create_dynamodb(){
 
 putItems_dynamodb(){
   awslocal dynamodb batch-write-item --request-items file:///docker-entrypoint-initaws.d/item/putCustomers.json
-  echo " 3 costumers add in costumerTable successfully"
+  echo " 3 costumers add in customerTable successfully"
 }
 
 update_dynamodb(){

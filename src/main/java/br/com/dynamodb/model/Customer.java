@@ -7,12 +7,14 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 
 @DynamoDBTable(tableName = "customer")
 public class Customer implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = -4282005207341771716L;
 
     @JsonIgnore

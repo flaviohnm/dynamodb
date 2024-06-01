@@ -20,27 +20,27 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @PostMapping("costumer")
+    @PostMapping("customer")
     public ResponseEntity<CustomerDTO> createCustomer(@Valid @RequestBody CustomerDTO customerDTO) {
         return new ResponseEntity(customerService.saveCustomer(customerDTO), HttpStatus.OK);
     }
 
-    @GetMapping("costumer")
+    @GetMapping("customer")
     public ResponseEntity<List<CustomerDTO>> findCustomerByName(@Param("companyName") String companyName) {
         return ResponseEntity.ok(customerService.findByCompanyName(companyName));
     }
 
-    @GetMapping("costumer/all")
+    @GetMapping("customer/all")
     public ResponseEntity<List<CustomerDTO>> Customers() {
         return ResponseEntity.ok(customerService.findAllCustomers());
     }
 
-    @PutMapping("costumer")
+    @PutMapping("customer")
     public ResponseEntity<CustomerDTO> updateCustomer(@Valid @RequestBody CustomerDTO customerDTO) {
         return ResponseEntity.ok(customerService.updateCustomer(customerDTO));
     }
 
-    @PatchMapping(value = "costumer/{companyDocumentNumber}")
+    @PatchMapping(value = "customer/{companyDocumentNumber}")
     public ResponseEntity<CustomerDTO> disableCustomer(@PathVariable(value = "companyDocumentNumber") String companyDocumentNumber) {
         return ResponseEntity.ok(customerService.disableCustomer(companyDocumentNumber));
     }
