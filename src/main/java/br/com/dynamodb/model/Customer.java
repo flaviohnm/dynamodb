@@ -7,12 +7,14 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 
-@DynamoDBTable(tableName = "costumer")
-public class Costumer implements Serializable {
+@DynamoDBTable(tableName = "customer")
+public class Customer implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = -4282005207341771716L;
 
     @JsonIgnore
@@ -36,10 +38,10 @@ public class Costumer implements Serializable {
     @JsonProperty("active")
     private Boolean active;
 
-    public Costumer() {
+    public Customer() {
     }
 
-    public Costumer(String companyName, String companyDocumentNumber, String phoneNumber, String createDate, Long expirationDate, Boolean active) {
+    public Customer(String companyName, String companyDocumentNumber, String phoneNumber, String createDate, Long expirationDate, Boolean active) {
         this.companyName = companyName;
         this.companyDocumentNumber = companyDocumentNumber;
         this.phoneNumber = phoneNumber;
@@ -48,7 +50,7 @@ public class Costumer implements Serializable {
         this.active = active;
     }
 
-    public Costumer(String id, String companyName, String companyDocumentNumber, String phoneNumber, String createDate, Long expirationDate, Boolean active) {
+    public Customer(String id, String companyName, String companyDocumentNumber, String phoneNumber, String createDate, Long expirationDate, Boolean active) {
         this.id = id;
         this.companyName = companyName;
         this.companyDocumentNumber = companyDocumentNumber;

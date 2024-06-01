@@ -2,10 +2,10 @@ package br.com.dynamodb.service;
 
 
 import br.com.dynamodb.converter.Converter;
-import br.com.dynamodb.dto.CostumerDTO;
-import br.com.dynamodb.model.Costumer;
-import br.com.dynamodb.repository.CostumerRepository;
-import br.com.dynamodb.service.impl.CostumerServiceImpl;
+import br.com.dynamodb.dto.CustomerDTO;
+import br.com.dynamodb.model.Customer;
+import br.com.dynamodb.repository.CustomerRepository;
+import br.com.dynamodb.service.impl.CustomerServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +17,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static br.com.dynamodb.commom.CostumerConstants.*;
+import static br.com.dynamodb.commom.CustomerConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -27,13 +27,13 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
-public class CostumerServiceTest {
+public class CustomerServiceTest {
 
     @InjectMocks
-    private CostumerServiceImpl service;
+    private CustomerServiceImpl service;
 
     @Mock
-    private CostumerRepository repository;
+    private CustomerRepository repository;
 
     public Converter converter;
 
@@ -43,30 +43,30 @@ public class CostumerServiceTest {
     }
 
     @Test
-    public void createCostumer_WithValidData_ReturnsCostumer() {
+    public void createCustomer_WithValidData_ReturnsCustomer() {
 
         given(repository.findByCompanyDocumentNumber(anyString())).willReturn(Optional.empty());
-        given(repository.save(any(Costumer.class))).willReturn(COSTUMER_ID);
+        given(repository.save(any(Customer.class))).willReturn(CUSTOMER_ID);
 
         //System under test
-        CostumerDTO sut = service.saveCostumer(COSTUMER_DTO);
+        CustomerDTO sut = service.saveCustomer(CUSTOMER_DTO);
 
         assertThat(sut.getCreateDate()).isNotEmpty();
-        assertThat(sut.getCompanyName()).isEqualTo(COSTUMER_ID.getCompanyName());
-        assertThat(sut.getCompanyDocumentNumber()).isEqualTo(COSTUMER_ID.getCompanyDocumentNumber());
-        assertThat(sut.getPhoneNumber()).isEqualTo(COSTUMER_ID.getPhoneNumber());
-        assertThat(sut.getActive()).isEqualTo(COSTUMER_ID.getActive());
-        assertThat(sut.getExpirationDate()).isEqualTo(converter.toStringDate(COSTUMER_ID.getExpirationDate()));
+        assertThat(sut.getCompanyName()).isEqualTo(CUSTOMER_ID.getCompanyName());
+        assertThat(sut.getCompanyDocumentNumber()).isEqualTo(CUSTOMER_ID.getCompanyDocumentNumber());
+        assertThat(sut.getPhoneNumber()).isEqualTo(CUSTOMER_ID.getPhoneNumber());
+        assertThat(sut.getActive()).isEqualTo(CUSTOMER_ID.getActive());
+        assertThat(sut.getExpirationDate()).isEqualTo(converter.toStringDate(CUSTOMER_ID.getExpirationDate()));
 
     }
 
     @Test
-    public void createCostumer_WithInvalidData_ThrowsException() {
+    public void createCustomer_WithInvalidData_ThrowsException() {
 
-        given(repository.findByCompanyDocumentNumber(anyString())).willReturn(Optional.of(COSTUMER_ID));
+        given(repository.findByCompanyDocumentNumber(anyString())).willReturn(Optional.of(CUSTOMER_ID));
 
         Exception exception = assertThrows(RuntimeException.class, () -> {
-            service.saveCostumer(COSTUMER_DTO);
+            service.saveCustomer(CUSTOMER_DTO);
         });
 
         String expectedMessage = "There is already a customer with this document number";
@@ -77,40 +77,40 @@ public class CostumerServiceTest {
     }
 
     @Test
-    public void getCostumer_ByExistingCompanyName_ReturnsCostumer() {
+    public void getCustomer_ByExistingCompanyName_ReturnsCustomer() {
 
-        COSTUMER_ID.setId("c630b6d5-8650-4bcb-89a2-61e0500fcb95");
+        CUSTOMER_ID.setId("c630b6d5-8650-4bcb-89a2-61e0500fcb95");
 
-        given(repository.findByCompanyName(anyString())).willReturn(List.of(COSTUMER_ID));
+        given(repository.findByCompanyName(anyString())).willReturn(List.of(CUSTOMER_ID));
 
-        List<CostumerDTO> sut = service.findByCompanyName("Empresa Portuguesa LTDA");
+        List<CustomerDTO> sut = service.findByCompanyName("Empresa Portuguesa LTDA");
 
         assertThat(sut).isNotEmpty();
-        assertThat(sut.getFirst().getCompanyName()).isEqualTo(COSTUMER_ID.getCompanyName());
-        assertThat(sut.getFirst().getCompanyDocumentNumber()).isEqualTo(COSTUMER_ID.getCompanyDocumentNumber());
-        assertThat(sut.getFirst().getPhoneNumber()).isEqualTo(COSTUMER_ID.getPhoneNumber());
-        assertThat(sut.getFirst().getActive()).isEqualTo(COSTUMER_ID.getActive());
-        assertThat(sut.getFirst().getExpirationDate()).isEqualTo(converter.toStringDate(COSTUMER_ID.getExpirationDate()));
+        assertThat(sut.getFirst().getCompanyName()).isEqualTo(CUSTOMER_ID.getCompanyName());
+        assertThat(sut.getFirst().getCompanyDocumentNumber()).isEqualTo(CUSTOMER_ID.getCompanyDocumentNumber());
+        assertThat(sut.getFirst().getPhoneNumber()).isEqualTo(CUSTOMER_ID.getPhoneNumber());
+        assertThat(sut.getFirst().getActive()).isEqualTo(CUSTOMER_ID.getActive());
+        assertThat(sut.getFirst().getExpirationDate()).isEqualTo(converter.toStringDate(CUSTOMER_ID.getExpirationDate()));
 
     }
 
     @Test
-    public void getCostumer_ByUnExistingCompanyName_ReturnsEmpty() {
+    public void getCustomer_ByUnExistingCompanyName_ReturnsEmpty() {
         final String name = "UnExisting name";
 
         given(repository.findByCompanyName(name)).willReturn(List.of());
 
-        List<CostumerDTO> sut = service.findByCompanyName(name);
+        List<CustomerDTO> sut = service.findByCompanyName(name);
 
         assertThat(sut).isEmpty();
     }
 
     @Test
-    public void listCostumers_ReturnsAllCostumers() {
+    public void listCustomers_ReturnsAllCustomers() {
 
-        given(repository.findAll()).willReturn(COSTUMERS);
+        given(repository.findAll()).willReturn(CUSTOMERS);
 
-        List<CostumerDTO> sut = service.findAllCostumers();
+        List<CustomerDTO> sut = service.findAllCustomers();
 
         assertThat(sut).isNotEmpty();
         assertThat(sut).hasSize(3);
@@ -133,41 +133,41 @@ public class CostumerServiceTest {
     }
 
     @Test
-    public void listPlanets_ReturnsNoCostumers() {
+    public void listPlanets_ReturnsNoCustomers() {
         given(repository.findAll()).willReturn(Collections.emptyList());
 
-        List<CostumerDTO> sut = service.findAllCostumers();
+        List<CustomerDTO> sut = service.findAllCustomers();
 
         assertThat(sut).isEmpty();
     }
 
     @Test
-    public void disableCostumer_ByExistingCompanyName_ReturnsCostumer() {
+    public void disableCustomer_ByExistingCompanyName_ReturnsCustomer() {
 
-        given(repository.findByCompanyDocumentNumber(anyString())).willReturn(Optional.of(COSTUMER_ID));
-        given(repository.save(any(Costumer.class))).willReturn(COSTUMER_ID);
+        given(repository.findByCompanyDocumentNumber(anyString())).willReturn(Optional.of(CUSTOMER_ID));
+        given(repository.save(any(Customer.class))).willReturn(CUSTOMER_ID);
 
         //System under test
-        CostumerDTO sut = service.disableCostumer(COSTUMER_ID.getCompanyDocumentNumber());
+        CustomerDTO sut = service.disableCustomer(CUSTOMER_ID.getCompanyDocumentNumber());
 
         assertThat(sut.getActive()).isEqualTo(false);
 
     }
 
     @Test
-    public void disableCostumer_ByUnExistingCompanyDocumentNumber_ReturnsEmpty() {
+    public void disableCustomer_ByUnExistingCompanyDocumentNumber_ReturnsEmpty() {
 
         given(repository.findByCompanyDocumentNumber(anyString())).willReturn(Optional.empty());
 
-        assertThatThrownBy(() -> service.disableCostumer(COSTUMER_DTO.getCompanyDocumentNumber()))
+        assertThatThrownBy(() -> service.disableCustomer(CUSTOMER_DTO.getCompanyDocumentNumber()))
                 .isInstanceOf(RuntimeException.class);
     }
 
     @Test
-    public void disableCostumer_ByUnExistingCompanyDocumentNumber_ReturnsExceptionMessage() {
+    public void disableCustomer_ByUnExistingCompanyDocumentNumber_ReturnsExceptionMessage() {
 
         Exception exception = assertThrows(RuntimeException.class, () -> {
-            service.disableCostumer(null);
+            service.disableCustomer(null);
         });
 
         String expectedMessage = "There is no customer with this document number";
@@ -177,12 +177,12 @@ public class CostumerServiceTest {
     }
 
     @Test
-    public void updateCostumer_ByExistingCompanyName_ReturnsUpdatedCostumer() {
+    public void updateCustomer_ByExistingCompanyName_ReturnsUpdatedCustomer() {
 
-        given(repository.findByCompanyDocumentNumber(anyString())).willReturn(Optional.of(COSTUMER_ID));
-        given(repository.save(any(Costumer.class))).willReturn(AMERICANA);
+        given(repository.findByCompanyDocumentNumber(anyString())).willReturn(Optional.of(CUSTOMER_ID));
+        given(repository.save(any(Customer.class))).willReturn(AMERICANA);
 
-        CostumerDTO sut = service.updateCostumer(COSTUMER_DTO);
+        CustomerDTO sut = service.updateCustomer(CUSTOMER_DTO);
 
         assertThat(sut.getCompanyName()).isEqualTo(AMERICANA.getCompanyName());
         assertThat(sut.getPhoneNumber()).isEqualTo(AMERICANA.getPhoneNumber());
@@ -190,10 +190,10 @@ public class CostumerServiceTest {
     }
 
     @Test
-    public void updateCostumer_ByUnExistingCompanyDocumentNumber_ReturnsExceptionMessage() {
+    public void updateCustomer_ByUnExistingCompanyDocumentNumber_ReturnsExceptionMessage() {
 
         Exception exception = assertThrows(RuntimeException.class, () -> {
-            service.updateCostumer(COSTUMER_DTO);
+            service.updateCustomer(CUSTOMER_DTO);
         });
 
         String expectedMessage = "There is no customer with this document number";
