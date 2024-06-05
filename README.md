@@ -8,19 +8,19 @@
 
 ## 🚀💻 Technologies & Tools
 
-![JavaScript](https://img.shields.io/badge/-JavaScript-black?style=flat-square&logo=javascript) ![Angular](https://img.shields.io/badge/-Angular-red?style=flat-square&logo=angular) ![HTML5](https://img.shields.io/badge/-HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)  ![CSS3](https://img.shields.io/badge/-CSS3-1572B6?style=flat-square&logo=css3)  ![Git](https://img.shields.io/badge/-Git-black?style=flat-square&logo=git)  ![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github)
-![Heroku](https://img.shields.io/badge/-Heroku-430098?style=flat-square&logo=heroku) ![Docker](https://img.shields.io/badge/-Docker-black?style=flat-square&logo=docker) ![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-gold?style=flat-square&logo=postgresql) ![TypeScript](https://img.shields.io/badge/-TypeScript-black?style=flat-square&logo=typescript) ![Java](https://img.shields.io/badge/-Java-red?style=flat-square&logo=java)
+<div align="left">
+  <h3>Linguagens</h3>
+  <a href="https://github.com/flaviohnm?tab=repositories&language=java"><img src="https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=OpenJDK&logoColor=white" alt="Java"/></a>
+  <a href="https://github.com/flaviohnm?tab=repositories&language=java"><img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white" alt="Spring"/></a>
+  <a href="https://github.com/flaviohnm?tab=repositories&language=java"><img src="https://img.shields.io/badge/apache_maven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white" alt="ApacheMaven"/></a>
 
-## :pencil: Configurando Ambiente - Back-End
-
-| Tool                | Link                                                                                             |
-|---------------------|:-------------------------------------------------------------------------------------------------|
-| Java                | [https://www.java.com/pt-BR/](https://www.java.com/pt-BR/)                                       |
-| InteliJ Community   | [https://www.jetbrains.com/pt-br/idea/](https://www.jetbrains.com/pt-br/idea/)                   |
-| Spring              | [https://spring.io/](https://spring.io/)                                                         |
-| DynamoDB LocalStack | [https://hub.docker.com/r/localstack/localstack](https://hub.docker.com/r/localstack/localstack) |
-| NoSQL Workbech      | [AWS NoSQL Workbench](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/workbench.html)                                                  |
-| Insomnia           | [https://insomnia.rest/](https://insomnia.rest/)                                   |
+<h3>Ferramentas</h3>
+<img src="https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white" alt="Docker"/>
+<img src="https://img.shields.io/badge/Amazon%20DynamoDB-4053D6?style=for-the-badge&logo=Amazon%20DynamoDB&logoColor=white" alt="DynamoDB"/>
+<img src="https://img.shields.io/badge/Junit5-25A162?style=for-the-badge&logo=junit5&logoColor=white" alt="JUnit5"/>
+<img src="https://img.shields.io/badge/IntelliJ_IDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white" alt="IntelliJ"/>
+<img src="https://img.shields.io/badge/Insomnia-5849be?style=for-the-badge&logo=Insomnia&logoColor=white" alt="IntelliJ"/>
+</div>
 
 ### 💻DynamoDB
 ```json
@@ -57,4 +57,6 @@ Esse projeto foi baseado no documento publicado pelo Kaike Ventura
 ---
 Feito por :man_astronaut: Flavio Monteiro :wave:
 <br>
-[![Linkedin Badge](https://img.shields.io/badge/-flaviohnm-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/flaviohnm/)](https://www.linkedin.com/in/flaviohnm/)   [![Gmail Badge](https://img.shields.io/badge/-flaviohnm@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:flaviohnm@gmail.com)](mailto:flaviohnm@gmail.com)
+<a target="_blank" href="mailto:flaviohnm@gmail.com"><img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white"/></a>
+<a target="_blank" href="https://www.linkedin.com/in/flaviohnm/"><img src="https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white"/></a>
+<a href="https://buymeacoffee.com/flaviohnm" title="buy me a coffee" target="_blank"><img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" align="right"></a>
