@@ -149,8 +149,17 @@
                         <artifactId>pitest-junit5-plugin</artifactId>
                         <version>${pitest-junit5.version}</version>
                     </dependency>
+                    <dependency>
+                        <groupId>io.github.wmaarts</groupId>
+                        <artifactId>pitest-mutation-testing-elements-plugin</artifactId>
+                        <version>0.6.3</version>
+                    </dependency>
                 </dependencies>
                 <configuration>
+                    <outputFormats>
+                        <!-- select the "enhanced" HTML reporter -->
+                        <format>HTML2</format>
+                    </outputFormats>
                     <targetTests>
                         <param>br.com.dynamodb.*Test</param>
                     </targetTests>
