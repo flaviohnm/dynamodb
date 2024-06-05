@@ -55,3 +55,14 @@ jobs:
             git commit -m ":computer: update: jacoco coverage badge :computer:"
             git push
           fi
+
+  pitest-coverage:
+    steps:
+
+      - name: Run Pitest
+        run: mvn test-compile org.pitest:pitest-maven:mutationCoverage
+
+      - name: Upload mutation test report
+        run: ./.github/upload-mutation-report.sh
+        env:
+          API_KEY: ${{ secrets.STRYKER_DASHBOARD_TOKEN }}
