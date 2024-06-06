@@ -56,10 +56,49 @@ jobs:
             git push
           fi
 
-      - name: Run Pitest
-        run: mvn test-compile org.pitest:pitest-maven:mutationCoverage
+#      - name: Run Pitest
+#        run: mvn test-compile org.pitest:pitest-maven:mutationCoverage
+#
+#      - name: Upload Mutation Test Report
+#        run: git update-index --chmod=+x .github/upload-mutation-report.sh
+#        env:
+#          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+
+  mutationtesting:
+    needs: build
+    if: contains(github.event.head_commit.message, 'maven-release-plugin') != true
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '22' ]
+        architecture: [ 'x64' ]
+    name: Build with JDK ${{ matrix.java }} on ${{ matrix.architecture }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4.1.6
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+
+      - name: Setup JDK ${{ matrix.java }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'oracle'
+          architecture: ${{ matrix.architecture }}
+          cache: 'maven'
+
+      - name: Install reporter
+        run: mvn -B --no-transfer-progress install
+
+      - name: Run Pitest and upload report
+        run: mvn -B -e --no-transfer-progress test-compile org.pitest:pitest-maven:mutationCoverage -Dverbose
+        env:
+          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
 
       - name: Upload Mutation Test Report
         run: git update-index --chmod=+x .github/upload-mutation-report.sh
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+
