@@ -72,7 +72,7 @@ jobs:
       matrix:
         java: [ '22' ]
         architecture: [ 'x64' ]
-    name: Build with JDK ${{ matrix.java }} on ${{ matrix.architecture }}
+    name: Mutation Coverage
 
     steps:
       - name: Check out repository
