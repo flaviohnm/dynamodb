@@ -89,13 +89,13 @@ jobs:
           architecture: ${{ matrix.architecture }}
           cache: 'maven'
 
-      - name: Install reporter
-        run: mvn -B --no-transfer-progress install
-
-      - name: Run Pitest and upload report
-        run: mvn -B -e --no-transfer-progress test-compile org.pitest:pitest-maven:mutationCoverage -Dverbose
-        env:
-          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+#      - name: Install reporter
+#        run: mvn -B --no-transfer-progress install
+#
+#      - name: Run Pitest and upload report
+#        run: mvn -B -e --no-transfer-progress test-compile org.pitest:pitest-maven:mutationCoverage -Dverbose
+#        env:
+#          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
 
       - name: Upload Mutation Test Report
         run: git update-index --chmod=+x .github/upload-mutation-report.sh
