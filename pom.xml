@@ -23,6 +23,7 @@
         <pitest.version>1.16.1</pitest.version>
         <pitest-junit5.version>1.2.1</pitest-junit5.version>
         <pitest-github.version>0.6.3</pitest-github.version>
+        <pit-dashboard-reporter>0.1.5</pit-dashboard-reporter>
     </properties>
     <dependencies>
         <!-- Spring Boot -->
@@ -64,6 +65,7 @@
             <artifactId>jacoco-maven-plugin</artifactId>
             <version>${jacoco.version}</version>
         </dependency>
+        <!-- Mockito -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -75,6 +77,24 @@
             <artifactId>testng</artifactId>
             <version>7.10.2</version>
             <scope>test</scope>
+        </dependency>
+        <!-- Pitest -->
+        <dependency>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-entry</artifactId>
+            <version>${pitest.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.github.wmaarts</groupId>
+            <artifactId>pitest-mutation-testing-elements-plugin</artifactId>
+            <version>0.6.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.stryker-mutator</groupId>
+                    <artifactId>mutation-testing-elements</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
@@ -151,15 +171,14 @@
                         <version>${pitest-junit5.version}</version>
                     </dependency>
                     <dependency>
-                        <groupId>io.github.wmaarts</groupId>
-                        <artifactId>pitest-mutation-testing-elements-plugin</artifactId>
-                        <version>${pitest-github.version}</version>
+                        <groupId>it.mulders.stryker</groupId>
+                        <artifactId>pit-dashboard-reporter</artifactId>
+                        <version>${pit-dashboard-reporter}</version>
                     </dependency>
                 </dependencies>
                 <configuration>
                     <outputFormats>
-                        <!-- select the "enhanced" HTML reporter -->
-                        <format>HTML2</format>
+                        <format>stryker-dashboard</format>
                     </outputFormats>
                     <targetTests>
                         <param>br.com.dynamodb.*Test</param>
@@ -170,6 +189,16 @@
                         <param>br.com.dynamodb.config.Constants</param>
                         <param>br.com.dynamodb.config.DynamoDBConfig</param>
                     </excludedClasses>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>3.0.1</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <releaseProfiles>release</releaseProfiles>
+                    <tagNameFormat>v@{project.version}</tagNameFormat>
                 </configuration>
             </plugin>
         </plugins>

@@ -72,7 +72,7 @@ jobs:
       matrix:
         java: [ '22' ]
         architecture: [ 'x64' ]
-    name: Build with JDK ${{ matrix.java }} on ${{ matrix.architecture }}
+    name: Mutation Coverage
 
     steps:
       - name: Check out repository
@@ -100,5 +100,5 @@ jobs:
       - name: Upload Mutation Test Report
         run: git update-index --chmod=+x .github/upload-mutation-report.sh
         env:
-          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY}}
 
