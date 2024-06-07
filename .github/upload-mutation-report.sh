@@ -24,7 +24,7 @@ curl -X PUT \
   ${BASE_URL}/api/reports/${PROJECT}/${VERSION} \
   -H "Content-Type: application/json" \
   -H "Host: dashboard.stryker-mutator.io" \
-  -H "X-Api-Key: ${API_KEY}" \
+  -H "X-Api-Key: ${STRYKER_DASHBOARD_API_KEY}" \
   -d @mutation-testing-report.json
 
 rm mutation-testing-report.json
