@@ -2,13 +2,13 @@ name: build
 on:
   push:
     branches:
-      - develop
+      - main
     paths-ignore:
       - '**.md'
       - '**.yml'
   pull_request:
     branches:
-      - develop
+      - main
 
 jobs:
   build:
