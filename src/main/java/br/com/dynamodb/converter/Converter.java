@@ -9,6 +9,7 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static br.com.dynamodb.config.Constants.*;
 
@@ -61,6 +62,25 @@ public class Converter {
         customerDTO.setActive(customer.getActive());
 
         return customerDTO;
+    }
+
+    public Customer optionalToUpdateCustomer(Optional<Customer> optionalCustomer){
+        var customer = new Customer();
+
+        customer.setCompanyDocumentNumber(optionalCustomer.get().getCompanyDocumentNumber());
+        customer.setCompanyName(optionalCustomer.get().getCompanyName());
+        customer.setPhoneNumber(optionalCustomer.get().getPhoneNumber());
+
+        return customer;
+    }
+
+    public Customer optionalToDisableCustomer(Optional<Customer> optionalCustomer){
+        var customer = new Customer();
+
+        customer.setCompanyDocumentNumber(optionalCustomer.get().getCompanyDocumentNumber());
+        customer.setActive(false);
+
+        return customer;
     }
 
     public List<CustomerDTO> toCustomerDTOList(List<Customer> customers) {
