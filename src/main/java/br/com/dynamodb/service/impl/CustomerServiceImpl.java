@@ -80,7 +80,8 @@ public class CustomerServiceImpl implements CustomerService {
 
         return converter.toCustomerDTO(
                 repository.save(
-                        converter.optionalToUpdateCustomer(customer)));
+                        converter.optionalToDisableCustomer(customer)
+                ));
     }
 
 }
