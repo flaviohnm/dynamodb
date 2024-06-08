@@ -22,7 +22,9 @@
         <mockito.version>5.12.0</mockito.version>
         <pitest.version>1.16.1</pitest.version>
         <pitest-junit5.version>1.2.1</pitest-junit5.version>
-<!--        <pit-dashboard-reporter>0.1.2</pit-dashboard-reporter>-->
+        <pit-dashboard-reporter>0.2.1</pit-dashboard-reporter>
+        <pitest-mutation-testing-elements>0.6.3</pitest-mutation-testing-elements>
+        <testng.version>7.10.2</testng.version>
     </properties>
     <dependencies>
         <!-- Spring Boot -->
@@ -75,7 +77,7 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>7.10.2</version>
+            <version>${testng.version}</version>
             <scope>test</scope>
         </dependency>
         <!-- Pitest -->
@@ -88,7 +90,7 @@
         <dependency>
             <groupId>io.github.wmaarts</groupId>
             <artifactId>pitest-mutation-testing-elements-plugin</artifactId>
-            <version>0.6.3</version>
+            <version>${pitest-mutation-testing-elements}</version>
             <exclusions>
                 <exclusion>
                     <groupId>io.stryker-mutator</groupId>
@@ -168,12 +170,12 @@
                     <dependency>
                         <groupId>org.pitest</groupId>
                         <artifactId>pitest-junit5-plugin</artifactId>
-                        <version>1.2.1</version>
+                        <version>${pitest-junit5.version}</version>
                     </dependency>
                     <dependency>
                         <groupId>it.mulders.stryker</groupId>
                         <artifactId>pit-dashboard-reporter</artifactId>
-                        <version>0.2.1</version>
+                        <version>${pit-dashboard-reporter}</version>
                     </dependency>
                 </dependencies>
                 <configuration>
