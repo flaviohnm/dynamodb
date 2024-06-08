@@ -64,10 +64,9 @@ public class CustomerServiceImpl implements CustomerService {
             throw new RuntimeException("There is no customer with this document number");
         }
 
-        customer.get().setCompanyName(customerDTO.getCompanyName());
-        customer.get().setPhoneNumber(customerDTO.getPhoneNumber());
-
-        return converter.toCustomerDTO(repository.save(customer.get()));
+        return converter.toCustomerDTO(
+                repository.save(
+                        converter.optionalToUpdateCustomer(customer)));
     }
 
     @Override
@@ -78,11 +77,10 @@ public class CustomerServiceImpl implements CustomerService {
         if (customer.isEmpty()) {
             throw new RuntimeException("There is no customer with this document number");
         }
-        customer.get().setActive(false);
 
-        var disabledCostumer = repository.save(customer.get());
-
-        return converter.toCustomerDTO(disabledCostumer);
+        return converter.toCustomerDTO(
+                repository.save(
+                        converter.optionalToUpdateCustomer(customer)));
     }
 
 }
