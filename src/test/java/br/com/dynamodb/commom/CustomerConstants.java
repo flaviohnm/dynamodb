@@ -18,6 +18,16 @@ public class CustomerConstants {
             true
     );
 
+    public static final Customer DISABLE_CUSTOMER_ID = new Customer(
+            "c630b6d5-8650-4bcb-89a2-61e0500fcb95",
+            "Empresa Portuguesa LTDA",
+            "6598752300011",
+            "11-44444-55511",
+            "2024-05-14T16:26:30.024057900",
+            1723663590L,
+            false
+    );
+
     public static final Customer CUSTOMER = new Customer(
             "Empresa Portuguesa LTDA",
             "6598752300011",

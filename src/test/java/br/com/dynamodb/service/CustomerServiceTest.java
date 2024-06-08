@@ -145,7 +145,7 @@ public class CustomerServiceTest {
     public void disableCustomer_ByExistingCompanyName_ReturnsCustomer() {
 
         given(repository.findByCompanyDocumentNumber(anyString())).willReturn(Optional.of(CUSTOMER_ID));
-        given(repository.save(any(Customer.class))).willReturn(CUSTOMER_ID);
+        given(repository.save(any(Customer.class))).willReturn(DISABLE_CUSTOMER_ID);
 
         //System under test
         CustomerDTO sut = service.disableCustomer(CUSTOMER_ID.getCompanyDocumentNumber());
