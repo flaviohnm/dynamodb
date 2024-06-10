@@ -59,6 +59,7 @@ public class Converter {
         customerDTO.setPhoneNumber(customer.getPhoneNumber());
         customerDTO.setCreateDate(toStringLocalDateTime(customer.getCreateDate()));
         customerDTO.setExpirationDate(toStringDate(customer.getExpirationDate()));
+        customerDTO.setUpdatedDate(customer.getUpdatedDate().isEmpty() ? "" : toStringLocalDateTime(customer.getUpdatedDate()));
         customerDTO.setActive(customer.getActive());
 
         return customerDTO;
@@ -70,6 +71,8 @@ public class Converter {
         customer.setCompanyDocumentNumber(optionalCustomer.get().getCompanyDocumentNumber());
         customer.setCompanyName(optionalCustomer.get().getCompanyName());
         customer.setPhoneNumber(optionalCustomer.get().getPhoneNumber());
+        customer.setUpdatedDate(LocalDateTime.now().toString());
+
 
         return customer;
     }
@@ -79,6 +82,7 @@ public class Converter {
 
         customer.setCompanyDocumentNumber(optionalCustomer.get().getCompanyDocumentNumber());
         customer.setActive(false);
+        customer.setUpdatedDate(LocalDateTime.now().toString());
 
         return customer;
     }
