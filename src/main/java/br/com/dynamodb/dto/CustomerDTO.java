@@ -31,6 +31,9 @@ public class CustomerDTO implements Serializable {
     @JsonProperty("expirationDate")
     private String expirationDate;
 
+    @JsonProperty("updatedDate")
+    private String updatedDate;
+
     @JsonProperty("active")
     private Boolean active;
 
@@ -67,13 +70,20 @@ public class CustomerDTO implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-
     public String getCreateDate() {
         return createDate;
     }
 
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
+    }
+
+    public String getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(String updatedDate) {
+        this.updatedDate = updatedDate;
     }
 
     public String getExpirationDate() {
@@ -91,7 +101,5 @@ public class CustomerDTO implements Serializable {
     public void setActive(Boolean active) {
         this.active = active;
     }
-
-
 
 }
