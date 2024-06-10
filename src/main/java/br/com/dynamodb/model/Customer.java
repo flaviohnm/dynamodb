@@ -43,16 +43,6 @@ public class Customer implements Serializable {
     public Customer() {
     }
 
-    public Customer(String companyName, String companyDocumentNumber, String phoneNumber, String createDate, String updatedDate, Long expirationDate, Boolean active) {
-        this.companyName = companyName;
-        this.companyDocumentNumber = companyDocumentNumber;
-        this.phoneNumber = phoneNumber;
-        this.createDate = createDate;
-        this.updatedDate = updatedDate;
-        this.expirationDate = expirationDate;
-        this.active = active;
-    }
-
     public Customer(String id, String companyName, String companyDocumentNumber, String phoneNumber, String createDate, String updatedDate, Long expirationDate, Boolean active) {
         this.id = id;
         this.companyName = companyName;
