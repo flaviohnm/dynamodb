@@ -173,11 +173,11 @@
                         <artifactId>pitest-junit5-plugin</artifactId>
                         <version>${pitest-junit5.version}</version>
                     </dependency>
-<!--                    <dependency>-->
-<!--                        <groupId>it.mulders.stryker</groupId>-->
-<!--                        <artifactId>pit-dashboard-reporter</artifactId>-->
-<!--                        <version>${pit-dashboard-reporter}</version>-->
-<!--                    </dependency>-->
+                    <dependency>
+                        <groupId>it.mulders.stryker</groupId>
+                        <artifactId>pit-dashboard-reporter</artifactId>
+                        <version>${pit-dashboard-reporter}</version>
+                    </dependency>
                 </dependencies>
                 <configuration>
                     <targetTests>
@@ -189,9 +189,9 @@
                         <param>br.com.dynamodb.config.Constants</param>
                         <param>br.com.dynamodb.config.DynamoDBConfig</param>
                     </excludedClasses>
-<!--                    <outputFormats>-->
-<!--                        <format>stryker-dashboard</format>-->
-<!--                    </outputFormats>-->
+                    <outputFormats>
+                        <format>stryker-dashboard</format>
+                    </outputFormats>
                 </configuration>
             </plugin>
         </plugins>
