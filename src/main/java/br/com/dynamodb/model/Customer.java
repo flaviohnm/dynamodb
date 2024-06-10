@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serial;
 import java.io.Serializable;
 
-
 @DynamoDBTable(tableName = "customer")
 public class Customer implements Serializable {
 
@@ -32,6 +31,9 @@ public class Customer implements Serializable {
     @JsonProperty("create_date")
     private String createDate;
 
+    @JsonProperty("updated_date")
+    private String updatedDate;
+
     @JsonProperty("expiration_date")
     private Long expirationDate;
 
@@ -41,21 +43,23 @@ public class Customer implements Serializable {
     public Customer() {
     }
 
-    public Customer(String companyName, String companyDocumentNumber, String phoneNumber, String createDate, Long expirationDate, Boolean active) {
+    public Customer(String companyName, String companyDocumentNumber, String phoneNumber, String createDate, String updatedDate, Long expirationDate, Boolean active) {
         this.companyName = companyName;
         this.companyDocumentNumber = companyDocumentNumber;
         this.phoneNumber = phoneNumber;
         this.createDate = createDate;
+        this.updatedDate = updatedDate;
         this.expirationDate = expirationDate;
         this.active = active;
     }
 
-    public Customer(String id, String companyName, String companyDocumentNumber, String phoneNumber, String createDate, Long expirationDate, Boolean active) {
+    public Customer(String id, String companyName, String companyDocumentNumber, String phoneNumber, String createDate, String updatedDate, Long expirationDate, Boolean active) {
         this.id = id;
         this.companyName = companyName;
         this.companyDocumentNumber = companyDocumentNumber;
         this.phoneNumber = phoneNumber;
         this.createDate = createDate;
+        this.updatedDate = updatedDate;
         this.expirationDate = expirationDate;
         this.active = active;
     }
@@ -104,6 +108,15 @@ public class Customer implements Serializable {
 
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
+    }
+
+    @DynamoDBAttribute(attributeName = "updated_date")
+    public String getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(String updatedDate) {
+        this.updatedDate = updatedDate;
     }
 
     @DynamoDBAttribute(attributeName = "expiration_date")
