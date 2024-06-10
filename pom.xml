@@ -162,6 +162,7 @@
                     <skip>${surefire.skip}</skip>
                 </configuration>
             </plugin>
+            <!-- Mutation Test Coverage -->
             <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>

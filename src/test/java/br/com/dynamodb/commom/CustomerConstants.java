@@ -88,8 +88,7 @@ public class CustomerConstants {
             true
     );
 
-
-    public static final List<Customer> CUSTOMERS = new ArrayList<>(){
+    public static final List<Customer> CUSTOMERS = new ArrayList<>() {
         {
             add(AMERICANA);
             add(CHINESA);

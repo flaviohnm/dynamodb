@@ -64,9 +64,7 @@ public class CustomerServiceTest {
 
         given(repository.findByCompanyDocumentNumber(anyString())).willReturn(Optional.of(CUSTOMER_ID));
 
-        Exception exception = assertThrows(RuntimeException.class, () -> {
-            service.saveCustomer(CUSTOMER_DTO);
-        });
+        Exception exception = assertThrows(RuntimeException.class, () -> service.saveCustomer(CUSTOMER_DTO));
 
         String expectedMessage = "There is already a customer with this document number";
         String actualMessage = exception.getMessage();
@@ -149,7 +147,10 @@ public class CustomerServiceTest {
         //System under test
         CustomerDTO sut = service.disableCustomer(CUSTOMER_ID.getCompanyDocumentNumber());
 
-        assertThat(sut.getActive()).isEqualTo(false);
+        assertThat(sut.getCompanyDocumentNumber()).isEqualTo(DISABLE_CUSTOMER_ID.getCompanyDocumentNumber());
+        assertThat(sut.getCompanyName()).isEqualTo(DISABLE_CUSTOMER_ID.getCompanyName());
+        assertThat(sut.getPhoneNumber()).isEqualTo(DISABLE_CUSTOMER_ID.getPhoneNumber());
+        assertThat(sut.getActive()).isEqualTo(DISABLE_CUSTOMER_ID.getActive());
 
     }
 
@@ -165,9 +166,7 @@ public class CustomerServiceTest {
     @Test
     public void disableCustomer_ByUnExistingCompanyDocumentNumber_ReturnsExceptionMessage() {
 
-        Exception exception = assertThrows(RuntimeException.class, () -> {
-            service.disableCustomer(null);
-        });
+        Exception exception = assertThrows(RuntimeException.class, () -> service.disableCustomer(null));
 
         String expectedMessage = "There is no customer with this document number";
         String actualMessage = exception.getMessage();
@@ -185,15 +184,14 @@ public class CustomerServiceTest {
 
         assertThat(sut.getCompanyName()).isEqualTo(AMERICANA.getCompanyName());
         assertThat(sut.getPhoneNumber()).isEqualTo(AMERICANA.getPhoneNumber());
+        assertThat(sut.getActive()).isEqualTo(AMERICANA.getActive());
 
     }
 
     @Test
     public void updateCustomer_ByUnExistingCompanyDocumentNumber_ReturnsExceptionMessage() {
 
-        Exception exception = assertThrows(RuntimeException.class, () -> {
-            service.updateCustomer(CUSTOMER_DTO);
-        });
+        Exception exception = assertThrows(RuntimeException.class, () -> service.updateCustomer(CUSTOMER_DTO));
 
         String expectedMessage = "There is no customer with this document number";
         String actualMessage = exception.getMessage();
