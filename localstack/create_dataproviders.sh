@@ -29,4 +29,4 @@ putItems_dynamodb
 
 echo "Adding TTL attribute in Customer Table"
 echo "==================="
-putItems_dynamodb
+update_dynamodb
