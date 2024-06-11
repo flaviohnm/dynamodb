@@ -35,7 +35,7 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.findAllCustomers());
     }
 
-    @PutMapping("customer")
+    @PatchMapping("customer")
     public ResponseEntity<CustomerDTO> updateCustomer(@Valid @RequestBody CustomerDTO customerDTO) {
         return ResponseEntity.ok(customerService.updateCustomer(customerDTO));
     }

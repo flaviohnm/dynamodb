@@ -33,7 +33,7 @@ public class CustomerServiceImpl implements CustomerService {
         return converter
                 .toCustomerDTO(
                         repository.save(
-                                converter.toCustomer(customerDTO)
+                                converter.toCreateCustomer(customerDTO)
                         ));
     }
 
@@ -44,7 +44,8 @@ public class CustomerServiceImpl implements CustomerService {
 
         var customers = repository.findAll();
         customers
-                .iterator().forEachRemaining(customer -> CustomersDTO.add(converter.toCustomerDTO(customer)));
+                .iterator()
+                .forEachRemaining(customer -> CustomersDTO.add(converter.toCustomerDTO(customer)));
 
         return CustomersDTO;
     }
@@ -66,7 +67,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         return converter.toCustomerDTO(
                 repository.save(
-                        converter.optionalToUpdateCustomer(customer)));
+                        converter.optionalToUpdateCustomer(customer, customerDTO)));
     }
 
     @Override

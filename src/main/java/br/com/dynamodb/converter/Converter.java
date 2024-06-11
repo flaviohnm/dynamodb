@@ -38,7 +38,7 @@ public class Converter {
                 .format(FORMATTER);
     }
 
-    public Customer toCustomer(CustomerDTO customerDTO) {
+    public Customer toCreateCustomer(CustomerDTO customerDTO) {
         var customer = new Customer();
 
         customer.setCompanyName(customerDTO.getCompanyName());
@@ -69,14 +69,17 @@ public class Converter {
         return customerDTO;
     }
 
-    public Customer optionalToUpdateCustomer(Optional<Customer> optionalCustomer) {
+    public Customer optionalToUpdateCustomer(Optional<Customer> optionalCustomer, CustomerDTO customerDTO) {
         var customer = new Customer();
 
+        customer.setId(optionalCustomer.get().getId());
         customer.setCompanyDocumentNumber(optionalCustomer.get().getCompanyDocumentNumber());
-        customer.setCompanyName(optionalCustomer.get().getCompanyName());
-        customer.setPhoneNumber(optionalCustomer.get().getPhoneNumber());
+        customer.setCompanyName(customerDTO.getCompanyName());
+        customer.setPhoneNumber(customerDTO.getPhoneNumber());
+        customer.setCreateDate(optionalCustomer.get().getCreateDate());
+        customer.setExpirationDate(optionalCustomer.get().getExpirationDate());
         customer.setUpdatedDate(LocalDateTime.now().toString());
-
+        customer.setActive(optionalCustomer.get().getActive());
 
         return customer;
     }
@@ -84,9 +87,14 @@ public class Converter {
     public Customer optionalToDisableCustomer(Optional<Customer> optionalCustomer) {
         var customer = new Customer();
 
+        customer.setId(optionalCustomer.get().getId());
         customer.setCompanyDocumentNumber(optionalCustomer.get().getCompanyDocumentNumber());
-        customer.setActive(false);
+        customer.setCompanyName(optionalCustomer.get().getCompanyName());
+        customer.setPhoneNumber(optionalCustomer.get().getPhoneNumber());
+        customer.setCreateDate(optionalCustomer.get().getCreateDate());
+        customer.setExpirationDate(optionalCustomer.get().getExpirationDate());
         customer.setUpdatedDate(LocalDateTime.now().toString());
+        customer.setActive(false);
 
         return customer;
     }
