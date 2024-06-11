@@ -14,7 +14,7 @@ public class CustomerConstants {
             "6598752300011",
             "11-44444-55511",
             "2024-05-14T16:26:30.024057900",
-            "",
+            null,
             1723663590L,
             true
     );
@@ -59,7 +59,7 @@ public class CustomerConstants {
             "6598752300012",
             "12-44444-55512",
             "2024-05-14T16:26:30.024057900",
-            "2024-05-14T16:26:30.024057900",
+            "2024-06-10T13:00:00.000",
             1723663590L,
             true
     );
@@ -70,7 +70,7 @@ public class CustomerConstants {
             "6598752300013",
             "13-44444-55513",
             "2024-05-14T16:26:30.024057900",
-            "2024-05-14T16:26:30.024057900",
+            "2024-06-10T13:00:00.000",
             1723663590L,
             true
     );
@@ -81,15 +81,29 @@ public class CustomerConstants {
             "6598752300014",
             "14-44444-55514",
             "2024-05-14T16:26:30.024057900",
-            "2024-05-14T16:26:30.024057900",
+            "2024-06-10T13:00:00.000",
             1723663590L,
             true
     );
+
+    public static final Customer CANADENSE = new Customer(
+            "c630b6d5-8650-4bcb-89a2-61e0500fcb99",
+            "Empresa Canadense LTDA",
+            "6598752300015",
+            "14-44444-55514",
+            "2024-05-14T16:26:30.024057900",
+            null,
+            1723663590L,
+            true
+    );
+
+
 
     public static final List<Customer> CUSTOMERS = new ArrayList<>() {
         {
             add(AMERICANA);
             add(CHINESA);
+            add(CANADENSE);
             add(BRASILEIRA);
         }
     };

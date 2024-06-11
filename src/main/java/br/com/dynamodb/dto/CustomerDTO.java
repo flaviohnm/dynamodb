@@ -1,5 +1,7 @@
 package br.com.dynamodb.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -32,6 +34,7 @@ public class CustomerDTO implements Serializable {
     private String expirationDate;
 
     @JsonProperty("updatedDate")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String updatedDate;
 
     @JsonProperty("active")

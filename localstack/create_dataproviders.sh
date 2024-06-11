@@ -13,11 +13,11 @@ putItems_dynamodb(){
   echo " 3 costumers add in customerTable successfully"
 }
 
-update_dynamodb(){
-  awslocal dynamodb update-time-to-live --table-name customer \
-    --time-to-live-specification "Enable=true, AttributeName=expiration_date"
-  echo "update dynamodb with ttl attribute successfully"
-}
+#update_dynamodb(){
+#  awslocal dynamodb update-time-to-live --table-name customer \
+#    --time-to-live-specification "Enable=true, AttributeName=expiration_date"
+#  echo "update dynamodb with ttl attribute successfully"
+#}
 
 echo "Criando DynamoDB"
 echo "==================="
@@ -27,6 +27,6 @@ echo "Adding 3 Customers in Customer Table"
 echo "==================="
 putItems_dynamodb
 
-echo "Adding TTL attribute in Customer Table"
-echo "==================="
-putItems_dynamodb
+#echo "Adding TTL attribute in Customer Table"
+#echo "==================="
+#update_dynamodb
