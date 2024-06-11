@@ -59,13 +59,17 @@ public class Converter {
         customerDTO.setPhoneNumber(customer.getPhoneNumber());
         customerDTO.setCreateDate(toStringLocalDateTime(customer.getCreateDate()));
         customerDTO.setExpirationDate(toStringDate(customer.getExpirationDate()));
-        customerDTO.setUpdatedDate(customer.getUpdatedDate().isEmpty() ? "" : toStringLocalDateTime(customer.getUpdatedDate()));
+        if (customer.getUpdatedDate() != null) {
+            customerDTO.setUpdatedDate(
+                    toStringLocalDateTime(customer.getUpdatedDate())
+            );
+        }
         customerDTO.setActive(customer.getActive());
 
         return customerDTO;
     }
 
-    public Customer optionalToUpdateCustomer(Optional<Customer> optionalCustomer){
+    public Customer optionalToUpdateCustomer(Optional<Customer> optionalCustomer) {
         var customer = new Customer();
 
         customer.setCompanyDocumentNumber(optionalCustomer.get().getCompanyDocumentNumber());
@@ -77,7 +81,7 @@ public class Converter {
         return customer;
     }
 
-    public Customer optionalToDisableCustomer(Optional<Customer> optionalCustomer){
+    public Customer optionalToDisableCustomer(Optional<Customer> optionalCustomer) {
         var customer = new Customer();
 
         customer.setCompanyDocumentNumber(optionalCustomer.get().getCompanyDocumentNumber());
