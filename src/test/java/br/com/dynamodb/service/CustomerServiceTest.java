@@ -1,7 +1,7 @@
 package br.com.dynamodb.service;
 
-import br.com.dynamodb.mapper.Mapper;
 import br.com.dynamodb.dto.CustomerDTO;
+import br.com.dynamodb.mapper.Mapper;
 import br.com.dynamodb.model.Customer;
 import br.com.dynamodb.repository.CustomerRepository;
 import br.com.dynamodb.service.impl.CustomerServiceImpl;
@@ -11,7 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collections;
 import java.util.List;
