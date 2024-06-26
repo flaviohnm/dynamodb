@@ -1,6 +1,5 @@
 package br.com.dynamodb.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
@@ -27,9 +26,13 @@ public class CustomerDTO implements Serializable {
     @NotBlank
     private String phoneNumber;
 
+    @NotNull
+    @NotBlank
     @JsonProperty("createDate")
     private String createDate;
 
+    @NotNull
+    @NotBlank
     @JsonProperty("expirationDate")
     private String expirationDate;
 
