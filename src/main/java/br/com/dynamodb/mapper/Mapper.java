@@ -30,6 +30,7 @@ public class Mapper {
                 .ofEpochSecond(epocDate)
                 .atZone(ZoneId.of(TIMEZONE_RECIFE))
                 .toLocalDateTime().format(FORMATTER);
+
     }
 
     public String toStringLocalDateTime(String stringDate) {
