@@ -1,7 +1,7 @@
 package br.com.dynamodb.service.impl;
 
-import br.com.dynamodb.converter.Converter;
 import br.com.dynamodb.dto.CustomerDTO;
+import br.com.dynamodb.mapper.Mapper;
 import br.com.dynamodb.model.Customer;
 import br.com.dynamodb.repository.CustomerRepository;
 import br.com.dynamodb.service.CustomerService;
@@ -14,9 +14,9 @@ import java.util.Optional;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-    private final CustomerRepository repository;
+    public Mapper mapper = new Mapper();
 
-    public Converter converter = new Converter();
+    private final CustomerRepository repository;
 
     public CustomerServiceImpl(CustomerRepository repository) {
         this.repository = repository;
@@ -30,11 +30,12 @@ public class CustomerServiceImpl implements CustomerService {
             throw new RuntimeException("There is already a customer with this document number");
         }
 
-        return converter
+        return mapper
                 .toCustomerDTO(
                         repository.save(
-                                converter.toCreateCustomer(customerDTO)
+                                mapper.toCreateCustomer(customerDTO)
                         ));
+
     }
 
     @Override
@@ -45,7 +46,7 @@ public class CustomerServiceImpl implements CustomerService {
         var customers = repository.findAll();
         customers
                 .iterator()
-                .forEachRemaining(customer -> CustomersDTO.add(converter.toCustomerDTO(customer)));
+                .forEachRemaining(customer -> CustomersDTO.add(mapper.toCustomerDTO(customer)));
 
         return CustomersDTO;
     }
@@ -53,7 +54,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<CustomerDTO> findByCompanyName(String companyName) {
 
-        return converter.toCustomerDTOList(repository.findByCompanyName(companyName));
+        return mapper.toCustomerDTOList(repository.findByCompanyName(companyName));
     }
 
     @Override
@@ -65,9 +66,9 @@ public class CustomerServiceImpl implements CustomerService {
             throw new RuntimeException("There is no customer with this document number");
         }
 
-        return converter.toCustomerDTO(
+        return mapper.toCustomerDTO(
                 repository.save(
-                        converter.optionalToUpdateCustomer(customer, customerDTO)));
+                        mapper.optionalToUpdateCustomer(customer, customerDTO)));
     }
 
     @Override
@@ -79,9 +80,9 @@ public class CustomerServiceImpl implements CustomerService {
             throw new RuntimeException("There is no customer with this document number");
         }
 
-        return converter.toCustomerDTO(
+        return mapper.toCustomerDTO(
                 repository.save(
-                        converter.optionalToDisableCustomer(customer)
+                        mapper.optionalToDisableCustomer(customer)
                 ));
     }
 
