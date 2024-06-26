@@ -1,6 +1,6 @@
 package br.com.dynamodb.service;
 
-import br.com.dynamodb.converter.Converter;
+import br.com.dynamodb.mapper.Mapper;
 import br.com.dynamodb.dto.CustomerDTO;
 import br.com.dynamodb.model.Customer;
 import br.com.dynamodb.repository.CustomerRepository;
@@ -11,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collections;
 import java.util.List;
@@ -33,11 +34,12 @@ public class CustomerServiceTest {
     @Mock
     private CustomerRepository repository;
 
-    public Converter converter;
+
+    public Mapper mapper;
 
     @BeforeEach
     public void setup() {
-        converter = new Converter();
+        mapper = new Mapper();
     }
 
     @Test
@@ -55,7 +57,7 @@ public class CustomerServiceTest {
         assertThat(sut.getCompanyDocumentNumber()).isEqualTo(CREATED_CUSTOMER_ID.getCompanyDocumentNumber());
         assertThat(sut.getPhoneNumber()).isEqualTo(CREATED_CUSTOMER_ID.getPhoneNumber());
         assertThat(sut.getActive()).isEqualTo(CREATED_CUSTOMER_ID.getActive());
-        assertThat(sut.getExpirationDate()).isEqualTo(converter.toStringDate(CREATED_CUSTOMER_ID.getExpirationDate()));
+        assertThat(sut.getExpirationDate()).isEqualTo(mapper.toStringDate(CREATED_CUSTOMER_ID.getExpirationDate()));
         assertTrue(sut.getUpdatedDate() == null);
 
     }
@@ -89,9 +91,9 @@ public class CustomerServiceTest {
         assertThat(sut.getFirst().getCompanyDocumentNumber()).isEqualTo(CUSTOMER_ID.getCompanyDocumentNumber());
         assertThat(sut.getFirst().getPhoneNumber()).isEqualTo(CUSTOMER_ID.getPhoneNumber());
         assertThat(sut.getFirst().getActive()).isEqualTo(CUSTOMER_ID.getActive());
-        assertThat(sut.getFirst().getExpirationDate()).isEqualTo(converter.toStringDate(CUSTOMER_ID.getExpirationDate()));
+        assertThat(sut.getFirst().getExpirationDate()).isEqualTo(mapper.toStringDate(CUSTOMER_ID.getExpirationDate()));
         assertFalse(sut.getFirst().getUpdatedDate().isEmpty());
-        assertThat(sut.getFirst().getUpdatedDate()).isEqualTo(converter.toStringLocalDateTime(CUSTOMER_ID.getUpdatedDate()));
+        assertThat(sut.getFirst().getUpdatedDate()).isEqualTo(mapper.toStringLocalDateTime(CUSTOMER_ID.getUpdatedDate()));
 
     }
 
@@ -120,22 +122,22 @@ public class CustomerServiceTest {
         assertThat(sut.getFirst().getCompanyName()).isEqualTo(AMERICANA.getCompanyName());
         assertThat(sut.getFirst().getCompanyDocumentNumber()).isEqualTo(AMERICANA.getCompanyDocumentNumber());
         assertThat(sut.getFirst().getPhoneNumber()).isEqualTo(AMERICANA.getPhoneNumber());
-        assertThat(sut.getFirst().getExpirationDate()).isEqualTo(converter.toStringDate(AMERICANA.getExpirationDate()));
+        assertThat(sut.getFirst().getExpirationDate()).isEqualTo(mapper.toStringDate(AMERICANA.getExpirationDate()));
         assertFalse(sut.getFirst().getUpdatedDate().isEmpty());
-        assertThat(sut.getFirst().getUpdatedDate()).isEqualTo(converter.toStringLocalDateTime(AMERICANA.getUpdatedDate()));
+        assertThat(sut.getFirst().getUpdatedDate()).isEqualTo(mapper.toStringLocalDateTime(AMERICANA.getUpdatedDate()));
 
         assertNotNull(sut.get(1));
         assertThat(sut.get(1).getCompanyName()).isEqualTo(CHINESA.getCompanyName());
         assertThat(sut.get(1).getCompanyDocumentNumber()).isEqualTo(CHINESA.getCompanyDocumentNumber());
         assertThat(sut.get(1).getPhoneNumber()).isEqualTo(CHINESA.getPhoneNumber());
-        assertThat(sut.get(1).getExpirationDate()).isEqualTo(converter.toStringDate(CHINESA.getExpirationDate()));
-        assertThat(sut.get(1).getUpdatedDate()).isEqualTo(converter.toStringLocalDateTime(CHINESA.getUpdatedDate()));
+        assertThat(sut.get(1).getExpirationDate()).isEqualTo(mapper.toStringDate(CHINESA.getExpirationDate()));
+        assertThat(sut.get(1).getUpdatedDate()).isEqualTo(mapper.toStringLocalDateTime(CHINESA.getUpdatedDate()));
 
         assertNotNull(sut.get(2));
         assertThat(sut.get(2).getCompanyName()).isEqualTo(CANADENSE.getCompanyName());
         assertThat(sut.get(2).getCompanyDocumentNumber()).isEqualTo(CANADENSE.getCompanyDocumentNumber());
         assertThat(sut.get(2).getPhoneNumber()).isEqualTo(CANADENSE.getPhoneNumber());
-        assertThat(sut.get(2).getExpirationDate()).isEqualTo(converter.toStringDate(CANADENSE.getExpirationDate()));
+        assertThat(sut.get(2).getExpirationDate()).isEqualTo(mapper.toStringDate(CANADENSE.getExpirationDate()));
         assertTrue(sut.get(2).getUpdatedDate() == null);
 
 
@@ -143,8 +145,8 @@ public class CustomerServiceTest {
         assertThat(sut.getLast().getCompanyName()).isEqualTo(BRASILEIRA.getCompanyName());
         assertThat(sut.getLast().getCompanyDocumentNumber()).isEqualTo(BRASILEIRA.getCompanyDocumentNumber());
         assertThat(sut.getLast().getPhoneNumber()).isEqualTo(BRASILEIRA.getPhoneNumber());
-        assertThat(sut.getLast().getExpirationDate()).isEqualTo(converter.toStringDate(BRASILEIRA.getExpirationDate()));
-        assertThat(sut.getLast().getUpdatedDate()).isEqualTo(converter.toStringLocalDateTime(BRASILEIRA.getUpdatedDate()));
+        assertThat(sut.getLast().getExpirationDate()).isEqualTo(mapper.toStringDate(BRASILEIRA.getExpirationDate()));
+        assertThat(sut.getLast().getUpdatedDate()).isEqualTo(mapper.toStringLocalDateTime(BRASILEIRA.getUpdatedDate()));
     }
 
     @Test
@@ -171,7 +173,7 @@ public class CustomerServiceTest {
         assertThat(sut.getPhoneNumber()).isEqualTo(DISABLE_CUSTOMER_ID.getPhoneNumber());
         assertFalse(sut.getActive());
         assertFalse(sut.getUpdatedDate().isEmpty());
-        assertThat(sut.getUpdatedDate()).isEqualTo(converter.toStringLocalDateTime(DISABLE_CUSTOMER_ID.getUpdatedDate()));
+        assertThat(sut.getUpdatedDate()).isEqualTo(mapper.toStringLocalDateTime(DISABLE_CUSTOMER_ID.getUpdatedDate()));
 
     }
 

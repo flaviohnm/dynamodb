@@ -1,4 +1,4 @@
-package br.com.dynamodb.converter;
+package br.com.dynamodb.mapper;
 
 import br.com.dynamodb.dto.CustomerDTO;
 import br.com.dynamodb.model.Customer;
@@ -13,7 +13,7 @@ import java.util.Optional;
 
 import static br.com.dynamodb.config.Constants.*;
 
-public class Converter {
+public class Mapper {
 
     public Long toEpocDate(String date) {
         return LocalDateTime
