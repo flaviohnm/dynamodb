@@ -17,7 +17,7 @@
         <java.version>22</java.version>
         <aws-dynamo.version>1.12.749</aws-dynamo.version>
         <spring-data-dynamodb.version>5.1.0</spring-data-dynamodb.version>
-        <lombok.version>1.18.32</lombok.version>
+        <lombok.version>1.18.34</lombok.version>
         <jacoco.version>0.8.12</jacoco.version>
         <mockito.version>5.12.0</mockito.version>
         <pitest.version>1.16.1</pitest.version>
