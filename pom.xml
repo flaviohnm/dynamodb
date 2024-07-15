@@ -15,7 +15,7 @@
     <description>AWS DynamoDB Project</description>
     <properties>
         <java.version>22</java.version>
-        <aws-dynamo.version>1.12.749</aws-dynamo.version>
+        <aws-dynamo.version>1.12.761</aws-dynamo.version>
         <spring-data-dynamodb.version>5.1.0</spring-data-dynamodb.version>
         <lombok.version>1.18.32</lombok.version>
         <jacoco.version>0.8.12</jacoco.version>
