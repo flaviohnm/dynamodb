@@ -40,64 +40,57 @@ public class Mapper {
     }
 
     public Customer toCreateCustomer(CustomerDTO customerDTO) {
-        var customer = new Customer();
+        var date = LocalDateTime.now().toString();
 
-        customer.setCompanyName(customerDTO.getCompanyName());
-        customer.setCompanyDocumentNumber(customerDTO.getCompanyDocumentNumber());
-        customer.setPhoneNumber(customerDTO.getPhoneNumber());
-        customer.setCreateDate(LocalDateTime.now().toString());
-        customer.setExpirationDate(toEpocDate(customer.getCreateDate()));
-        customer.setActive(true);
-
-        return customer;
+        return Customer.builder()
+                .companyName(customerDTO.getCompanyName())
+                .companyDocumentNumber(customerDTO.getCompanyDocumentNumber())
+                .phoneNumber(customerDTO.getPhoneNumber())
+                .createDate(date)
+                .expirationDate(toEpocDate(date))
+                .active(true)
+                .build();
     }
 
     public CustomerDTO toCustomerDTO(Customer customer) {
-        var customerDTO = new CustomerDTO();
-
-        customerDTO.setCompanyName(customer.getCompanyName());
-        customerDTO.setCompanyDocumentNumber(customer.getCompanyDocumentNumber());
-        customerDTO.setPhoneNumber(customer.getPhoneNumber());
-        customerDTO.setCreateDate(toStringLocalDateTime(customer.getCreateDate()));
-        customerDTO.setExpirationDate(toStringDate(customer.getExpirationDate()));
-        if (customer.getUpdatedDate() != null) {
-            customerDTO.setUpdatedDate(
-                    toStringLocalDateTime(customer.getUpdatedDate())
-            );
-        }
-        customerDTO.setActive(customer.getActive());
-
-        return customerDTO;
+        return CustomerDTO
+                .builder()
+                .companyName(customer.getCompanyName())
+                .companyDocumentNumber(customer.getCompanyDocumentNumber())
+                .phoneNumber(customer.getPhoneNumber())
+                .createDate(toStringLocalDateTime(customer.getCreateDate()))
+                .expirationDate(toStringDate(customer.getExpirationDate()))
+                .updatedDate(customer.getUpdatedDate() != null ? toStringLocalDateTime(customer.getUpdatedDate()) : null)
+                .active(customer.getActive())
+                .build();
     }
 
     public Customer optionalToUpdateCustomer(Optional<Customer> optionalCustomer, CustomerDTO customerDTO) {
-        var customer = new Customer();
-
-        customer.setId(optionalCustomer.get().getId());
-        customer.setCompanyDocumentNumber(optionalCustomer.get().getCompanyDocumentNumber());
-        customer.setCompanyName(customerDTO.getCompanyName());
-        customer.setPhoneNumber(customerDTO.getPhoneNumber());
-        customer.setCreateDate(optionalCustomer.get().getCreateDate());
-        customer.setExpirationDate(optionalCustomer.get().getExpirationDate());
-        customer.setUpdatedDate(LocalDateTime.now().toString());
-        customer.setActive(optionalCustomer.get().getActive());
-
-        return customer;
+        return Customer
+                .builder()
+                .id(optionalCustomer.get().getId())
+                .companyDocumentNumber(optionalCustomer.get().getCompanyDocumentNumber())
+                .companyName(customerDTO.getCompanyName())
+                .phoneNumber(customerDTO.getPhoneNumber())
+                .createDate(optionalCustomer.get().getCreateDate())
+                .expirationDate(optionalCustomer.get().getExpirationDate())
+                .updatedDate(LocalDateTime.now().toString())
+                .active(optionalCustomer.get().getActive())
+                .build();
     }
 
     public Customer optionalToDisableCustomer(Optional<Customer> optionalCustomer) {
-        var customer = new Customer();
-
-        customer.setId(optionalCustomer.get().getId());
-        customer.setCompanyDocumentNumber(optionalCustomer.get().getCompanyDocumentNumber());
-        customer.setCompanyName(optionalCustomer.get().getCompanyName());
-        customer.setPhoneNumber(optionalCustomer.get().getPhoneNumber());
-        customer.setCreateDate(optionalCustomer.get().getCreateDate());
-        customer.setExpirationDate(optionalCustomer.get().getExpirationDate());
-        customer.setUpdatedDate(LocalDateTime.now().toString());
-        customer.setActive(false);
-
-        return customer;
+        return Customer
+                .builder()
+                .id(optionalCustomer.get().getId())
+                .companyDocumentNumber(optionalCustomer.get().getCompanyDocumentNumber())
+                .companyName(optionalCustomer.get().getCompanyName())
+                .phoneNumber(optionalCustomer.get().getPhoneNumber())
+                .createDate(optionalCustomer.get().getCreateDate())
+                .expirationDate(optionalCustomer.get().getExpirationDate())
+                .updatedDate(LocalDateTime.now().toString())
+                .active(false)
+                .build();
     }
 
     public List<CustomerDTO> toCustomerDTOList(List<Customer> customers) {

@@ -187,7 +187,6 @@
                     <excludedClasses>
                         <param>br.com.dynamodb.model.Customer</param>
                         <param>br.com.dynamodb.dto.CustomerDTO</param>
-                        <param>br.com.dynamodb.mapper.Mapper</param>
                         <param>br.com.dynamodb.config.Constants</param>
                         <param>br.com.dynamodb.config.DynamoDBConfig</param>
                     </excludedClasses>
