@@ -17,14 +17,14 @@ jobs:
       matrix:
         java: [ '22' ]
         architecture: [ 'x64' ]
-    name: Build with JDK ${{ matrix.java }} on ${{ matrix.architecture }}
+    name: Phase Build with JDK ${{ matrix.java }} on ${{ matrix.architecture }}
 
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Setup JDK ${{ matrix.java }}
+      - name: Phase Setup JDK ${{ matrix.java }}
         uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.java }}
@@ -32,21 +32,21 @@ jobs:
           architecture: ${{ matrix.architecture }}
           cache: 'maven'
 
-      - name: Build with Maven
+      - name: Phase Test
         run: mvn test -B package --file pom.xml
 
-      - name: Generate JaCoCo Badge
+      - name: Phase Generate JaCoCo Badge
         id: jacoco
         uses: cicirello/jacoco-badge-generator@v2
         with:
           generate-branches-badge: true
           jacoco-csv-file: "target/site/jacoco/jacoco.csv"
 
-      - name: Log Coverage Percentage
+      - name: Phase Log Coverage Percentage
         run: |
           echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
 
-      - name: Commit the badge (if it changed)
+      - name: Phase Commit the badge (if it changed)
         run: |
           if [[ `git status --porcelain` ]]; then
             git config --global user.name 'Flavio Monteiro'
@@ -55,36 +55,3 @@ jobs:
             git commit -m ":computer: update: jacoco coverage badge :computer:"
             git push
           fi
-
-#  mutationtesting:
-#    needs: build
-#    if: contains(github.event.head_commit.message, 'maven-release-plugin') != true
-#    runs-on: ubuntu-latest
-#    strategy:
-#      matrix:
-#        java: [ '22' ]
-#        architecture: [ 'x64' ]
-#    name: Mutation Coverage
-#
-#    steps:
-#      - name: Check out repository
-#        uses: actions/checkout@v4.1.6
-#        with:
-#          # Disabling shallow clone is recommended for improving relevancy of reporting
-#          fetch-depth: 0
-#
-#      - name: Setup JDK ${{ matrix.java }}
-#        uses: actions/setup-java@v4
-#        with:
-#          java-version: ${{ matrix.java }}
-#          distribution: 'oracle'
-#          architecture: ${{ matrix.architecture }}
-#          cache: 'maven'
-#
-#      - name: Install reporter
-#        run: mvn -B --no-transfer-progress install
-#
-#      - name: Run Pitest and upload report
-#        run: mvn -B -e --no-transfer-progress test-compile org.pitest:pitest-maven:mutationCoverage -Dverbose
-#        env:
-#          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
