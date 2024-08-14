@@ -6,10 +6,12 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 
 import java.io.Serial;
 import java.io.Serializable;
 
+@Builder
 @DynamoDBTable(tableName = "customer")
 public class Customer implements Serializable {
 
