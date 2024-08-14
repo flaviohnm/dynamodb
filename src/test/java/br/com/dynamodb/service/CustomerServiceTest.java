@@ -78,8 +78,6 @@ public class CustomerServiceTest {
     @Test
     public void getCustomer_ByExistingCompanyName_ReturnsCustomer() {
 
-        CUSTOMER_ID.setId("c630b6d5-8650-4bcb-89a2-61e0500fcb95");
-
         given(repository.findByCompanyName(anyString())).willReturn(List.of(CUSTOMER_ID));
 
         List<CustomerDTO> sut = service.findByCompanyName("Empresa Portuguesa LTDA");

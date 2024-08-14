@@ -62,17 +62,9 @@ public class Customer implements Serializable {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     @DynamoDBAttribute(attributeName = "company_name")
     public String getCompanyName() {
         return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
     }
 
     @DynamoDBAttribute(attributeName = "company_document_number")
@@ -80,17 +72,9 @@ public class Customer implements Serializable {
         return companyDocumentNumber;
     }
 
-    public void setCompanyDocumentNumber(String companyDocumentNumber) {
-        this.companyDocumentNumber = companyDocumentNumber;
-    }
-
     @DynamoDBAttribute(attributeName = "phone_number")
     public String getPhoneNumber() {
         return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     @DynamoDBAttribute(attributeName = "create_date")
@@ -98,26 +82,15 @@ public class Customer implements Serializable {
         return createDate;
     }
 
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
-    }
-
     @DynamoDBAttribute(attributeName = "updated_date")
     public String getUpdatedDate() {
         return updatedDate;
     }
 
-    public void setUpdatedDate(String updatedDate) {
-        this.updatedDate = updatedDate;
-    }
 
     @DynamoDBAttribute(attributeName = "expiration_date")
     public Long getExpirationDate() {
         return expirationDate;
-    }
-
-    public void setExpirationDate(Long expirationDate) {
-        this.expirationDate = expirationDate;
     }
 
     @DynamoDBAttribute(attributeName = "active")
@@ -125,7 +98,4 @@ public class Customer implements Serializable {
         return active;
     }
 
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
 }
