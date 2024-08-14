@@ -117,12 +117,9 @@
                         </rule>
                     </rules>
                     <excludes>
-                        <exclude>/**/DynamoDbApplication.class</exclude>
-                        <exclude>/**/DynamoDBConfig.class</exclude>
-                        <exclude>/**/Mapper.class</exclude>
+                        <exclude>/**/config/*</exclude>
                         <exclude>/**/Constants.class</exclude>
-                        <exclude>/**/Costumer.class</exclude>
-                        <exclude>/**/CostumerDTO.class</exclude>
+                        <exclude>/**/DynamoDbApplication.class</exclude>
                     </excludes>
                 </configuration>
                 <executions>
@@ -185,10 +182,7 @@
                         <param>br.com.dynamodb.*Test</param>
                     </targetTests>
                     <excludedClasses>
-                        <param>br.com.dynamodb.model.Customer</param>
-                        <param>br.com.dynamodb.dto.CustomerDTO</param>
-                        <param>br.com.dynamodb.config.Constants</param>
-                        <param>br.com.dynamodb.config.DynamoDBConfig</param>
+                        <param>br.com.dynamodb.config.*</param>
                     </excludedClasses>
                     <outputFormats>
                         <format>stryker-dashboard</format>
