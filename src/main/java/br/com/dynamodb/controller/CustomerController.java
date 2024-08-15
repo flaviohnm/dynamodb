@@ -2,11 +2,13 @@ package br.com.dynamodb.controller;
 
 import br.com.dynamodb.dto.CustomerDTO;
 import br.com.dynamodb.service.CustomerService;
+
 import jakarta.validation.Valid;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 

@@ -1,15 +1,14 @@
 #!/bin/bash -x
 
-LOCALSTACK_HOST=localhost
-AWS_REGION=sa-east-1
+FOLDER_PATH=/etc/localstack/init/ready.d
 
 create_dynamodb(){
-  awslocal dynamodb create-table --table-name customer --cli-input-json file:///docker-entrypoint-initaws.d/table/customerTable.json
+  awslocal dynamodb --endpoint http://localhost:4566 create-table --table-name customer --cli-input-json file://${FOLDER_PATH}/table/customerTable.json
   echo "create dynamodbTable customer successfully"
 }
 
 putItems_dynamodb(){
-  awslocal dynamodb batch-write-item --request-items file:///docker-entrypoint-initaws.d/item/putCustomers.json
+  aws dynamodb --endpoint http://localhost:4566 --region us-east-1 batch-write-item --request-items file://${FOLDER_PATH}/item/putCustomers.json
   echo " 3 costumers add in customerTable successfully"
 }
 
@@ -19,12 +18,8 @@ putItems_dynamodb(){
 #  echo "update dynamodb with ttl attribute successfully"
 #}
 
-echo "Criando DynamoDB"
-echo "==================="
 create_dynamodb
 
-echo "Adding 3 Customers in Customer Table"
-echo "==================="
 putItems_dynamodb
 
 #echo "Adding TTL attribute in Customer Table"
