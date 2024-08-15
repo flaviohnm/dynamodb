@@ -10,12 +10,12 @@
     </parent>
     <groupId>br.com</groupId>
     <artifactId>dynamodb</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>DynamoDB</name>
     <description>AWS DynamoDB Project</description>
     <properties>
         <java.version>22</java.version>
-        <aws-dynamo.version>1.12.767</aws-dynamo.version>
+        <aws-dynamo.version>1.12.768</aws-dynamo.version>
         <spring-data-dynamodb.version>5.1.0</spring-data-dynamodb.version>
         <lombok.version>1.18.34</lombok.version>
         <jacoco.version>0.8.12</jacoco.version>
@@ -35,13 +35,23 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-        <!-- Lombok -->
+        <!-- Spring Data -->
+        <!--        <dependency>-->
+        <!--            <groupId>com.github.derjust</groupId>-->
+        <!--            <artifactId>spring-data-dynamodb</artifactId>-->
+        <!--            <version>${spring-data-dynamodb.version}</version>-->
+        <!--        </dependency>-->
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-            <scope>provided</scope>
+            <groupId>io.github.boostchicken</groupId>
+            <artifactId>spring-data-dynamodb</artifactId>
+            <version>5.2.5</version>
         </dependency>
         <!-- AWS DynamoDB -->
         <dependency>
@@ -49,10 +59,12 @@
             <artifactId>aws-java-sdk-dynamodb</artifactId>
             <version>${aws-dynamo.version}</version>
         </dependency>
+        <!-- Lombok -->
         <dependency>
-            <groupId>com.github.derjust</groupId>
-            <artifactId>spring-data-dynamodb</artifactId>
-            <version>${spring-data-dynamodb.version}</version>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
         </dependency>
         <!-- Test -->
         <dependency>
