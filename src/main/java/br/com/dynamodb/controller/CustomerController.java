@@ -3,8 +3,9 @@ package br.com.dynamodb.controller;
 import br.com.dynamodb.dto.CustomerDTO;
 import br.com.dynamodb.service.CustomerService;
 
+
 import jakarta.validation.Valid;
-import org.springframework.data.repository.query.Param;
+import jakarta.websocket.server.PathParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class CustomerController {
     }
 
     @GetMapping("customer")
-    public ResponseEntity<List<CustomerDTO>> findCustomerByName(@Param("companyName") String companyName) {
+    public ResponseEntity<List<CustomerDTO>> findCustomerByName(@PathParam("companyName") String companyName) {
         return ResponseEntity.ok(customerService.findByCompanyName(companyName));
     }
 
