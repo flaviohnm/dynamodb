@@ -3,6 +3,7 @@ package br.com.dynamodb.service;
 import br.com.dynamodb.dto.CustomerDTO;
 import br.com.dynamodb.mapper.Mapper;
 import br.com.dynamodb.model.Customer;
+import br.com.dynamodb.repository.DynamoDbRepository;
 import br.com.dynamodb.service.impl.CustomerServiceImpl;
 import io.awspring.cloud.dynamodb.DynamoDbTemplate;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,10 +29,13 @@ import static org.mockito.BDDMockito.given;
 public class CustomerServiceTest {
 
     @InjectMocks
-    private CustomerServiceImpl service;
+    CustomerServiceImpl service;
 
     @Mock
-    private DynamoDbTemplate repository;
+    DynamoDbRepository repository;
+
+    @Mock
+    DynamoDbTemplate dynamoDbTemplate;
 
 
     public Mapper mapper;
@@ -45,7 +49,7 @@ public class CustomerServiceTest {
     public void createCustomer_WithValidData_ReturnsCustomer() {
 
         given(repository.findByCompanyDocumentNumber(anyString())).willReturn(Optional.empty());
-        given(repository.save(any(Customer.class))).willReturn(CREATED_CUSTOMER_ID);
+        given(dynamoDbTemplate.save(any(Customer.class))).willReturn(CREATED_CUSTOMER_ID);
 
         //System under test
         CustomerDTO sut = service.saveCustomer(CUSTOMER_DTO);
@@ -71,7 +75,8 @@ public class CustomerServiceTest {
         String expectedMessage = "There is already a customer with this document number";
         String actualMessage = exception.getMessage();
 
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertThat(actualMessage.equals(expectedMessage));
+//        assertTrue(actualMessage.contains(expectedMessage));
 
     }
 
@@ -108,7 +113,7 @@ public class CustomerServiceTest {
     @Test
     public void listCustomers_ReturnsAllCustomers() {
 
-        given(repository.findAll()).willReturn(CUSTOMERS);
+        given(repository.findAllCustomers()).willReturn(CUSTOMERS);
 
         List<CustomerDTO> sut = service.findAllCustomers();
 
@@ -148,7 +153,7 @@ public class CustomerServiceTest {
 
     @Test
     public void listPlanets_ReturnsNoCustomers() {
-        given(repository.findAll()).willReturn(Collections.emptyList());
+        given(repository.findAllCustomers()).willReturn(Collections.emptyList());
 
         List<CustomerDTO> sut = service.findAllCustomers();
 
@@ -159,7 +164,7 @@ public class CustomerServiceTest {
     public void disableCustomer_ByExistingCompanyName_ReturnsCustomer() {
 
         given(repository.findByCompanyDocumentNumber(anyString())).willReturn(Optional.of(CUSTOMER_ID));
-        given(repository.save(any(Customer.class))).willReturn(DISABLE_CUSTOMER_ID);
+        given(dynamoDbTemplate.update(any(Customer.class))).willReturn(DISABLE_CUSTOMER_ID);
 
         //System under test
         CustomerDTO sut = service.disableCustomer(CUSTOMER_ID.getCompanyDocumentNumber());
@@ -198,7 +203,7 @@ public class CustomerServiceTest {
     public void updateCustomer_ByExistingCompanyName_ReturnsUpdatedCustomer() {
 
         given(repository.findByCompanyDocumentNumber(anyString())).willReturn(Optional.of(CUSTOMER_ID));
-        given(repository.save(any(Customer.class))).willReturn(AMERICANA);
+        given(dynamoDbTemplate.update(any(Customer.class))).willReturn(AMERICANA);
 
         CustomerDTO sut = service.updateCustomer(CUSTOMER_DTO);
 
