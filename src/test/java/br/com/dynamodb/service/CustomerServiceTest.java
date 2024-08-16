@@ -3,8 +3,8 @@ package br.com.dynamodb.service;
 import br.com.dynamodb.dto.CustomerDTO;
 import br.com.dynamodb.mapper.Mapper;
 import br.com.dynamodb.model.Customer;
-import br.com.dynamodb.repository.CustomerRepository;
 import br.com.dynamodb.service.impl.CustomerServiceImpl;
+import io.awspring.cloud.dynamodb.DynamoDbTemplate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,7 +31,7 @@ public class CustomerServiceTest {
     private CustomerServiceImpl service;
 
     @Mock
-    private CustomerRepository repository;
+    private DynamoDbTemplate repository;
 
 
     public Mapper mapper;
