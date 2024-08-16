@@ -15,11 +15,10 @@
     <description>AWS DynamoDB Project</description>
     <properties>
         <java.version>22</java.version>
-        <aws-dynamo.version>1.12.768</aws-dynamo.version>
-        <spring-data-dynamodb.version>5.1.0</spring-data-dynamodb.version>
         <lombok.version>1.18.34</lombok.version>
         <jacoco.version>0.8.12</jacoco.version>
         <mockito.version>5.12.0</mockito.version>
+        <jakarta.validation-api>3.1.0</jakarta.validation-api>
         <pitest.version>1.16.1</pitest.version>
         <pitest-junit5.version>1.2.1</pitest-junit5.version>
         <pit-dashboard-reporter>0.2.1</pit-dashboard-reporter>
@@ -57,7 +56,7 @@
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
-            <version>3.1.0</version>
+            <version>${jakarta.validation-api}</version>
         </dependency>
         <!-- Lombok -->
         <dependency>

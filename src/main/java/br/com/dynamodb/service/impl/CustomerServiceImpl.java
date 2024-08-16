@@ -2,7 +2,6 @@ package br.com.dynamodb.service.impl;
 
 import br.com.dynamodb.dto.CustomerDTO;
 import br.com.dynamodb.mapper.Mapper;
-import br.com.dynamodb.model.Customer;
 import br.com.dynamodb.repository.DynamoDbRepository;
 import br.com.dynamodb.service.CustomerService;
 import io.awspring.cloud.dynamodb.DynamoDbTemplate;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -26,10 +24,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDTO saveCustomer(CustomerDTO customerDTO) {
-        var recoveryCustomer =
+        var recoveryListCustomer =
                 repository.findByCompanyDocumentNumber(customerDTO.getCompanyDocumentNumber());
 
-        if (recoveryCustomer.isPresent()) {
+        if (!recoveryListCustomer.isEmpty()) {
             throw new RuntimeException("There is already a customer with this document number");
         }
 
@@ -51,18 +49,15 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Optional<Customer> findByCompanyDocumentNumber(String companyDocumentNumber) {
-        return repository.findByCompanyDocumentNumber(companyDocumentNumber);
-    }
-
-    @Override
     public CustomerDTO updateCustomer(CustomerDTO customerDTO) {
-        var recoveryCustomer =
+        var recoveryListCustomer =
                 repository.findByCompanyDocumentNumber(customerDTO.getCompanyDocumentNumber());
 
-        if (recoveryCustomer.isEmpty()) {
+        if (recoveryListCustomer.isEmpty()) {
             throw new RuntimeException("There is no customer with this document number");
         }
+
+        var recoveryCustomer = recoveryListCustomer.stream().toList().getFirst();
 
         return mapper.toCustomerDTO(
                 dynamoDbTemplate.update(
@@ -71,12 +66,14 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDTO disableCustomer(String companyDocumentNumber) {
-        var recoveryCustomer =
+        var recoveryListCustomer =
                 repository.findByCompanyDocumentNumber(companyDocumentNumber);
 
-        if (recoveryCustomer.isEmpty()) {
+        if (recoveryListCustomer.isEmpty()) {
             throw new RuntimeException("There is no customer with this document number");
         }
+
+        var recoveryCustomer = recoveryListCustomer.stream().toList().getFirst();
 
         return mapper.toCustomerDTO(
                 dynamoDbTemplate.update(

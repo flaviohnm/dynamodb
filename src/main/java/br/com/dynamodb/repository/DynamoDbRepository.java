@@ -9,7 +9,10 @@ import software.amazon.awssdk.enhanced.dynamodb.model.PageIterable;
 import software.amazon.awssdk.enhanced.dynamodb.model.ScanEnhancedRequest;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class DynamoDbRepository {
@@ -17,7 +20,7 @@ public class DynamoDbRepository {
     @Autowired
     DynamoDbTemplate dynamoDbTemplate;
 
-    public Optional<Customer> findByCompanyDocumentNumber(String companyDocumentNumber) {
+    public List<Customer> findByCompanyDocumentNumber(String companyDocumentNumber) {
         Map<String, AttributeValue> expressionValues = new HashMap<>();
         expressionValues.put(":company_document_number", AttributeValue.fromS(companyDocumentNumber));
 
@@ -31,12 +34,11 @@ public class DynamoDbRepository {
         PageIterable<Customer> customerList = dynamoDbTemplate.scan(scanEnhancedRequest,
                 Customer.class);
 
-        return Optional.ofNullable(customerList
+        return customerList
                 .stream()
                 .toList()
                 .getFirst()
-                .items()
-                .getFirst());
+                .items();
     }
 
     public List<Customer> findByCompanyName(String companyName) {
@@ -50,10 +52,10 @@ public class DynamoDbRepository {
 
         ScanEnhancedRequest scanEnhancedRequest = ScanEnhancedRequest.builder()
                 .filterExpression(filterExpression).build();
-        PageIterable<Customer> customerList = dynamoDbTemplate.scan(scanEnhancedRequest,
+        PageIterable<Customer> customers = dynamoDbTemplate.scan(scanEnhancedRequest,
                 Customer.class);
 
-        return customerList
+        return customers
                 .items()
                 .stream()
                 .toList();

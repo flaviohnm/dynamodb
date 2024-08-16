@@ -48,7 +48,7 @@ public class CustomerServiceTest {
     @Test
     public void createCustomer_WithValidData_ReturnsCustomer() {
 
-        given(repository.findByCompanyDocumentNumber(anyString())).willReturn(Optional.empty());
+        given(repository.findByCompanyDocumentNumber(anyString())).willReturn(List.of());
         given(dynamoDbTemplate.save(any(Customer.class))).willReturn(CREATED_CUSTOMER_ID);
 
         //System under test
@@ -68,7 +68,7 @@ public class CustomerServiceTest {
     @Test
     public void createCustomer_WithInvalidData_ThrowsException() {
 
-        given(repository.findByCompanyDocumentNumber(anyString())).willReturn(Optional.of(CUSTOMER_ID));
+        given(repository.findByCompanyDocumentNumber(anyString())).willReturn(List.of());
 
         Exception exception = assertThrows(RuntimeException.class, () -> service.saveCustomer(CUSTOMER_DTO));
 
@@ -163,7 +163,7 @@ public class CustomerServiceTest {
     @Test
     public void disableCustomer_ByExistingCompanyName_ReturnsCustomer() {
 
-        given(repository.findByCompanyDocumentNumber(anyString())).willReturn(Optional.of(CUSTOMER_ID));
+        given(repository.findByCompanyDocumentNumber(anyString())).willReturn(List.of(CUSTOMER_ID));
         given(dynamoDbTemplate.update(any(Customer.class))).willReturn(DISABLE_CUSTOMER_ID);
 
         //System under test
@@ -182,7 +182,7 @@ public class CustomerServiceTest {
     @Test
     public void disableCustomer_ByUnExistingCompanyDocumentNumber_ReturnsEmpty() {
 
-        given(repository.findByCompanyDocumentNumber(anyString())).willReturn(Optional.empty());
+        given(repository.findByCompanyDocumentNumber(anyString())).willReturn(List.of());
 
         assertThatThrownBy(() -> service.disableCustomer(CUSTOMER_DTO.getCompanyDocumentNumber()))
                 .isInstanceOf(RuntimeException.class);
@@ -202,7 +202,7 @@ public class CustomerServiceTest {
     @Test
     public void updateCustomer_ByExistingCompanyName_ReturnsUpdatedCustomer() {
 
-        given(repository.findByCompanyDocumentNumber(anyString())).willReturn(Optional.of(CUSTOMER_ID));
+        given(repository.findByCompanyDocumentNumber(anyString())).willReturn(List.of(CUSTOMER_ID));
         given(dynamoDbTemplate.update(any(Customer.class))).willReturn(AMERICANA);
 
         CustomerDTO sut = service.updateCustomer(CUSTOMER_DTO);
