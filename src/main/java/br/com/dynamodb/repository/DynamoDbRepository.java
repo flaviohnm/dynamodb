@@ -9,7 +9,6 @@ import software.amazon.awssdk.enhanced.dynamodb.model.PageIterable;
 import software.amazon.awssdk.enhanced.dynamodb.model.ScanEnhancedRequest;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,10 +30,10 @@ public class DynamoDbRepository {
 
         ScanEnhancedRequest scanEnhancedRequest = ScanEnhancedRequest.builder()
                 .filterExpression(filterExpression).build();
-        PageIterable<Customer> customerList = dynamoDbTemplate.scan(scanEnhancedRequest,
+        PageIterable<Customer> customers = dynamoDbTemplate.scan(scanEnhancedRequest,
                 Customer.class);
 
-        return customerList
+        return customers
                 .stream()
                 .toList()
                 .getFirst()
@@ -62,18 +61,12 @@ public class DynamoDbRepository {
     }
 
     public List<Customer> findAllCustomers() {
+        var customers = dynamoDbTemplate.scanAll(Customer.class);
 
-        List<Customer> customers = new ArrayList<>();
-
-        var recoveryCustomers = dynamoDbTemplate.scanAll(Customer.class);
-        recoveryCustomers
+        return customers
+                .items()
                 .stream()
-                .forEach(customerPage -> customerPage
-                        .items()
-                        .iterator()
-                        .forEachRemaining(customer -> customers.add(customer)));
-
-        return customers;
+                .toList();
     }
 
 }
