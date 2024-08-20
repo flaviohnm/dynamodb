@@ -37,18 +37,6 @@ public class Customer implements Serializable {
     @JsonProperty("active")
     private Boolean active;
 
-
-//    public Customer(String id, String companyName, String companyDocumentNumber, String phoneNumber, String createDate, String updatedDate, Long expirationDate, Boolean active) {
-//        this.id = id;
-//        this.companyName = companyName;
-//        this.companyDocumentNumber = companyDocumentNumber;
-//        this.phoneNumber = phoneNumber;
-//        this.createDate = createDate;
-//        this.updatedDate = updatedDate;
-//        this.expirationDate = expirationDate;
-//        this.active = active;
-//    }
-
     @DynamoDbPartitionKey
     @DynamoDbAttribute("id")
     public String getId() {
