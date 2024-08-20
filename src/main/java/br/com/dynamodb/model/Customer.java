@@ -3,8 +3,7 @@ package br.com.dynamodb.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-import lombok.Setter;
+import lombok.*;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
@@ -13,7 +12,9 @@ import java.io.Serial;
 import java.io.Serializable;
 
 @Data
-@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @DynamoDbBean
 public class Customer implements Serializable {
 
@@ -36,19 +37,17 @@ public class Customer implements Serializable {
     @JsonProperty("active")
     private Boolean active;
 
-    public Customer() {
-    }
 
-    public Customer(String id, String companyName, String companyDocumentNumber, String phoneNumber, String createDate, String updatedDate, Long expirationDate, Boolean active) {
-        this.id = id;
-        this.companyName = companyName;
-        this.companyDocumentNumber = companyDocumentNumber;
-        this.phoneNumber = phoneNumber;
-        this.createDate = createDate;
-        this.updatedDate = updatedDate;
-        this.expirationDate = expirationDate;
-        this.active = active;
-    }
+//    public Customer(String id, String companyName, String companyDocumentNumber, String phoneNumber, String createDate, String updatedDate, Long expirationDate, Boolean active) {
+//        this.id = id;
+//        this.companyName = companyName;
+//        this.companyDocumentNumber = companyDocumentNumber;
+//        this.phoneNumber = phoneNumber;
+//        this.createDate = createDate;
+//        this.updatedDate = updatedDate;
+//        this.expirationDate = expirationDate;
+//        this.active = active;
+//    }
 
     @DynamoDbPartitionKey
     @DynamoDbAttribute("id")

@@ -45,6 +45,11 @@
   }
 }
 ```
+### Mutatuion Test
+```shell
+mvn test-compile org.pitest:pitest-maven:mutationCoverage
+```
+
 ### :coffee:Desafio Futuro
 
 Publicar a aplicação no github com gitActions
