@@ -1,6 +1,8 @@
 package br.com.dynamodb.service.impl;
 
 import br.com.dynamodb.dto.CustomerDTO;
+import br.com.dynamodb.exceptions.ResourceNotFoundException;
+import br.com.dynamodb.exceptions.UnprocessableEntityException;
 import br.com.dynamodb.mapper.Mapper;
 import br.com.dynamodb.repository.DynamoDbRepository;
 import br.com.dynamodb.service.CustomerService;
@@ -28,7 +30,7 @@ public class CustomerServiceImpl implements CustomerService {
                 repository.findByCompanyDocumentNumber(customerDTO.getCompanyDocumentNumber());
 
         if (!recoveryListCustomer.isEmpty()) {
-            throw new RuntimeException("There is already a customer with this document number");
+            throw new UnprocessableEntityException("There is already a customer with this document number");
         }
 
         return mapper
@@ -54,7 +56,7 @@ public class CustomerServiceImpl implements CustomerService {
                 repository.findByCompanyDocumentNumber(customerDTO.getCompanyDocumentNumber());
 
         if (recoveryListCustomer.isEmpty()) {
-            throw new RuntimeException("There is no customer with this document number");
+            throw new ResourceNotFoundException("There is no customer with this document number");
         }
 
         var recoveryCustomer = recoveryListCustomer.stream().toList().getFirst();
@@ -70,7 +72,7 @@ public class CustomerServiceImpl implements CustomerService {
                 repository.findByCompanyDocumentNumber(companyDocumentNumber);
 
         if (recoveryListCustomer.isEmpty()) {
-            throw new RuntimeException("There is no customer with this document number");
+            throw new ResourceNotFoundException("There is no customer with this document number");
         }
 
         var recoveryCustomer = recoveryListCustomer.stream().toList().getFirst();
