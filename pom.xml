@@ -129,7 +129,7 @@
                     </rules>
                     <excludes>
                         <exclude>/**/config/*</exclude>
-                        <exclude>/**/Constants.class</exclude>
+                        <exclude>/**/repository/*</exclude>
                         <exclude>/**/DynamoDbApplication.class</exclude>
                     </excludes>
                 </configuration>
@@ -194,6 +194,7 @@
                     </targetTests>
                     <excludedClasses>
                         <param>br.com.dynamodb.config.*</param>
+                        <param>br.com.dynamodb.repository.*</param>
                     </excludedClasses>
                     <outputFormats>
                         <format>stryker-dashboard</format>
