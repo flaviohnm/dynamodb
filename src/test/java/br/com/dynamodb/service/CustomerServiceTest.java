@@ -1,6 +1,8 @@
 package br.com.dynamodb.service;
 
 import br.com.dynamodb.dto.CustomerDTO;
+import br.com.dynamodb.exceptions.ResourceNotFoundException;
+import br.com.dynamodb.exceptions.UnprocessableEntityException;
 import br.com.dynamodb.mapper.Mapper;
 import br.com.dynamodb.model.Customer;
 import br.com.dynamodb.repository.DynamoDbRepository;
@@ -69,7 +71,7 @@ public class CustomerServiceTest {
 
         given(repository.findByCompanyDocumentNumber(anyString())).willReturn(List.of(CUSTOMER_ID));
 
-        Exception exception = assertThrows(RuntimeException.class, () -> service.saveCustomer(CUSTOMER_DTO));
+        Exception exception = assertThrows(UnprocessableEntityException.class, () -> service.saveCustomer(CUSTOMER_DTO));
 
         String expectedMessage = "There is already a customer with this document number";
         String actualMessage = exception.getMessage();
@@ -184,13 +186,13 @@ public class CustomerServiceTest {
         given(repository.findByCompanyDocumentNumber(anyString())).willReturn(List.of());
 
         assertThatThrownBy(() -> service.disableCustomer(CUSTOMER_DTO.getCompanyDocumentNumber()))
-                .isInstanceOf(RuntimeException.class);
+                .isInstanceOf(ResourceNotFoundException.class);
     }
 
     @Test
     public void disableCustomer_ByUnExistingCompanyDocumentNumber_ReturnsExceptionMessage() {
 
-        Exception exception = assertThrows(RuntimeException.class, () -> service.disableCustomer(null));
+        Exception exception = assertThrows(ResourceNotFoundException.class, () -> service.disableCustomer(null));
 
         String expectedMessage = "There is no customer with this document number";
         String actualMessage = exception.getMessage();
@@ -216,7 +218,7 @@ public class CustomerServiceTest {
     @Test
     public void updateCustomer_ByUnExistingCompanyDocumentNumber_ReturnsExceptionMessage() {
 
-        Exception exception = assertThrows(RuntimeException.class, () -> service.updateCustomer(CUSTOMER_DTO));
+        Exception exception = assertThrows(ResourceNotFoundException.class, () -> service.updateCustomer(CUSTOMER_DTO));
 
         String expectedMessage = "There is no customer with this document number";
         String actualMessage = exception.getMessage();

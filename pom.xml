@@ -130,6 +130,8 @@
                     <excludes>
                         <exclude>/**/config/*</exclude>
                         <exclude>/**/repository/*</exclude>
+                        <exclude>/**/exceptions/handler/*</exclude>
+                        <exclude>/**/exceptions/ExceptionResponse.class</exclude>
                         <exclude>/**/DynamoDbApplication.class</exclude>
                     </excludes>
                 </configuration>
@@ -195,6 +197,8 @@
                     <excludedClasses>
                         <param>br.com.dynamodb.config.*</param>
                         <param>br.com.dynamodb.repository.*</param>
+                        <param>br.com.dynamodb.exceptions.handler.*</param>
+                        <param>br.com.dynamodb.exceptions.ExceptionResponse.class</param>
                     </excludedClasses>
                     <outputFormats>
                         <format>stryker-dashboard</format>
