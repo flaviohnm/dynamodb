@@ -207,9 +207,9 @@
                         <param>br.com.dynamodb.model.*</param>
                         <param>br.com.dynamodb.repository.*</param>
                     </excludedClasses>
-<!--                    <outputFormats>-->
-<!--                        <format>stryker-dashboard</format>-->
-<!--                    </outputFormats>-->
+                    <outputFormats>
+                        <format>stryker-dashboard</format>
+                    </outputFormats>
                 </configuration>
             </plugin>
         </plugins>
