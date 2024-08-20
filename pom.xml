@@ -196,10 +196,10 @@
                         <param>br.com.dynamodb.*Test</param>
                     </targetTests>
                     <excludedClasses>
-                        <param>br.com.dynamodb.config.*</param>
-                        <param>br.com.dynamodb.repository.*</param>
-                        <param>br.com.dynamodb.exceptions.handler.*</param>
-                        <param>br.com.dynamodb.exceptions.ExceptionResponse.class</param>
+                        <param>br.com.dynamodb.config.DynamoDBConfiguration</param>
+                        <param>br.com.dynamodb.repository.DynamoDbRepository</param>
+                        <param>br.com.dynamodb.exceptions.handler.CustomizedResponseEntityExceptionHandler</param>
+                        <param>br.com.dynamodb.exceptions.ExceptionResponse</param>
                     </excludedClasses>
                     <outputFormats>
                         <format>stryker-dashboard</format>
