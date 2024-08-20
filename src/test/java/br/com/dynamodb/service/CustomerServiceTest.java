@@ -15,7 +15,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import static br.com.dynamodb.commom.CustomerConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -68,7 +67,7 @@ public class CustomerServiceTest {
     @Test
     public void createCustomer_WithInvalidData_ThrowsException() {
 
-        given(repository.findByCompanyDocumentNumber(anyString())).willReturn(List.of());
+        given(repository.findByCompanyDocumentNumber(anyString())).willReturn(List.of(CUSTOMER_ID));
 
         Exception exception = assertThrows(RuntimeException.class, () -> service.saveCustomer(CUSTOMER_DTO));
 
@@ -76,7 +75,7 @@ public class CustomerServiceTest {
         String actualMessage = exception.getMessage();
 
         assertThat(actualMessage.equals(expectedMessage));
-//        assertTrue(actualMessage.contains(expectedMessage));
+        assertTrue(actualMessage.contains(expectedMessage));
 
     }
 
