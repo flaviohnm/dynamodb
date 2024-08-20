@@ -129,9 +129,9 @@
                         </rule>
                     </rules>
                     <excludes>
-                        <exclude>/**/config/*</exclude>
-                        <exclude>/**/repository/*</exclude>
                         <exclude>/**/exceptions/handler/*</exclude>
+                        <exclude>/**/config/DynamoDBConfiguration.class</exclude>
+                        <exclude>/**/repository/DynamoDbRepository.class</exclude>
                         <exclude>/**/exceptions/ExceptionResponse.class</exclude>
                         <exclude>/**/DynamoDbApplication.class</exclude>
                     </excludes>
