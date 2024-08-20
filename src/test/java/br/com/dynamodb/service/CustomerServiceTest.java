@@ -62,7 +62,7 @@ public class CustomerServiceTest {
         assertThat(sut.getPhoneNumber()).isEqualTo(CREATED_CUSTOMER_ID.getPhoneNumber());
         assertThat(sut.getActive()).isEqualTo(CREATED_CUSTOMER_ID.getActive());
         assertThat(sut.getExpirationDate()).isEqualTo(mapper.toStringDate(CREATED_CUSTOMER_ID.getExpirationDate()));
-        assertTrue(sut.getUpdatedDate() == null);
+        assertNull(sut.getUpdatedDate());
 
     }
 
@@ -76,8 +76,7 @@ public class CustomerServiceTest {
         String expectedMessage = "There is already a customer with this document number";
         String actualMessage = exception.getMessage();
 
-        assertThat(actualMessage.equals(expectedMessage));
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertEquals(actualMessage, expectedMessage);
 
     }
 
@@ -141,7 +140,7 @@ public class CustomerServiceTest {
         assertThat(sut.get(2).getCompanyDocumentNumber()).isEqualTo(CANADENSE.getCompanyDocumentNumber());
         assertThat(sut.get(2).getPhoneNumber()).isEqualTo(CANADENSE.getPhoneNumber());
         assertThat(sut.get(2).getExpirationDate()).isEqualTo(mapper.toStringDate(CANADENSE.getExpirationDate()));
-        assertTrue(sut.get(2).getUpdatedDate() == null);
+        assertNull(sut.get(2).getUpdatedDate());
 
 
         assertNotNull(sut.getLast());
