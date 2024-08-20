@@ -190,20 +190,26 @@
                         <artifactId>pit-dashboard-reporter</artifactId>
                         <version>${pit-dashboard-reporter}</version>
                     </dependency>
+                    <dependency>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-testng-plugin</artifactId>
+                        <version>0.1</version>
+                    </dependency>
                 </dependencies>
                 <configuration>
                     <targetTests>
                         <param>br.com.dynamodb.*Test</param>
                     </targetTests>
                     <excludedClasses>
-                        <param>br.com.dynamodb.config.DynamoDBConfiguration</param>
-                        <param>br.com.dynamodb.repository.DynamoDbRepository</param>
-                        <param>br.com.dynamodb.exceptions.handler.CustomizedResponseEntityExceptionHandler</param>
-                        <param>br.com.dynamodb.exceptions.ExceptionResponse</param>
+                        <param>br.com.dynamodb.config.*</param>
+                        <param>br.com.dynamodb.controller.*</param>
+                        <param>br.com.dynamodb.exceptions.*</param>
+                        <param>br.com.dynamodb.model.*</param>
+                        <param>br.com.dynamodb.repository.*</param>
                     </excludedClasses>
-                    <outputFormats>
-                        <format>stryker-dashboard</format>
-                    </outputFormats>
+<!--                    <outputFormats>-->
+<!--                        <format>stryker-dashboard</format>-->
+<!--                    </outputFormats>-->
                 </configuration>
             </plugin>
         </plugins>
