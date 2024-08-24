@@ -8,7 +8,7 @@ create_dynamodb(){
 }
 
 putItems_dynamodb(){
-  aws dynamodb --endpoint http://localhost:4566 --region us-east-1 batch-write-item --request-items file://${FOLDER_PATH}/item/putCustomers.json
+  awslocal dynamodb --endpoint http://localhost:4566 --region us-east-1 batch-write-item --request-items file://${FOLDER_PATH}/item/putCustomers.json
   echo " 3 costumers add in customerTable successfully"
 }
 
