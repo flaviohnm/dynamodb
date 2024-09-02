@@ -20,7 +20,7 @@
         <mockito.version>5.12.0</mockito.version>
         <jakarta.validation-api>3.1.0</jakarta.validation-api>
         <spring-cloud-aws-dependencies>3.1.1</spring-cloud-aws-dependencies>
-        <pitest.version>1.16.1</pitest.version>
+        <pitest.version>1.16.3</pitest.version>
         <pitest-junit5.version>1.2.1</pitest-junit5.version>
         <pit-dashboard-reporter>0.2.1</pit-dashboard-reporter>
         <pitest-mutation-testing-elements>0.6.3</pitest-mutation-testing-elements>
