@@ -22,6 +22,4 @@ create_dynamodb
 
 putItems_dynamodb
 
-echo "Adding TTL attribute in Customer Table"
-echo "==================="
 update_dynamodb
