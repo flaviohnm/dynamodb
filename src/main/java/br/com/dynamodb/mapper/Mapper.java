@@ -9,6 +9,7 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static br.com.dynamodb.config.Constants.*;
@@ -63,6 +64,20 @@ public class Mapper {
                 .expirationDate(toStringDate(customer.getExpirationDate()))
                 .updatedDate(customer.getUpdatedDate() != null ? toStringLocalDateTime(customer.getUpdatedDate()) : null)
                 .active(customer.getActive())
+                .build();
+    }
+
+    public Customer optionalToCustomer(Optional<Customer> optCostumer) {
+        return Customer.builder()
+                .id(optCostumer.get().getId())
+                .companyName(optCostumer.get().getCompanyName())
+                .companyDocumentNumber(optCostumer.get().getCompanyDocumentNumber())
+                .companyName(optCostumer.get().getCompanyName())
+                .phoneNumber(optCostumer.get().getPhoneNumber())
+                .createDate(optCostumer.get().getCreateDate())
+                .expirationDate(optCostumer.get().getExpirationDate())
+                .updatedDate(optCostumer.get().getUpdatedDate())
+                .active(optCostumer.get().getActive())
                 .build();
     }
 
