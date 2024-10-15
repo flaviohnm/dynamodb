@@ -5,13 +5,17 @@ import io.awspring.cloud.dynamodb.DynamoDbTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.enhanced.dynamodb.Expression;
+import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.model.PageIterable;
+import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
+import software.amazon.awssdk.enhanced.dynamodb.model.QueryEnhancedRequest;
 import software.amazon.awssdk.enhanced.dynamodb.model.ScanEnhancedRequest;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class DynamoDbRepository {
@@ -58,6 +62,21 @@ public class DynamoDbRepository {
                 .items()
                 .stream()
                 .toList();
+    }
+
+    public Optional<Customer> findCompanyNameByQuery(String companyName) {
+
+        var key = Key.builder().partitionValue(companyName).build();
+        var queryEnhancedRequest = QueryEnhancedRequest.builder()
+                .queryConditional(QueryConditional.keyEqualTo(key)).build();
+
+        PageIterable<Customer> customers = dynamoDbTemplate.query(queryEnhancedRequest,
+                Customer.class, "xCompanyName");
+
+        return customers
+                .items()
+                .stream()
+                .findFirst();
     }
 
     public List<Customer> findAllCustomers() {
