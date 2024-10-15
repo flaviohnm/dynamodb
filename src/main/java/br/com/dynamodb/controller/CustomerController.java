@@ -33,6 +33,11 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.findByCompanyName(companyName));
     }
 
+    @GetMapping("customer/query")
+    public ResponseEntity<CustomerDTO> findCompanyNameByQuery(@PathParam("companyName") String companyName) {
+        return ResponseEntity.ok(customerService.findCompanyNameByQuery(companyName));
+    }
+
     @GetMapping("customer/all")
     public ResponseEntity<List<CustomerDTO>> Customers() {
         return ResponseEntity.ok(customerService.findAllCustomers());

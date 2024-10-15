@@ -17,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static br.com.dynamodb.commom.CustomerConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -40,6 +41,10 @@ public class CustomerServiceTest {
 
 
     public Mapper mapper;
+
+    private static final String CUSTOMER_IS_ALREADY = "There is already a customer with this document number";
+    private static final String CUSTOMER_IS_NOT_EXISTS = "There is not customer with this document number";
+
 
     @BeforeEach
     public void setup() {
@@ -73,7 +78,7 @@ public class CustomerServiceTest {
 
         Exception exception = assertThrows(UnprocessableEntityException.class, () -> service.saveCustomer(CUSTOMER_DTO));
 
-        String expectedMessage = "There is already a customer with this document number";
+        String expectedMessage = CUSTOMER_IS_ALREADY;
         String actualMessage = exception.getMessage();
 
         assertEquals(actualMessage, expectedMessage);
@@ -96,6 +101,23 @@ public class CustomerServiceTest {
         assertThat(sut.getFirst().getExpirationDate()).isEqualTo(mapper.toStringDate(CUSTOMER_ID.getExpirationDate()));
         assertFalse(sut.getFirst().getUpdatedDate().isEmpty());
         assertThat(sut.getFirst().getUpdatedDate()).isEqualTo(mapper.toStringLocalDateTime(CUSTOMER_ID.getUpdatedDate()));
+
+    }
+
+    public void getCustomer_ByQuery_ExistingCompanyName_ReturnsCustomer() {
+
+        given(repository.findCompanyNameByQuery(anyString())).willReturn(Optional.of(CUSTOMER_ID));
+
+        CustomerDTO sut = service.findCompanyNameByQuery("Empresa Portuguesa LTDA");
+
+        assertNotNull(sut);
+        assertThat(sut.getCompanyName()).isEqualTo(CUSTOMER_ID.getCompanyName());
+        assertThat(sut.getCompanyDocumentNumber()).isEqualTo(CUSTOMER_ID.getCompanyDocumentNumber());
+        assertThat(sut.getPhoneNumber()).isEqualTo(CUSTOMER_ID.getPhoneNumber());
+        assertThat(sut.getActive()).isEqualTo(CUSTOMER_ID.getActive());
+        assertThat(sut.getExpirationDate()).isEqualTo(mapper.toStringDate(CUSTOMER_ID.getExpirationDate()));
+        assertFalse(sut.getUpdatedDate().isEmpty());
+        assertThat(sut.getUpdatedDate()).isEqualTo(mapper.toStringLocalDateTime(CUSTOMER_ID.getUpdatedDate()));
 
     }
 
@@ -152,7 +174,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void listPlanets_ReturnsNoCustomers() {
+    public void listCustomers_ReturnsNoCustomers() {
         given(repository.findAllCustomers()).willReturn(Collections.emptyList());
 
         List<CustomerDTO> sut = service.findAllCustomers();
@@ -193,7 +215,7 @@ public class CustomerServiceTest {
 
         Exception exception = assertThrows(ResourceNotFoundException.class, () -> service.disableCustomer(null));
 
-        String expectedMessage = "There is no customer with this document number";
+        String expectedMessage = CUSTOMER_IS_NOT_EXISTS;
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
@@ -219,7 +241,7 @@ public class CustomerServiceTest {
 
         Exception exception = assertThrows(ResourceNotFoundException.class, () -> service.updateCustomer(CUSTOMER_DTO));
 
-        String expectedMessage = "There is no customer with this document number";
+        String expectedMessage = CUSTOMER_IS_NOT_EXISTS;
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));

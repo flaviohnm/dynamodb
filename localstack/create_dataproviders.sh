@@ -9,19 +9,17 @@ create_dynamodb(){
 
 putItems_dynamodb(){
   awslocal dynamodb --endpoint http://localhost:4566 --region us-east-1 batch-write-item --request-items file://${FOLDER_PATH}/item/putCustomers.json
-  echo " 3 costumers add in customerTable successfully"
+  echo "3 costumers add in customerTable successfully"
 }
 
-#update_dynamodb(){
-#  awslocal dynamodb update-time-to-live --table-name customer \
-#    --time-to-live-specification "Enable=true, AttributeName=expiration_date"
-#  echo "update dynamodb with ttl attribute successfully"
-#}
+update_dynamodb(){
+  awslocal dynamodb update-time-to-live --table-name customer \
+    --time-to-live-specification "Enabled=true, AttributeName=expiration_date"
+  echo "update dynamodb with ttl attribute successfully"
+}
 
 create_dynamodb
 
 putItems_dynamodb
 
-#echo "Adding TTL attribute in Customer Table"
-#echo "==================="
-#update_dynamodb
+update_dynamodb

@@ -7,6 +7,7 @@ import lombok.*;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSecondaryPartitionKey;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -43,6 +44,7 @@ public class Customer implements Serializable {
         return id;
     }
 
+    @DynamoDbSecondaryPartitionKey(indexNames = "xCompanyName")
     @DynamoDbAttribute("company_name")
     public String getCompanyName() {
         return companyName;

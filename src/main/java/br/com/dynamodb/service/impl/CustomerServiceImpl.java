@@ -23,6 +23,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     public Mapper mapper = new Mapper();
 
+    private static final String CUSTOMER_IS_ALREADY = "There is already a customer with this document number";
+    private static final String CUSTOMER_IS_NOT_EXISTS = "There is not customer with this document number";
 
     @Override
     public CustomerDTO saveCustomer(CustomerDTO customerDTO) {
@@ -30,7 +32,7 @@ public class CustomerServiceImpl implements CustomerService {
                 repository.findByCompanyDocumentNumber(customerDTO.getCompanyDocumentNumber());
 
         if (!recoveryListCustomer.isEmpty()) {
-            throw new UnprocessableEntityException("There is already a customer with this document number");
+            throw new UnprocessableEntityException(CUSTOMER_IS_ALREADY);
         }
 
         return mapper
@@ -51,12 +53,26 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public CustomerDTO findCompanyNameByQuery(String companyName) {
+        var recoveredCustomer = repository.findCompanyNameByQuery(companyName);
+
+        if (recoveredCustomer.isEmpty()) {
+            throw new ResourceNotFoundException(CUSTOMER_IS_NOT_EXISTS);
+        }
+
+        return mapper
+                .toCustomerDTO(mapper
+                        .optionalToCustomer(repository
+                                .findCompanyNameByQuery(companyName)));
+    }
+
+    @Override
     public CustomerDTO updateCustomer(CustomerDTO customerDTO) {
         var recoveryListCustomer =
                 repository.findByCompanyDocumentNumber(customerDTO.getCompanyDocumentNumber());
 
         if (recoveryListCustomer.isEmpty()) {
-            throw new ResourceNotFoundException("There is no customer with this document number");
+            throw new ResourceNotFoundException(CUSTOMER_IS_NOT_EXISTS);
         }
 
         var recoveryCustomer = recoveryListCustomer.stream().toList().getFirst();
@@ -72,7 +88,7 @@ public class CustomerServiceImpl implements CustomerService {
                 repository.findByCompanyDocumentNumber(companyDocumentNumber);
 
         if (recoveryListCustomer.isEmpty()) {
-            throw new ResourceNotFoundException("There is no customer with this document number");
+            throw new ResourceNotFoundException(CUSTOMER_IS_NOT_EXISTS);
         }
 
         var recoveryCustomer = recoveryListCustomer.stream().toList().getFirst();
