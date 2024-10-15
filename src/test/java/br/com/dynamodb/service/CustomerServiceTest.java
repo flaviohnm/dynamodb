@@ -104,6 +104,7 @@ public class CustomerServiceTest {
 
     }
 
+    @Test
     public void getCustomer_ByQuery_ExistingCompanyName_ReturnsCustomer() {
 
         given(repository.findCompanyNameByQuery(anyString())).willReturn(Optional.of(CUSTOMER_ID));
@@ -122,12 +123,26 @@ public class CustomerServiceTest {
     }
 
     @Test
+    public void getCustomer_ByQuery_UnExistingCompanyName_ReturnsEmpty() {
+
+        given(repository.findCompanyNameByQuery(anyString())).willReturn(Optional.empty());
+
+        Exception exception = assertThrows(ResourceNotFoundException.class, () -> service.findCompanyNameByQuery(anyString()));
+
+        String expectedMessage = CUSTOMER_IS_NOT_EXISTS;
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+
+    }
+
+
+    @Test
     public void getCustomer_ByUnExistingCompanyName_ReturnsEmpty() {
-        final String name = "UnExisting name";
 
-        given(repository.findByCompanyName(name)).willReturn(List.of());
+        given(repository.findByCompanyName(anyString())).willReturn(List.of());
 
-        List<CustomerDTO> sut = service.findByCompanyName(name);
+        List<CustomerDTO> sut = service.findByCompanyName(anyString());
 
         assertThat(sut).isEmpty();
     }
