@@ -15,7 +15,7 @@
     <description>AWS DynamoDB Project</description>
     <properties>
         <java.version>22</java.version>
-        <lombok.version>1.18.34</lombok.version>
+        <lombok.version>1.18.36</lombok.version>
         <jacoco.version>0.8.12</jacoco.version>
         <mockito.version>5.14.1</mockito.version>
         <jakarta.validation-api>3.1.0</jakarta.validation-api>
