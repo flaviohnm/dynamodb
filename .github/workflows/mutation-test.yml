@@ -28,7 +28,25 @@ jobs:
       - name: Install reporter
         run: mvn -B --no-transfer-progress install
 
+      # PRs (e qualquer evento fora de push na main): roda o Pitest normalmente,
+      # mas sem tentar subir para o Stryker Dashboard (evita falha por falta de secret).
+      - name: Run Pitest (sem upload para o dashboard)
+        if: github.event_name != 'push' || github.ref != 'refs/heads/main'
+        run: mvn -B -e --no-transfer-progress test-compile org.pitest:pitest-maven:mutationCoverage -Dverbose -DoutputFormats=HTML,XML
+
+      # Push na main: roda o Pitest e sobe o relatório para o Stryker Dashboard.
       - name: Run Pitest and upload report
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: mvn -B -e --no-transfer-progress test-compile org.pitest:pitest-maven:mutationCoverage -Dverbose
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+
+      # Opcional: deixa o relatório HTML do Pitest disponível como artifact do run,
+      # útil para inspecionar mutantes sobreviventes direto no PR.
+      - name: Upload Pitest HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pitest-report
+          path: target/pit-reports/
+          retention-days: 14

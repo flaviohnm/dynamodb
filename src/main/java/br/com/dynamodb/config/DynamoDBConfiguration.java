@@ -1,5 +1,7 @@
 package br.com.dynamodb.config;
 
+import br.com.dynamodb.model.Customer;
+import io.awspring.cloud.dynamodb.DynamoDbTableNameResolver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,20 +25,40 @@ public class DynamoDBConfiguration {
     @Value("${aws.dynamodb.endpoint}")
     private String endpoint;
 
+    @Value("${aws.region:sa-east-1}")
+    private String region;
+
     @Bean
     public DynamoDbClient getDynamoDbClient() {
         return DynamoDbClient.builder()
                 .endpointOverride(URI.create(endpoint))
-                .region(Region.US_EAST_1)
-                .credentialsProvider(StaticCredentialsProvider.create(
-                        AwsBasicCredentials.create(accessKey, secretKey)))
+                .region(Region.of(region))
+                .credentialsProvider(
+                        StaticCredentialsProvider.create(
+                                AwsBasicCredentials.create(accessKey, secretKey)))
                 .build();
     }
 
     @Bean
-    public DynamoDbEnhancedClient getDynamoDbEnhancedClient() {
+    public DynamoDbEnhancedClient getDynamoDbEnhancedClient(DynamoDbClient dynamoDbClient) {
         return DynamoDbEnhancedClient.builder()
-                .dynamoDbClient(getDynamoDbClient())
+                .dynamoDbClient(dynamoDbClient)
                 .build();
+    }
+
+    // --------------------------------------------------------------------------
+    // Mapeamento de nome de tabela customizado para o DynamoDbTemplate
+    // --------------------------------------------------------------------------
+    @Bean
+    public DynamoDbTableNameResolver dynamoDbTableNameResolver() {
+        return new DynamoDbTableNameResolver() {
+            @Override
+            public <T> String resolve(Class<T> clazz) {
+                if (clazz.equals(Customer.class)) {
+                    return "customers"; // Mapeia a classe Customer para a tabela "customers"
+                }
+                return clazz.getSimpleName().toLowerCase();
+            }
+        };
     }
 }

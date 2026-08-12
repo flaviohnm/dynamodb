@@ -5,22 +5,22 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.4</version>
+        <version>3.4.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>br.com</groupId>
     <artifactId>dynamodb</artifactId>
-    <version>0.0.1</version>
+    <version>0.1.0</version>
     <name>DynamoDB</name>
     <description>AWS DynamoDB Project</description>
     <properties>
-        <java.version>22</java.version>
-        <lombok.version>1.18.34</lombok.version>
+        <java.version>21</java.version>
+        <lombok.version>1.18.36</lombok.version>
         <jacoco.version>0.8.12</jacoco.version>
-        <mockito.version>5.14.1</mockito.version>
+        <mockito.version>5.15.2</mockito.version>
         <jakarta.validation-api>3.1.0</jakarta.validation-api>
-        <spring-cloud-aws-dependencies>3.2.0</spring-cloud-aws-dependencies>
-        <pitest.version>1.17.0</pitest.version>
+        <spring-cloud-aws-dependencies>4.1.0</spring-cloud-aws-dependencies>
+        <pitest.version>1.17.4</pitest.version>
         <pitest-junit5.version>1.2.1</pitest-junit5.version>
         <pit-dashboard-reporter>0.2.1</pit-dashboard-reporter>
         <pitest-mutation-testing-elements>0.6.3</pitest-mutation-testing-elements>
@@ -58,6 +58,10 @@
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
             <version>${jakarta.validation-api}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         <!-- Lombok -->
         <dependency>

@@ -86,6 +86,7 @@ public class DynamoDbRepository {
                 .items()
                 .stream()
                 .toList();
+
     }
 
 }
