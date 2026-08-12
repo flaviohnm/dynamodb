@@ -48,12 +48,24 @@ integrado ao **Amazon DynamoDB** como banco de dados NoSQL. O objetivo é servir
 
 ## 🏗 Arquitetura
 
-```
-┌─────────────┐       HTTP       ┌──────────────────┐       AWS SDK       ┌──────────────┐
-│   Cliente   │  ─────────────▶  │  Spring Boot API  │  ─────────────────▶ │  DynamoDB    │
-│ (Insomnia/  │                  │  (Controller →     │                     │  (Docker/    │
-│  Postman)   │  ◀─────────────  │  Service → Repo)   │  ◀───────────────── │  Local/AWS)  │
-└─────────────┘       JSON       └──────────────────┘                     └──────────────┘
+```mermaid
+sequenceDiagram
+    autonumber
+
+    participant C as Cliente<br/>(Insomnia/Postman)
+    participant CT as Controller
+    participant S as Service
+    participant R as Repository
+    participant DB as DynamoDB<br/>(Docker/Local/AWS)
+
+    C->>CT: HTTP Request (JSON)
+    CT->>S: Processa requisição
+    S->>R: Executa operação
+    R->>DB: AWS SDK
+    DB-->>R: Retorna dados
+    R-->>S: Resultado
+    S-->>CT: Resposta
+    CT-->>C: HTTP Response (JSON)
 ```
 
 ## 🚀💻 Tecnologias & Ferramentas
