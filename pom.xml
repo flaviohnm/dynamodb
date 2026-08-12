@@ -22,7 +22,7 @@
         <spring-cloud-aws-dependencies>3.2.0</spring-cloud-aws-dependencies>
         <pitest.version>1.17.0</pitest.version>
         <pitest-junit5.version>1.2.1</pitest-junit5.version>
-        <pit-dashboard-reporter>0.2.1</pit-dashboard-reporter>
+        <pit-dashboard-reporter>0.3.18</pit-dashboard-reporter>
         <pitest-mutation-testing-elements>0.6.3</pitest-mutation-testing-elements>
         <testng.version>7.10.2</testng.version>
     </properties>
