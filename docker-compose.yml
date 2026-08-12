@@ -1,16 +1,46 @@
 services:
-
-  localstack:
-    container_name: localstack
-    image: localstack/localstack:latest
+  customer:
+    container_name: floci
+    image: floci/floci:latest-aws # Substitua pela tag exata da imagem do Floci que você utiliza
     ports:
-      - "127.0.0.1:4566:4566"            # LocalStack Gateway
-      - "127.0.0.1:4510-4559:4510-4559"  # external services port range
+      - "4566:4566" # Porta do Gateway do Floci
     environment:
-      - DEBUG=0
-      - DOCKER_HOST=unix:///var/run/docker.sock
-      - LOCALSTACK_API_KEY=${LOCALSTACK_API_KEY-}
+      - FLOCI_DEFAULT_REGION=sa-east-1
+      - FLOCI_DEFAULT_ACCOUNT=000000000000
+      - FLOCI_AUTH_VALIDATE_SIGNATURES=false
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - LIFECYCLE_HOOK_TIMEOUT=120
     volumes:
-      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
-      - "/var/run/docker.sock:/var/run/docker.sock"
-      - "./localstack:/etc/localstack/init/ready.d/"
+      # Volume para persistência de dados do Floci
+       - /var/run/docker.sock:/var/run/docker.sock
+       - ./data:/app/data
+       - ./files/database:/etc/files/database
+       - ./init/start.d:/etc/floci/init/start.d:ro
+    networks:
+      - network
+    healthcheck:
+      test: [ "CMD-SHELL", "nc -z localhost 4566 || exit 1" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
+  dynamodb-admin:
+    image: aaronshaf/dynamodb-admin:latest
+    container_name: dynamodb-admin
+    ports:
+      - "8001:8001"
+    environment:
+      - DYNAMO_ENDPOINT=http://floci:4566
+      - AWS_DEFAULT_REGION=sa-east-1
+      - AWS_REGION=sa-east-1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+    networks:
+      - network
+
+
+networks:
+  network:
+    driver: bridge
