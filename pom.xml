@@ -16,7 +16,7 @@
     <properties>
         <java.version>21</java.version>
         <lombok.version>1.18.36</lombok.version>
-        <jacoco.version>0.8.12</jacoco.version>
+        <jacoco.version>0.8.15</jacoco.version>
         <mockito.version>5.15.2</mockito.version>
         <jakarta.validation-api>3.1.0</jakarta.validation-api>
         <spring-cloud-aws-dependencies>4.1.0</spring-cloud-aws-dependencies>
