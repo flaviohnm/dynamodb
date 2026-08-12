@@ -50,9 +50,9 @@ integrado ao **Amazon DynamoDB** como banco de dados NoSQL. O objetivo é servir
 
 ```
 ┌─────────────┐       HTTP       ┌──────────────────┐       AWS SDK       ┌──────────────┐
-│   Cliente   │  ─────────────▶  │  Spring Boot API │  ─────────────────▶ │  DynamoDB    │
-│ (Insomnia/  │                  │  (Controller →   │                     │  (Docker/    │
-│  Postman)   │  ◀─────────────  │  Service → Repo) │  ◀───────────────── │  Local/AWS)  │
+│   Cliente   │  ─────────────▶  │  Spring Boot API  │  ─────────────────▶ │  DynamoDB    │
+│ (Insomnia/  │                  │  (Controller →     │                     │  (Docker/    │
+│  Postman)   │  ◀─────────────  │  Service → Repo)   │  ◀───────────────── │  Local/AWS)  │
 └─────────────┘       JSON       └──────────────────┘                     └──────────────┘
 ```
 
