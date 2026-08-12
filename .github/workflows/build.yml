@@ -20,7 +20,7 @@ jobs:
     name: Phase Build with JDK ${{ matrix.java }} on ${{ matrix.architecture }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.ref }}
 
