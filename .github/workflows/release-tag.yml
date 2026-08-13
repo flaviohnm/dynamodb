@@ -29,6 +29,11 @@ jobs:
       - name: Install standard-version
         run: npm install -g standard-version
 
+      - name: Configure Git user    # ← ADICIONE AQUI
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"        
+
       - name: Detect version bump and generate CHANGELOG
         id: version
         run: |
