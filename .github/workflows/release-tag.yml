@@ -21,20 +21,42 @@ jobs:
       - name: Fetch all tags
         run: git fetch --tags
 
+      - name: Check if release already exists
+        id: tag_check
+        run: |
+          # Obtém a última tag
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          
+          # Verifica se existe tag no commit atual
+          CURRENT_COMMIT=$(git rev-parse HEAD)
+          TAGGED_COMMIT=$(git rev-list -n 1 "$LAST_TAG" 2>/dev/null || echo "")
+          
+          if [ "$CURRENT_COMMIT" = "$TAGGED_COMMIT" ]; then
+            echo "⚠️  Commit atual já possui tag ($LAST_TAG). Release já foi criada."
+            echo "tag_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "✅ Prosseguindo com a release..."
+            echo "tag_exists=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Set up Node.js (para standard-version)
+        if: steps.tag_check.outputs.tag_exists == 'false'
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
       - name: Install standard-version
+        if: steps.tag_check.outputs.tag_exists == 'false'
         run: npm install -g standard-version
 
-      - name: Configure Git user    # ← ADICIONE AQUI
+      - name: Configure Git user
+        if: steps.tag_check.outputs.tag_exists == 'false'
         run: |
           git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"        
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Detect version bump and generate CHANGELOG
+        if: steps.tag_check.outputs.tag_exists == 'false'
         id: version
         run: |
           # Obtém a última tag ou assume v0.0.0 se não existir
@@ -50,6 +72,7 @@ jobs:
           standard-version
 
       - name: Get new version
+        if: steps.tag_check.outputs.tag_exists == 'false'
         id: new_version
         run: |
           NEW_TAG=$(git describe --tags --abbrev=0)
@@ -58,12 +81,12 @@ jobs:
           echo "tag=$NEW_TAG" >> $GITHUB_OUTPUT
 
       - name: Push changes and tags
+        if: steps.tag_check.outputs.tag_exists == 'false'
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
           git push origin --tags
 
       - name: Generate Release Notes
+        if: steps.tag_check.outputs.tag_exists == 'false'
         id: release_notes
         run: |
           NEW_TAG=${{ steps.new_version.outputs.tag }}
@@ -82,6 +105,7 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Create GitHub Release
+        if: steps.tag_check.outputs.tag_exists == 'false'
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ steps.new_version.outputs.tag }}
