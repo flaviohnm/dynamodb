@@ -45,7 +45,7 @@ jobs:
       # útil para inspecionar mutantes sobreviventes direto no PR.
       - name: Upload Pitest HTML report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: pitest-report
           path: target/pit-reports/
