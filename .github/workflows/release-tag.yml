@@ -1,0 +1,87 @@
+name: Release - Tag & GitHub Release
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4.1.6
+        with:
+          fetch-depth: 0  # Histórico completo para análise de commits
+
+      - name: Fetch all tags
+        run: git fetch --tags
+
+      - name: Set up Node.js (para standard-version)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install standard-version
+        run: npm install -g standard-version
+
+      - name: Detect version bump and generate CHANGELOG
+        id: version
+        run: |
+          # Obtém a última tag ou assume v0.0.0 se não existir
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          
+          echo "last_tag=$LAST_TAG" >> $GITHUB_OUTPUT
+          
+          # Roda standard-version em modo "dry-run" para descobrir a próxima versão
+          RELEASE_TYPE=$(standard-version --dry-run 2>&1 | grep -oP "bumping version in .* from \K[^ ]+" || echo "patch")
+          echo "release_type=$RELEASE_TYPE" >> $GITHUB_OUTPUT
+          
+          # Executa standard-version para de verdade (gera CHANGELOG.md, cria tag)
+          standard-version
+
+      - name: Get new version
+        id: new_version
+        run: |
+          NEW_TAG=$(git describe --tags --abbrev=0)
+          NEW_VERSION=${NEW_TAG#v}  # Remove o "v" do início
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "tag=$NEW_TAG" >> $GITHUB_OUTPUT
+
+      - name: Push changes and tags
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git push origin main
+          git push origin --tags
+
+      - name: Generate Release Notes
+        id: release_notes
+        run: |
+          NEW_TAG=${{ steps.new_version.outputs.tag }}
+          LAST_TAG=${{ steps.version.outputs.last_tag }}
+          
+          # Se existe CHANGELOG.md, usa o conteúdo dele; senão, lista os commits
+          if [ -f CHANGELOG.md ]; then
+            # Extrai a primeira seção de release do CHANGELOG
+            NOTES=$(awk '/^## \[/ { if (found) exit; found=1; next } found { print }' CHANGELOG.md)
+          else
+            NOTES=$(git log $LAST_TAG..$NEW_TAG --oneline --pretty=format:"- %h: %s")
+          fi
+          
+          echo "notes<<EOF" >> $GITHUB_OUTPUT
+          echo "$NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.new_version.outputs.tag }}
+          name: "Release ${{ steps.new_version.outputs.version }}"
+          body: ${{ steps.release_notes.outputs.notes }}
+          draft: false
+          prerelease: false

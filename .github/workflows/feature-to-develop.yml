@@ -1,0 +1,35 @@
+name: Auto PR - feature -> develop
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  open-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4.1.6
+
+      - name: Create PR to develop (se ainda não existir)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH="${GITHUB_REF#refs/heads/}"
+
+          EXISTING=$(gh pr list --base develop --head "$BRANCH" --state open --json number --jq '.[0].number')
+
+          if [ -z "$EXISTING" ]; then
+            gh pr create \
+              --base develop \
+              --head "$BRANCH" \
+              --title "${BRANCH}" \
+              --body "PR automático gerado a partir da branch \`${BRANCH}\`."
+          else
+            echo "Já existe PR aberto (#$EXISTING) de $BRANCH para develop. Nada a fazer."
+          fi
