@@ -43,7 +43,7 @@ jobs:
 
       - name: Set up Node.js (para standard-version)
         if: steps.tag_check.outputs.tag_exists == 'false'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: '20'
 
