@@ -23,13 +23,8 @@ jobs:
   # STAGE 1: Testes & Análise
   # ==========================================
   ci:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        java: ['22']
-        architecture: ['x64']
-
     name: Tests & Analysis
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
@@ -38,12 +33,11 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Setup JDK ${{ matrix.java }}
+      - name: Setup JDK 22
         uses: actions/setup-java@v4
         with:
-          java-version: ${{ matrix.java }}
+          java-version: '22'
           distribution: 'oracle'
-          architecture: ${{ matrix.architecture }}
           cache: 'maven'
 
       - name: Run unit tests
@@ -93,14 +87,13 @@ jobs:
           echo "Branches: ${{ steps.jacoco.outputs.branches }}%"
 
   # ==========================================
-  # STAGE 2: Auto-PR (depende de CI)
+  # STAGE 2: Criar Pull Requests (depende de CI)
   # ==========================================
   auto-pr:
+    name: Create Pull Requests
     needs: ci  # ← ESPERA CI TERMINAR COM SUCESSO
     if: github.event_name == 'push'  # Só em push, não em PR
     runs-on: ubuntu-latest
-
-    name: Create Pull Requests
 
     steps:
       - name: Checkout repository
@@ -141,14 +134,13 @@ jobs:
           fi
 
   # ==========================================
-  # STAGE 3: Release (depende de Auto-PR, só em main)
+  # STAGE 3: Release & Tag (depende de Auto-PR, só em main)
   # ==========================================
   release:
+    name: Release & Tag
     needs: auto-pr  # ← ESPERA AUTO-PR TERMINAR COM SUCESSO
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
-
-    name: Release & Tag
 
     steps:
       - name: Check out repository
@@ -229,7 +221,19 @@ jobs:
               NEW_VERSION=$(grep -oP '<version>\K[^<]+' pom.xml | head -1)
               NEW_TAG="v${NEW_VERSION}"
               echo "✅ Usando versão do pom.xml: $NEW_TAG"
+          
+              # ✅ Verifica se tag já existe (local ou remoto) e a deleta antes de criar
+              if git rev-parse "$NEW_TAG" >/dev/null 2>&1; then
+                echo "⚠️  Tag $NEW_TAG já existe localmente. Deletando..."
+                git tag -d "$NEW_TAG" 2>/dev/null || true
+              fi
+          
+              # ✅ Tenta deletar do remoto também (pode falhar se não existir, tudo bem)
+              git push origin ":refs/tags/$NEW_TAG" 2>/dev/null || true
+          
+              # ✅ Agora cria a tag (safe porque deletamos acima)
               git tag "$NEW_TAG"
+              echo "✅ Tag $NEW_TAG criada com sucesso"
             else
               echo "❌ Não conseguiu detectar versão"
               exit 1
