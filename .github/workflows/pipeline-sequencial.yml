@@ -29,7 +29,7 @@ jobs:
         java: ['22']
         architecture: ['x64']
 
-    name: CI with JDK ${{ matrix.java }} on ${{ matrix.architecture }}
+    name: Tests & Analysis
 
     steps:
       - name: Checkout repository
@@ -100,7 +100,7 @@ jobs:
     if: github.event_name == 'push'  # Só em push, não em PR
     runs-on: ubuntu-latest
 
-    name: Auto PR
+    name: Create Pull Requests
 
     steps:
       - name: Checkout repository
@@ -148,7 +148,7 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
 
-    name: Release - Tag & GitHub Release
+    name: Release & Tag
 
     steps:
       - name: Check out repository
