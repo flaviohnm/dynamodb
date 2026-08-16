@@ -147,6 +147,7 @@ jobs:
         uses: actions/checkout@v4.1.6
         with:
           fetch-depth: 0
+          token: ${{ secrets.RELEASE_TOKEN }}  # ← PAT com bypass de proteção
 
       - name: Fetch all tags
         run: git fetch --tags
@@ -184,6 +185,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Usa o PAT no remote para o push ter permissão de bypass
+          git remote set-url origin https://x-access-token:${{ secrets.RELEASE_TOKEN }}@github.com/${{ github.repository }}.git
 
       - name: Clean up duplicate tags (local)
         if: steps.tag_check.outputs.tag_exists == 'false'
