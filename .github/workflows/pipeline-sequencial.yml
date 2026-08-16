@@ -218,7 +218,7 @@ jobs:
             echo "❌ Tag não foi criada pelo standard-version"
           
             if [ -f "pom.xml" ]; then
-              NEW_VERSION=$(grep -oP '<version>\K[^<]+' pom.xml | head -1)
+              NEW_VERSION=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' exec:exec)
               NEW_TAG="v${NEW_VERSION}"
               echo "✅ Usando versão do pom.xml: $NEW_TAG"
           
