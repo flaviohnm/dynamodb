@@ -199,54 +199,36 @@ jobs:
         id: version
         run: |
           LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
-          
           echo "last_tag=$LAST_TAG" >> $GITHUB_OUTPUT
           
-          RELEASE_TYPE=$(standard-version --dry-run 2>&1 | grep -oP "bumping version in .* from \K[^ ]+" || echo "patch")
-          echo "release_type=$RELEASE_TYPE" >> $GITHUB_OUTPUT
-          
-          standard-version --no-verify
-        continue-on-error: true
+          # ✅ Standard-version faz TUDO: incrementa versão, gera CHANGELOG, cria tag
+          # Baseado em Conventional Commits (feat: MINOR, fix: PATCH, BREAKING: MAJOR)
+          standard-version
 
       - name: Get new version
         if: steps.tag_check.outputs.tag_exists == 'false'
         id: new_version
         run: |
+          # Standard-version já criou a tag, basta pegar ela
           NEW_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
           
           if [ -z "$NEW_TAG" ]; then
-            echo "❌ Tag não foi criada pelo standard-version"
-          
-            if [ -f "pom.xml" ]; then
-              NEW_VERSION=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' exec:exec)
-              NEW_TAG="v${NEW_VERSION}"
-              echo "✅ Usando versão do pom.xml: $NEW_TAG"
-          
-              # ✅ Verifica se tag já existe (local ou remoto) e a deleta antes de criar
-              if git rev-parse "$NEW_TAG" >/dev/null 2>&1; then
-                echo "⚠️  Tag $NEW_TAG já existe localmente. Deletando..."
-                git tag -d "$NEW_TAG" 2>/dev/null || true
-              fi
-          
-              # ✅ Tenta deletar do remoto também (pode falhar se não existir, tudo bem)
-              git push origin ":refs/tags/$NEW_TAG" 2>/dev/null || true
-          
-              # ✅ Agora cria a tag (safe porque deletamos acima)
-              git tag "$NEW_TAG"
-              echo "✅ Tag $NEW_TAG criada com sucesso"
-            else
-              echo "❌ Não conseguiu detectar versão"
-              exit 1
-            fi
+            echo "❌ Standard-version falhou ao criar a tag"
+            echo "⚠️  Revise os logs acima para descobrir o motivo"
+            exit 1
           fi
           
-          NEW_VERSION=${NEW_TAG#v}
+          NEW_VERSION=${NEW_TAG#v}  # Remove o "v" do início
+          echo "✅ Tag criada com sucesso: $NEW_TAG"
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
           echo "tag=$NEW_TAG" >> $GITHUB_OUTPUT
 
       - name: Push changes and tags
         if: steps.tag_check.outputs.tag_exists == 'false'
         run: |
+          # Standard-version fez commit local da atualização do pom.xml e CHANGELOG
+          # Agora fazemos push de tudo
+          git push origin main
           git push origin --tags
 
       - name: Generate Release Notes
