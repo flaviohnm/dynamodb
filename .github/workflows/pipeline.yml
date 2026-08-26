@@ -197,6 +197,15 @@ jobs:
             echo "✅ Tag local $LAST_TAG removida (será recriada)"
           fi
 
+      - name: Sync with latest main
+        if: steps.tag_check.outputs.tag_exists == 'false'
+        run: |
+          # Garante que estamos em cima do commit mais recente da main antes
+          # de gerar o commit de versionamento (evita non-fast-forward no push)
+          git fetch origin main
+          git checkout main
+          git reset --hard origin/main
+
       - name: Detect version bump and generate CHANGELOG
         if: steps.tag_check.outputs.tag_exists == 'false'
         id: version
@@ -229,9 +238,17 @@ jobs:
       - name: Push changes and tags
         if: steps.tag_check.outputs.tag_exists == 'false'
         run: |
-          # Standard-version fez commit local da atualização do pom.xml e CHANGELOG
-          # Agora fazemos push de tudo
-          git push origin main
+          # Tenta o push; se algo avançou remotamente entre o sync e agora,
+          # faz rebase e tenta de novo (proteção extra contra corrida)
+          for i in 1 2 3; do
+            if git push origin main; then
+              break
+            fi
+            echo "⚠️  Push rejeitado, sincronizando e tentando de novo ($i/3)..."
+            git fetch origin main
+            git rebase origin/main
+          done
+          
           git push origin --tags
 
       - name: Generate Release Notes
