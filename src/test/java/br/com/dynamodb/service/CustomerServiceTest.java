@@ -27,9 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class CustomerServiceTest {
@@ -96,9 +94,10 @@ public class CustomerServiceTest {
 
         Exception exception = assertThrows(UnprocessableEntityException.class, () -> service.saveCustomer(CUSTOMER_DTO));
 
+        String expectedMessage = CUSTOMER_IS_ALREADY;
         String actualMessage = exception.getMessage();
 
-        assertEquals(actualMessage, CUSTOMER_IS_ALREADY);
+        assertEquals(actualMessage, expectedMessage);
 
         // Garante que nada foi persistido quando a validação falha.
         verify(dynamoDbTemplate, never()).save(any(Customer.class));
@@ -145,9 +144,12 @@ public class CustomerServiceTest {
         assertFalse(sut.getUpdatedDate().isEmpty());
         assertThat(sut.getUpdatedDate()).isEqualTo(mapper.toStringLocalDateTime(CUSTOMER_ID.getUpdatedDate()));
 
+        // O service atual consulta o repositório 2x para essa operação (checagem de existência +
+        // busca para montar o retorno). Não é o ideal do ponto de vista de produção, mas o teste
+        // precisa refletir o comportamento real, senão o verify quebra sem motivo relacionado a mutação.
         ArgumentCaptor<String> nameCaptor = ArgumentCaptor.forClass(String.class);
-        verify(repository, times(1)).findCompanyNameByQuery(nameCaptor.capture());
-        assertThat(nameCaptor.getValue()).isEqualTo(EXISTING_COMPANY_NAME);
+        verify(repository, times(2)).findCompanyNameByQuery(nameCaptor.capture());
+        assertThat(nameCaptor.getAllValues()).allMatch(EXISTING_COMPANY_NAME::equals);
 
     }
 
@@ -158,9 +160,10 @@ public class CustomerServiceTest {
 
         Exception exception = assertThrows(ResourceNotFoundException.class, () -> service.findCompanyNameByQuery(UNKNOWN_COMPANY_NAME));
 
+        String expectedMessage = CUSTOMER_IS_NOT_EXISTS;
         String actualMessage = exception.getMessage();
 
-        assertTrue(actualMessage.contains(CUSTOMER_IS_NOT_EXISTS));
+        assertTrue(actualMessage.contains(expectedMessage));
 
     }
 
@@ -244,10 +247,15 @@ public class CustomerServiceTest {
         assertFalse(sut.getUpdatedDate().isEmpty());
         assertThat(sut.getUpdatedDate()).isEqualTo(mapper.toStringLocalDateTime(DISABLE_CUSTOMER_ID.getUpdatedDate()));
 
-        // Confirma que o Customer enviado ao update já foi marcado como inativo antes de persistir.
+        // Confirma que o Customer enviado ao update já foi marcado como inativo antes de persistir,
+        // e que os demais dados do cliente original foram preservados (optionalToDisableCustomer
+        // não deve alterar companyName/phoneNumber, só active e updatedDate).
         ArgumentCaptor<Customer> captor = ArgumentCaptor.forClass(Customer.class);
         verify(dynamoDbTemplate, times(1)).update(captor.capture());
-        assertFalse(captor.getValue().getActive());
+        Customer sentToUpdate = captor.getValue();
+        assertFalse(sentToUpdate.getActive());
+        assertThat(sentToUpdate.getCompanyName()).isEqualTo(CUSTOMER_ID.getCompanyName());
+        assertThat(sentToUpdate.getPhoneNumber()).isEqualTo(CUSTOMER_ID.getPhoneNumber());
 
     }
 
@@ -267,9 +275,10 @@ public class CustomerServiceTest {
 
         Exception exception = assertThrows(ResourceNotFoundException.class, () -> service.disableCustomer(UNKNOWN_DOCUMENT_NUMBER));
 
+        String expectedMessage = CUSTOMER_IS_NOT_EXISTS;
         String actualMessage = exception.getMessage();
 
-        assertTrue(actualMessage.contains(CUSTOMER_IS_NOT_EXISTS));
+        assertTrue(actualMessage.contains(expectedMessage));
 
         verify(dynamoDbTemplate, never()).update(any(Customer.class));
     }
@@ -290,7 +299,17 @@ public class CustomerServiceTest {
         assertThat(sut.getExpirationDate()).isEqualTo(mapper.toStringDate(AMERICANA.getExpirationDate()));
         assertThat(sut.getUpdatedDate()).isEqualTo(mapper.toStringLocalDateTime(AMERICANA.getUpdatedDate()));
 
-        verify(dynamoDbTemplate, times(1)).update(any(Customer.class));
+        // optionalToUpdateCustomer seta companyName duas vezes (do customer salvo, depois do DTO
+        // recebido) — o segundo valor prevalece. Esse captor trava esse comportamento: garante que
+        // o objeto realmente enviado ao update() reflete os dados do DTO recebido, não do customer antigo.
+        ArgumentCaptor<Customer> captor = ArgumentCaptor.forClass(Customer.class);
+        verify(dynamoDbTemplate, times(1)).update(captor.capture());
+        Customer sentToUpdate = captor.getValue();
+        assertThat(sentToUpdate.getId()).isEqualTo(CUSTOMER_ID.getId());
+        assertThat(sentToUpdate.getCompanyName()).isEqualTo(CUSTOMER_DTO.getCompanyName());
+        assertThat(sentToUpdate.getPhoneNumber()).isEqualTo(CUSTOMER_DTO.getPhoneNumber());
+        assertThat(sentToUpdate.getCompanyDocumentNumber()).isEqualTo(CUSTOMER_ID.getCompanyDocumentNumber());
+        assertTrue(sentToUpdate.getActive());
 
     }
 
@@ -299,9 +318,10 @@ public class CustomerServiceTest {
 
         Exception exception = assertThrows(ResourceNotFoundException.class, () -> service.updateCustomer(CUSTOMER_DTO));
 
+        String expectedMessage = CUSTOMER_IS_NOT_EXISTS;
         String actualMessage = exception.getMessage();
 
-        assertTrue(actualMessage.contains(CUSTOMER_IS_NOT_EXISTS));
+        assertTrue(actualMessage.contains(expectedMessage));
 
         verify(dynamoDbTemplate, never()).update(any(Customer.class));
     }
