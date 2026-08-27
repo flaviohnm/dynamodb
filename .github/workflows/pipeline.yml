@@ -188,25 +188,6 @@ jobs:
           # Usa o PAT no remote para o push ter permissão de bypass
           git remote set-url origin https://x-access-token:${{ secrets.RELEASE_TOKEN }}@github.com/${{ github.repository }}.git
 
-      - name: Clean up duplicate tags (local and remote)
-        if: steps.tag_check.outputs.tag_exists == 'false'
-        run: |
-          LAST_TAG="${{ steps.tag_check.outputs.last_tag }}"
-          if [ ! -z "$LAST_TAG" ]; then
-            # Remove localmente
-            git tag -d "$LAST_TAG" 2>/dev/null || true
-          
-            # Remove também do remoto — cobre o caso de uma execução anterior
-            # ter conseguido criar a tag mas falhado no push da main (deixando
-            # a tag "órfã", sem o commit correspondente na main)
-            if git ls-remote --tags origin | grep -q "refs/tags/$LAST_TAG$"; then
-              echo "⚠️  Tag $LAST_TAG existe no remoto (possível resquício de execução anterior). Removendo..."
-              git push origin --delete "$LAST_TAG" 2>/dev/null || true
-            fi
-          
-            echo "✅ Tag $LAST_TAG removida (local e remoto, se existia)"
-          fi
-
       - name: Sync with latest main
         if: steps.tag_check.outputs.tag_exists == 'false'
         run: |
