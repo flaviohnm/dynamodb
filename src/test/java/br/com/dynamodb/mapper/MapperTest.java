@@ -4,6 +4,8 @@ import br.com.dynamodb.dto.CustomerDTO;
 import br.com.dynamodb.model.Customer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -27,47 +29,46 @@ public class MapperTest {
     // ---------------------------------------------------------------
     // toEpocDate
     // ---------------------------------------------------------------
+    // Parametrizado para cobrir: soma normal de meses, virada de ano,
+    // e para reforçar explicitamente contra o mutante EmptyReturns
+    // (replaced Long return value with 0L).
 
-    @Test
-    void toEpocDate_deveSomarTresMesesEConverterParaEpochComOffsetCorreto() {
-        // 2024-01-15T10:00:00 + 3 meses = 2024-04-15T10:00:00 (-03:00)
-        // == 2024-04-15T13:00:00Z == epoch 1713186000
-        // Valor calculado manualmente (dia epoch 19828 * 86400 + 13h em segundos),
-        // não recalculado com as mesmas constantes de produção.
-        Long resultado = mapper.toEpocDate("2024-01-15T10:00:00");
+    @ParameterizedTest(name = "{0} + PLUS_MONTH deve virar epoch {1}")
+    @CsvSource({
+            // 2024-01-15T10:00:00 + 3 meses = 2024-04-15T10:00:00 (-03:00) == 2024-04-15T13:00:00Z
+            "2024-01-15T10:00:00, 1713186000",
+            // 2023-11-15T08:00:00 + 3 meses = 2024-02-15T08:00:00 (-03:00) == 2024-02-15T11:00:00Z
+            // cobre mutantes que quebram a soma de meses na virada de ano
+            "2023-11-15T08:00:00, 1707994800"
+    })
+    void toEpocDate_deveConverterParaEpochComOffsetEMesesCorretos(String data, Long epochEsperado) {
+        Long resultado = mapper.toEpocDate(data);
 
-        assertThat(resultado).isEqualTo(1713186000L);
-    }
-
-    @Test
-    void toEpocDate_deveTratarViradaDeAnoAoSomarMeses() {
-        // 2023-11-15T08:00:00 + 3 meses = 2024-02-15T08:00:00 (-03:00)
-        // == 2024-02-15T11:00:00Z == epoch 1707994800
-        // Cobre mutantes que quebram a soma de meses na virada de ano.
-        Long resultado = mapper.toEpocDate("2023-11-15T08:00:00");
-
-        assertThat(resultado).isEqualTo(1707994800L);
+        assertThat(resultado).isEqualTo(epochEsperado);
+        // asserção redundante e explícita contra o mutante EmptyReturns (0L)
+        assertThat(resultado).isNotZero();
     }
 
     // ---------------------------------------------------------------
     // toStringDate
     // ---------------------------------------------------------------
+    // Parametrizado para cobrir: formatação normal e virada de dia/ano
+    // ao cruzar o fuso, e reforçar contra o mutante EmptyReturns ("").
 
-    @Test
-    void toStringDate_deveFormatarEpochNoFusoDeRecife() {
-        // epoch 1713186000 == 2024-04-15T13:00:00Z == 2024-04-15T10:00:00 em America/Recife
-        String resultado = mapper.toStringDate(1713186000L);
+    @ParameterizedTest(name = "epoch {0} deve virar \"{1}\" no fuso de Recife")
+    @CsvSource({
+            // epoch 1713186000 == 2024-04-15T13:00:00Z == 2024-04-15T10:00:00 em America/Recife
+            "1713186000, '15/04/2024 10:00:00'",
+            // epoch 0 == 1970-01-01T00:00:00Z == 1969-12-31T21:00:00 em America/Recife (-03:00)
+            // 21h em relogio de 12h (padrao "hh") = 09
+            "0, '31/12/1969 09:00:00'"
+    })
+    void toStringDate_deveFormatarEpochNoFusoDeRecife(Long epoch, String esperado) {
+        String resultado = mapper.toStringDate(epoch);
 
-        assertThat(resultado).isEqualTo("15/04/2024 10:00:00");
-    }
-
-    @Test
-    void toStringDate_deveTratarViradaDeDiaEAnoAoConverterFuso() {
-        // epoch 0 == 1970-01-01T00:00:00Z == 1969-12-31T21:00:00 em America/Recife (-03:00)
-        // 21h em relogio de 12h (padrao "hh") = 09
-        String resultado = mapper.toStringDate(0L);
-
-        assertThat(resultado).isEqualTo("31/12/1969 09:00:00");
+        assertThat(resultado).isEqualTo(esperado);
+        // asserção redundante e explícita contra o mutante EmptyReturns ("")
+        assertThat(resultado).isNotBlank();
     }
 
     // ---------------------------------------------------------------
@@ -75,7 +76,7 @@ public class MapperTest {
     // ---------------------------------------------------------------
 
     @Test
-    void toStringLocalDateTime_deveFormatarDataESHora() {
+    void toStringLocalDateTime_deveFormatarDataEHora() {
         String resultado = mapper.toStringLocalDateTime("2024-01-15T10:30:45");
 
         assertThat(resultado).isEqualTo("15/01/2024 10:30:45");
@@ -285,7 +286,7 @@ public class MapperTest {
     }
 
     @Test
-    void toCustomerDTOList_deveMapearECManterAOrdemDaLista() {
+    void toCustomerDTOList_deveMapearEManterAOrdemDaLista() {
         Customer customer1 = Customer.builder()
                 .id("id-6")
                 .companyName("Primeira Empresa")
