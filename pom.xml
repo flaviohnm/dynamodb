@@ -205,10 +205,7 @@
                         <param>br.com.dynamodb.*Test</param>
                     </targetTests>
                     <excludedClasses>
-                        <param>br.com.dynamodb.config.*</param>
                         <param>br.com.dynamodb.controller.*</param>
-                        <param>br.com.dynamodb.exceptions.*</param>
-                        <param>br.com.dynamodb.model.*</param>
                         <param>br.com.dynamodb.repository.*</param>
                     </excludedClasses>
                     <outputFormats>
