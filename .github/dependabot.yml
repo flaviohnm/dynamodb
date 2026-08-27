@@ -1,12 +1,40 @@
 version: 2
 updates:
-  - package-ecosystem: 'maven' # See documentation for possible values
-    directory: './' # Location of package manifests
-    open-pull-requests-limit: 25
+  - package-ecosystem: 'maven'
+    directory: './'
+    target-branch: 'develop'
+    open-pull-requests-limit: 10
     schedule:
-      interval: 'daily'
-  - package-ecosystem: 'github-actions' # See documentation for possible values
-    directory: './' # Location of package manifests
-    open-pull-requests-limit: 25
+      interval: 'weekly'
+      day: 'monday'
+    versioning-strategy: 'increase-if-necessary'
+    commit-message:
+      prefix: 'chore(deps)'
+      include: 'scope'
+    labels:
+      - 'dependencies'
+      - 'maven'
+    groups:
+      minor-and-patch:
+        update-types:
+          - 'minor'
+          - 'patch'
+
+  - package-ecosystem: 'github-actions'
+    directory: './'
+    target-branch: 'develop'
+    open-pull-requests-limit: 10
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
+      day: 'monday'
+    commit-message:
+      prefix: 'chore(ci)'
+      include: 'scope'
+    labels:
+      - 'dependencies'
+      - 'github-actions'
+    groups:
+      minor-and-patch:
+        update-types:
+          - 'minor'
+          - 'patch'
