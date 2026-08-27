@@ -8,10 +8,6 @@ DynamoDB**. Projeto de estudo focado em boas práticas de back-end: testes autom
 
 ![Coverage](.github/badges/jacoco.svg)
 [![Mutation Testing Badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fflaviohnm%2Fdynamodb%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/flaviohnm/dynamodb/main)
-![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=OpenJDK&logoColor=white)
-![Spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
-![DynamoDB](https://img.shields.io/badge/Amazon%20DynamoDB-4053D6?style=for-the-badge&logo=Amazon%20DynamoDB&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white)
 
 </div>
 
