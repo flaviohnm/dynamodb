@@ -96,10 +96,9 @@ public class CustomerServiceTest {
 
         Exception exception = assertThrows(UnprocessableEntityException.class, () -> service.saveCustomer(CUSTOMER_DTO));
 
-        String expectedMessage = CUSTOMER_IS_ALREADY;
         String actualMessage = exception.getMessage();
 
-        assertEquals(actualMessage, expectedMessage);
+        assertEquals(actualMessage, CUSTOMER_IS_ALREADY);
 
         // Garante que nada foi persistido quando a validação falha.
         verify(dynamoDbTemplate, never()).save(any(Customer.class));
@@ -159,10 +158,9 @@ public class CustomerServiceTest {
 
         Exception exception = assertThrows(ResourceNotFoundException.class, () -> service.findCompanyNameByQuery(UNKNOWN_COMPANY_NAME));
 
-        String expectedMessage = CUSTOMER_IS_NOT_EXISTS;
         String actualMessage = exception.getMessage();
 
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertTrue(actualMessage.contains(CUSTOMER_IS_NOT_EXISTS));
 
     }
 
@@ -269,10 +267,9 @@ public class CustomerServiceTest {
 
         Exception exception = assertThrows(ResourceNotFoundException.class, () -> service.disableCustomer(UNKNOWN_DOCUMENT_NUMBER));
 
-        String expectedMessage = CUSTOMER_IS_NOT_EXISTS;
         String actualMessage = exception.getMessage();
 
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertTrue(actualMessage.contains(CUSTOMER_IS_NOT_EXISTS));
 
         verify(dynamoDbTemplate, never()).update(any(Customer.class));
     }
@@ -302,10 +299,9 @@ public class CustomerServiceTest {
 
         Exception exception = assertThrows(ResourceNotFoundException.class, () -> service.updateCustomer(CUSTOMER_DTO));
 
-        String expectedMessage = CUSTOMER_IS_NOT_EXISTS;
         String actualMessage = exception.getMessage();
 
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertTrue(actualMessage.contains(CUSTOMER_IS_NOT_EXISTS));
 
         verify(dynamoDbTemplate, never()).update(any(Customer.class));
     }
