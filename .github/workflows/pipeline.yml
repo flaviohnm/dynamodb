@@ -48,13 +48,13 @@ jobs:
         run: mvn test-compile org.pitest:pitest-maven:mutationCoverage -B -Dverbose -DoutputFormats=HTML,XML
         continue-on-error: true
 
-      - name: Generate JaCoCo badge
-        id: jacoco
-        uses: cicirello/jacoco-badge-generator@v2
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
         with:
-          generate-branches-badge: true
-          jacoco-csv-file: "target/site/jacoco/jacoco.csv"
-        continue-on-error: true
+          files: ./target/site/jacoco/jacoco.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false
+          verbose: true
 
       - name: Upload test artifacts
         if: always()
@@ -79,12 +79,6 @@ jobs:
           upload-result: false
           push-fixes: 'none'
         continue-on-error: true
-
-      - name: Log JaCoCo coverage
-        if: steps.jacoco.outcome == 'success'
-        run: |
-          echo "Coverage: ${{ steps.jacoco.outputs.coverage }}%"
-          echo "Branches: ${{ steps.jacoco.outputs.branches }}%"
 
   # ==========================================
   # STAGE 2: Criar Pull Requests (depende de CI)
