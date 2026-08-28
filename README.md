@@ -6,7 +6,7 @@ DynamoDB**. Projeto de estudo focado em boas práticas de back-end: testes autom
 
 <div align="center">
 
-[![codecov](https://codecov.io/gh/flaviohnm/dynamodb/branch/main/graph/badge.svg)](https://codecov.io/gh/flaviohnm/dynamodb)
+[![codecov](https://codecov.io/gh/flaviohnm/dynamodb/branch/main/graph/badge.svg?token=VASM8F42Q3)](https://codecov.io/gh/flaviohnm/dynamodb)
 [![Mutation Testing Badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fflaviohnm%2Fdynamodb%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/flaviohnm/dynamodb/main)
 
 </div>
