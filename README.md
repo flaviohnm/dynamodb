@@ -6,7 +6,7 @@ DynamoDB**. Projeto de estudo focado em boas práticas de back-end: testes autom
 
 <div align="center">
 
-![Coverage](.github/badges/jacoco.svg)
+[![codecov](https://codecov.io/gh/flaviohnm/dynamodb/branch/main/graph/badge.svg)](https://codecov.io/gh/flaviohnm/dynamodb)
 [![Mutation Testing Badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fflaviohnm%2Fdynamodb%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/flaviohnm/dynamodb/main)
 
 </div>
@@ -16,19 +16,19 @@ DynamoDB**. Projeto de estudo focado em boas práticas de back-end: testes autom
 ## 📑 Sumário
 
 - [🛒 API REST Costumer | AWS DynamoDB \& Java Spring Data](#-api-rest-costumer--aws-dynamodb--java-spring-data)
-    - [📑 Sumário](#-sumário)
-    - [📖 Sobre o Projeto](#-sobre-o-projeto)
-    - [🏗 Arquitetura](#-arquitetura)
-    - [🚀💻 Tecnologias \& Ferramentas](#-tecnologias--ferramentas)
-    - [💻 Modelagem no DynamoDB](#-modelagem-no-dynamodb)
-    - [▶️ Como Executar](#️-como-executar)
-        - [Pré-requisitos](#pré-requisitos)
-        - [Passo a passo](#passo-a-passo)
-    - [📡 Endpoints da API](#-endpoints-da-api)
-    - [🧪 Testes](#-testes)
-    - [🗺 Roadmap](#-roadmap)
-    - [✍️ Comentários sobre o projeto](#️-comentários-sobre-o-projeto)
-    - [👨‍🚀 Autor](#-autor)
+  - [📑 Sumário](#-sumário)
+  - [📖 Sobre o Projeto](#-sobre-o-projeto)
+  - [🏗 Arquitetura](#-arquitetura)
+  - [🚀💻 Tecnologias \& Ferramentas](#-tecnologias--ferramentas)
+  - [💻 Modelagem no DynamoDB](#-modelagem-no-dynamodb)
+  - [▶️ Como Executar](#️-como-executar)
+    - [Pré-requisitos](#pré-requisitos)
+    - [Passo a passo](#passo-a-passo)
+  - [📡 Endpoints da API](#-endpoints-da-api)
+  - [🧪 Testes](#-testes)
+  - [🗺 Roadmap](#-roadmap)
+  - [✍️ Comentários sobre o projeto](#️-comentários-sobre-o-projeto)
+  - [👨‍🚀 Autor](#-autor)
 
 ---
 
@@ -180,7 +180,7 @@ mvn test
 mvn test-compile org.pitest:pitest-maven:mutationCoverage
 ```
 
-Os resultados de cobertura (Jacoco) e mutação (Stryker Dashboard) são exibidos nos badges no topo deste README.
+Os resultados de cobertura (Codecov, a partir do relatório Jacoco) e mutação (Stryker Dashboard) são exibidos nos badges no topo deste README.
 
 ## 🗺 Roadmap
 
