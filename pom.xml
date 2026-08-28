@@ -205,7 +205,6 @@
                         <param>br.com.dynamodb.*Test</param>
                     </targetTests>
                     <excludedClasses>
-                        <param>br.com.dynamodb.controller.*</param>
                         <param>br.com.dynamodb.repository.*</param>
                     </excludedClasses>
                     <outputFormats>
