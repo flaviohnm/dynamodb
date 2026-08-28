@@ -134,7 +134,7 @@
                     </rules>
                     <excludes>
                         <exclude>/**/repository/*</exclude>
-                        <exclude>/**/exceptions/ExceptionResponse.class</exclude>
+                        <exclude>/**/DynamoDbApplication.class</exclude>
                     </excludes>
                 </configuration>
                 <executions>
