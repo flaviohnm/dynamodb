@@ -33,15 +33,21 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Setup JDK 22
+      - name: Setup JDK 21
         uses: actions/setup-java@v6
         with:
-          java-version: '22'
+          java-version: '21'
           distribution: 'oracle'
           cache: 'maven'
 
       - name: Run unit tests
         run: mvn test -B --file pom.xml
+
+      - name: Generate JaCoCo XML report
+        run: mvn jacoco:report -B
+
+      - name: Debug - list jacoco output
+        run: find target/site/jacoco -type f || echo "pasta target/site/jacoco não existe"
 
       - name: Run mutation testing (Pitest)
         if: github.event_name == 'push' || github.event_name == 'pull_request'
@@ -50,9 +56,12 @@ jobs:
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: flaviohnm/dynamodb
+          files: ./target/site/jacoco/jacoco.xml
+          fail_ci_if_error: false
+          verbose: true
 
       - name: Upload test artifacts
         if: always()
