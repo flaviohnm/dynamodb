@@ -8,9 +8,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class CustomerTest {
 
-    // ---------------------------------------------------------------
-    // NoArgsConstructor + setters/getters individuais
-    // ---------------------------------------------------------------
 
     @Test
     void deveCriarComConstrutorVazioESetarTodosOsCamposIndividualmente() {
