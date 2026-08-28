@@ -133,10 +133,8 @@
                         </rule>
                     </rules>
                     <excludes>
-                        <exclude>/**/config/*</exclude>
                         <exclude>/**/repository/*</exclude>
                         <exclude>/**/exceptions/ExceptionResponse.class</exclude>
-                        <exclude>/**/DynamoDbApplication.class</exclude>
                     </excludes>
                 </configuration>
                 <executions>
