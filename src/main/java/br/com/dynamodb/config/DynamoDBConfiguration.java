@@ -46,16 +46,13 @@ public class DynamoDBConfiguration {
                 .build();
     }
 
-    // --------------------------------------------------------------------------
-    // Mapeamento de nome de tabela customizado para o DynamoDbTemplate
-    // --------------------------------------------------------------------------
     @Bean
     public DynamoDbTableNameResolver dynamoDbTableNameResolver() {
         return new DynamoDbTableNameResolver() {
             @Override
             public <T> String resolve(Class<T> clazz) {
                 if (clazz.equals(Customer.class)) {
-                    return "customers"; // Mapeia a classe Customer para a tabela "customers"
+                    return "customers";
                 }
                 return clazz.getSimpleName().toLowerCase();
             }
