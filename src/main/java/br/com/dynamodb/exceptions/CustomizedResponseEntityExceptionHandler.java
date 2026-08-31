@@ -1,8 +1,5 @@
-package br.com.dynamodb.exceptions.handler;
+package br.com.dynamodb.exceptions;
 
-import br.com.dynamodb.exceptions.ExceptionResponse;
-import br.com.dynamodb.exceptions.ResourceNotFoundException;
-import br.com.dynamodb.exceptions.UnprocessableEntityException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -50,7 +47,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
                 ex.getMessage(),
                 request.getDescription(false));
 
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.UNPROCESSABLE_ENTITY);
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.UNPROCESSABLE_CONTENT);
     }
 
 }

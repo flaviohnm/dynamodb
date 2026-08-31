@@ -1,9 +1,12 @@
 package br.com.dynamodb.exceptions;
 
+import lombok.Getter;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
+@Getter
 public class ExceptionResponse implements Serializable {
 
     @Serial
@@ -19,15 +22,4 @@ public class ExceptionResponse implements Serializable {
         this.details = details;
     }
 
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public String getDetails() {
-        return details;
-    }
 }
