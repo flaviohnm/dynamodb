@@ -82,7 +82,7 @@ jobs:
           retention-days: 14
 
       - name: Qodana scan
-        uses: JetBrains/qodana-action@v2026.2
+        uses: JetBrains/qodana-action@v2026.2.0
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
         with:
@@ -90,7 +90,7 @@ jobs:
           use-caches: true
           post-pr-comment: true
           use-annotations: true
-          upload-result: false
+          upload-result: true
           push-fixes: 'none'
         continue-on-error: true
 
