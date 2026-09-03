@@ -19,8 +19,8 @@
         <jacoco.version>0.8.15</jacoco.version>
         <mockito.version>5.23.0</mockito.version>
         <jakarta.validation-api>3.1.1</jakarta.validation-api>
-        <spring-cloud-aws-dependencies>4.1.0</spring-cloud-aws-dependencies>
-        <pitest.version>1.25.9</pitest.version>
+        <spring-cloud-aws-dependencies>4.1.1</spring-cloud-aws-dependencies>
+        <pitest.version>1.30.0</pitest.version>
         <pitest-junit5.version>1.2.3</pitest-junit5.version>
         <pit-dashboard-reporter>0.3.19</pit-dashboard-reporter>
         <pitest-mutation-testing-elements>0.7.1</pitest-mutation-testing-elements>
