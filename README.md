@@ -132,7 +132,7 @@ Tabela `customers`, com `id` como chave primária (partition key):
 
 ### Pré-requisitos
 
-- Java 17+
+- Java 21+
 - Maven
 - Docker (para rodar o DynamoDB local)
 
